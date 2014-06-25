@@ -1,0 +1,29 @@
+<use   name="root"/>
+<use   name="FWCore/Framework"/>
+<use   name="Geometry/Records"/>
+<use   name="DataFormats/TrackingRecHit"/>
+<use   name="DataFormats/DTRecHit"/>
+<use   name="DataFormats/CSCRecHit"/>
+<use   name="DataFormats/Common"/>
+<use   name="CondFormats/DataRecord"/>
+<use   name="Geometry/DTGeometry"/>
+<use   name="Geometry/CSCGeometry"/>
+<use   name="TrackingTools/TrackRefitter"/>
+<use   name="RecoMuon/TransientTrackingRecHit"/>
+<use   name="FWCore/ParameterSet"/>
+<use   name="FWCore/PluginManager"/>
+<use   name="FWCore/ServiceRegistry"/>
+<use   name="FWCore/Utilities"/>
+<use   name="CommonTools/Utils"/>
+<use   name="DataFormats/TrackReco"/>
+<use   name="Geometry/CommonDetUnit"/>
+<use   name="TrackingTools/TrackFitters"/>
+<use   name="Alignment/CommonAlignment"/>
+<use   name="clhep"/>
+<use   name="rootcore"/>
+<use   name="rootminuit"/>
+<flags   EDM_PLUGIN="1"/>
+
+
+
+
