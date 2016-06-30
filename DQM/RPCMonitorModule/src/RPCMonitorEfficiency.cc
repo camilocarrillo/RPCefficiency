@@ -1674,8 +1674,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   theFileOut->cd();
   
   for (TrackingGeometry::DetContainer::const_iterator it=rpcGeo->dets().begin();it<rpcGeo->dets().end();it++){
-    if( dynamic_cast< RPCChamber* >( *it ) != 0 ){
-      RPCChamber* ch = dynamic_cast< RPCChamber* >( *it ); 
+    if( dynamic_cast<const RPCChamber* >( *it ) != 0 ){
+      auto ch = dynamic_cast<const RPCChamber* >( *it ); 
       std::vector< const RPCRoll*> roles = (ch->rolls());
       for(std::vector<const RPCRoll*>::const_iterator r = roles.begin();r != roles.end(); ++r){
 	RPCDetId rpcId = (*r)->id();
@@ -1852,7 +1852,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
 	  //Cesare
           float effRoll =0;
-          float errEffRoll = 0;
           float DT_Int = 0;
 	  float RPCpoints = 0; 
           float MeanCLSRollBarrel = 0;
@@ -2083,7 +2082,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
             if(DT_Int != 0 ){
               if(!IsBadRoll(rpcId.rawId(),blacklist)){
             	effRoll = float(histoRPC->Integral())/float(histoDT->Integral());
-                errEffRoll = (sqrt(effRoll*(1-effRoll)/DT_Int));
                 EffBarrelRoll->Fill(100*effRoll);}
 	    }
             
@@ -2978,7 +2976,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	  float averageerrocc = 0.;
 
 	  float doublegapeff = 0;
-	  float doublegaperr = 0;
+	  //float doublegaperr = 0;
 
 	  float bufdoublegapeff = 0;
 	  	  
@@ -3096,8 +3094,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	    int lastybin = int(1.1*stripl-fiducialcuty);
 
 	    float averageRollWidth = nstrips*stripw; //This is the roll with.
-	    const BoundPlane & RPCSurface = (*r)->surface();
-	    GlobalPoint CenterPointInGlobal = RPCSurface.toGlobal(top_->localPosition(0));
 	    float radiusCenterRoll=top_->radius();
 	    
 	    if(debug) std::cout<<" Trapezoidal integral for "<<name<<std::endl;
@@ -3114,10 +3110,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      for(int i=firstxbin;i<=lastxbin;i++){
 		pinoobserved = pinoobserved + histoRPC_2D->GetBinContent(i,j);	
 		pinoexpected = pinoexpected + histoCSC_2D->GetBinContent(i,j);
-		float eff = -1;
-		if(histoCSC_2D->GetBinContent(i,j)!= 0){
-		  eff = (histoRPC_2D->GetBinContent(i,j)/histoCSC_2D->GetBinContent(i,j))*100.;
-		}
+		//float eff = -1;
+		//if(histoCSC_2D->GetBinContent(i,j)!= 0){
+		//  eff = (histoRPC_2D->GetBinContent(i,j)/histoCSC_2D->GetBinContent(i,j))*100.;
+		//}
 	      }
 	    }
 
@@ -3301,7 +3297,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	    if(debug) std::cout<<"Checking assertion"<<std::endl;
 	    
 	    doublegapeff=0.;
-	    doublegaperr=0.;
 	    	    
 	    if(NumberStripsPointed!=0){
 	      averageeff = (sumbuffef/float(NumberStripsPointed))*100.;
@@ -3313,7 +3308,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      if(withouteffect!=0){
 		float efftmp = doublegaperrocc/doublegaperrexp;
 		doublegapeff=efftmp*100;
-		doublegaperr = sqrt(efftmp*(1-efftmp)/doublegaperrexp)*100.;
 	      }
 	    }else{
 	      if(debug) std::cout<<"This Roll Doesn't have any strip Pointed"<<std::endl;
@@ -5865,29 +5859,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   Ca5->SaveAs("Greg/EfficiencyPerChamberNumber.png"); EfficiencyPerChamberNumber->Write();
   Ca5->Clear(); 
 
-  int colorPalette3[20];
-
-  colorPalette3[0]= 632; // 0 red 
-  colorPalette3[1]= 632; // 5 red
-  colorPalette3[2]= 632; // 10 
-  colorPalette3[3]= 632; // 15 
-  colorPalette3[4]= 632; // 20 
-  colorPalette3[5]= 632; // 25 
-  colorPalette3[6]= 632; // 30 
-  colorPalette3[7]= 632; // 35
-  colorPalette3[8]= 632; // 40
-  colorPalette3[9]= 632; // 45
-  colorPalette3[10]= 632; // 50
-  colorPalette3[11]= 632; // 55
-  colorPalette3[12]= 632; // 60
-  colorPalette3[13]= 632; // 65
-  colorPalette3[14]= 807; // 70
-  colorPalette3[15]= 807; // 75
-  colorPalette3[16]= 400; // 80
-  colorPalette3[17]= 400; // 85
-  colorPalette3[18]= 400; // 90 
-  colorPalette3[19]= 416; // 95 % green 
-  
   //gStyle->SetPalette(20,colorPalette3);
 
   gStyle->SetPalette(1);

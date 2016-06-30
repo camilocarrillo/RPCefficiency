@@ -5,6 +5,3 @@
 <use   name="DataFormats/RPCRecHit"/>
 <use   name="Geometry/RPCGeometry"/>
 <use   name="Geometry/Records"/>
-<library   file="RPCRecHitReader.cc" name="RPCRecHitReader">
-  <flags   EDM_PLUGIN="1"/>
-</library>
