@@ -72,12 +72,13 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
  
   rangestrips = iConfig.getUntrackedParameter<double>("rangestrips",1.);
   dupli = iConfig.getUntrackedParameter<int>("DuplicationCorrection",1); 
-  cscSegments=iConfig.getUntrackedParameter<edm::InputTag>("cscSegments");
-  dt4DSegments=iConfig.getUntrackedParameter<edm::InputTag>("dt4DSegments");
+  cscSegments = consumes<CSCSegmentCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("cscSegments"));
+  dt4DSegments = consumes<DTRecSegment4DCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("dt4DSegments"));
 
-  rpcRecHitsLabel = iConfig.getParameter<edm::InputTag>("rpcRecHits");
-  rpcDTPointsLabel  = iConfig.getParameter<edm::InputTag>("rpcDTPoints");
-  rpcCSCPointsLabel  = iConfig.getParameter<edm::InputTag>("rpcCSCPoints");
+  rpcRecHitsLabel = consumes<RPCRecHitCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("rpcRecHits"));
+  rpcDTPointsLabel = consumes<RPCRecHitCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("rpcDTPoints"));
+  rpcCSCPointsLabel = consumes<RPCRecHitCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("rpcCSCPoints"));
+
   
   nameInLog = iConfig.getUntrackedParameter<std::string>("moduleLogName", "RPC_Eff");
   EffSaveRootFile  = iConfig.getUntrackedParameter<bool>("EffSaveRootFile", false); 
@@ -331,12 +332,12 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 
   if(debug) std::cout<<"\t Getting the DT Segments"<<std::endl;
   edm::Handle<DTRecSegment4DCollection> all4DSegments;
-  iEvent.getByLabel(dt4DSegments, all4DSegments);
+  iEvent.getByToken(dt4DSegments, all4DSegments);
   if(debug) std::cout<<"I got the segments"<<std::endl;
   
   if(debug) std::cout <<"\t Getting the CSC Segments"<<std::endl;
   edm::Handle<CSCSegmentCollection> allCSCSegments;
-  iEvent.getByLabel(cscSegments, allCSCSegments);
+  iEvent.getByToken(cscSegments, allCSCSegments);
   if(debug) std::cout<<"I got the segments"<<std::endl;
   
   if(all4DSegments->size()==0 && allCSCSegments->size()==0) 
@@ -354,15 +355,15 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
   
   if(debug) std::cout <<"\t Getting the RPC RecHits"<<std::endl;
   Handle<RPCRecHitCollection> rpcHits;
-  iEvent.getByLabel(rpcRecHitsLabel,rpcHits);
+  iEvent.getByToken(rpcRecHitsLabel,rpcHits);
 
   if(debug) std::cout <<"\t Getting the RPC DT Points"<<std::endl;
   edm::Handle<RPCRecHitCollection> rpcDTPoints;
-  iEvent.getByLabel(rpcDTPointsLabel,rpcDTPoints);
+  iEvent.getByToken(rpcDTPointsLabel,rpcDTPoints);
 
   if(debug) std::cout <<"\t Getting the RPC CSC Points"<<std::endl;
   edm::Handle<RPCRecHitCollection> rpcCSCPoints;
-  iEvent.getByLabel(rpcCSCPointsLabel,rpcCSCPoints);
+  iEvent.getByToken(rpcCSCPointsLabel,rpcCSCPoints);
 
   RPCRecHitCollection::const_iterator recHit;
   

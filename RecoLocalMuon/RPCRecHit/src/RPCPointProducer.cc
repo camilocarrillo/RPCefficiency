@@ -28,19 +28,18 @@
 
 RPCPointProducer::RPCPointProducer(const edm::ParameterSet& iConfig)
 {
-  cscSegments=iConfig.getParameter<edm::InputTag>("cscSegments");
-  dt4DSegments=iConfig.getParameter<edm::InputTag>("dt4DSegments");
-  debug=iConfig.getUntrackedParameter<bool>("debug",false);
-  incldt=iConfig.getUntrackedParameter<bool>("incldt",true);
-  inclcsc=iConfig.getUntrackedParameter<bool>("inclcsc",true);
-  MinCosAng=iConfig.getUntrackedParameter<double>("MinCosAng",0.95);
-  MaxD=iConfig.getUntrackedParameter<double>("MaxD",80.);
-  MaxDrb4=iConfig.getUntrackedParameter<double>("MaxDrb4",150.);
-  ExtrapolatedRegion=iConfig.getUntrackedParameter<double>("ExtrapolatedRegion",0.5);
-
-  produces<RPCRecHitCollection>("RPCDTExtrapolatedPoints");
-  produces<RPCRecHitCollection>("RPCCSCExtrapolatedPoints");
-
+    cscSegments = consumes<CSCSegmentCollection>(iConfig.getParameter<edm::InputTag>("cscSegments"));
+    dt4DSegments = consumes<DTRecSegment4DCollection>(iConfig.getParameter<edm::InputTag>("dt4DSegments"));
+    debug=iConfig.getUntrackedParameter<bool>("debug",false);
+    incldt=iConfig.getUntrackedParameter<bool>("incldt",true);
+    inclcsc=iConfig.getUntrackedParameter<bool>("inclcsc",true);
+    MinCosAng=iConfig.getUntrackedParameter<double>("MinCosAng",0.95);
+    MaxD=iConfig.getUntrackedParameter<double>("MaxD",80.);
+    MaxDrb4=iConfig.getUntrackedParameter<double>("MaxDrb4",150.);
+    ExtrapolatedRegion=iConfig.getUntrackedParameter<double>("ExtrapolatedRegion",0.5);
+    
+    produces<RPCRecHitCollection>("RPCDTExtrapolatedPoints");
+    produces<RPCRecHitCollection>("RPCCSCExtrapolatedPoints");
 }
 
 
@@ -60,7 +59,7 @@ void RPCPointProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
 
   if(incldt){
     edm::Handle<DTRecSegment4DCollection> all4DSegments;
-    iEvent.getByLabel(dt4DSegments, all4DSegments);
+    iEvent.getByToken(dt4DSegments, all4DSegments);
     if(all4DSegments.isValid()){
       DTSegtoRPC DTClass(all4DSegments,iSetup,iEvent,debug,ExtrapolatedRegion);
       std::auto_ptr<RPCRecHitCollection> TheDTPoints(DTClass.thePoints());     
@@ -72,7 +71,7 @@ void RPCPointProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
 
   if(inclcsc){
     edm::Handle<CSCSegmentCollection> allCSCSegments;
-    iEvent.getByLabel(cscSegments, allCSCSegments);
+    iEvent.getByToken(cscSegments, allCSCSegments);
     if(allCSCSegments.isValid()){
       CSCSegtoRPC CSCClass(allCSCSegments,iSetup,iEvent,debug,ExtrapolatedRegion);
       std::auto_ptr<RPCRecHitCollection> TheCSCPoints(CSCClass.thePoints());  

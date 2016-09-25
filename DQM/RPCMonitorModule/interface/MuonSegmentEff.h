@@ -26,6 +26,14 @@
 #include <Geometry/DTGeometry/interface/DTGeometry.h>
 #include <Geometry/CSCGeometry/interface/CSCGeometry.h>
 
+#include "FWCore/Utilities/interface/InputTag.h"
+#include "FWCore/Utilities/interface/EDGetToken.h"
+#include "DataFormats/RPCRecHit/interface/RPCRecHitCollection.h"
+#include <DataFormats/DTRecHit/interface/DTRecSegment4DCollection.h>
+#include <DataFormats/CSCRecHit/interface/CSCSegmentCollection.h>
+
+
+
 #include<string>
 #include<map>
 #include<fstream>
@@ -178,11 +186,12 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       double rangestrips;
       int dupli;
       
-      edm::InputTag cscSegments;
-      edm::InputTag dt4DSegments;
-      edm::InputTag rpcRecHitsLabel;
-      edm::InputTag rpcDTPointsLabel;
-      edm::InputTag rpcCSCPointsLabel;
+      edm::EDGetTokenT<DTRecSegment4DCollection> dt4DSegments;
+      edm::EDGetTokenT<CSCSegmentCollection> cscSegments;
+      edm::EDGetTokenT<RPCRecHitCollection> rpcRecHitsLabel;
+      edm::EDGetTokenT<RPCRecHitCollection> rpcDTPointsLabel;
+      edm::EDGetTokenT<RPCRecHitCollection> rpcCSCPointsLabel;
+
       std::string rejected;
       std::string rollseff;
       

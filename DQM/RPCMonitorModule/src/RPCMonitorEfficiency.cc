@@ -901,7 +901,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
       while (ifin.good()){
 	ifin >>rawId >>name >>stripl >>stripw >>nstrips;
 	IntegralMuographyRawIdsVector[m].push_back(rawId);
-	//if(debug) std::cout<<"Building Vectors,  name "<<name<<" vector "<<namesIntegralMuography[m].c_str()<<std::endl;
+	if(debug) std::cout<<"Building Vectors,  name "<<name<<" vector "<<namesIntegralMuography[m].c_str()<<std::endl;
       }
     }
     ifin.close();
@@ -1715,6 +1715,9 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	  bxDistroId =folder+"/BXDistribution_"+ name;
 	  signal_bxDistroId =folder+"/Signal_BXDistribution_"+ name;
 	  meIdRealRPC =folder+"/RealDetectedOccupancy_"+ name;  
+
+
+	  if(debug) std::cout<<" name "<<name<<std::endl;
 
 	  meIdPRO = "Profile_For_"+name;
 	  meIdPROY = "Y_Profile_For_"+name;

@@ -48,16 +48,21 @@ using namespace std;
 #include <memory>
 #include <ctime>
 
+#include "FWCore/Utilities/interface/InputTag.h"
+#include "FWCore/Utilities/interface/EDGetToken.h"
+
 
 
 DTandCSCSegmentsinTracks::DTandCSCSegmentsinTracks(const edm::ParameterSet& iConfig)
 {
-  cscSegments=iConfig.getParameter<edm::InputTag>("cscSegments");
-  dt4DSegments=iConfig.getParameter<edm::InputTag>("dt4DSegments");
-  tracks=iConfig.getParameter<edm::InputTag>("tracks");
-  
-  
-  
+//  cscSegments=iConfig.getParameter<edm::InputTag>("cscSegments");
+//  dt4DSegments=iConfig.getParameter<edm::InputTag>("dt4DSegments");
+//  tracks=iConfig.getParameter<edm::InputTag>("tracks");
+
+  dt4DSegments = consumes<DTRecSegment4DCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("dt4DSegments"));
+  cscSegments = consumes<CSCSegmentCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("cscSegments"));
+  tracks = consumes<reco::TrackCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("tracks"));
+
   produces<DTRecSegment4DCollection>("SelectedDtSegments");
   produces<CSCSegmentCollection>("SelectedCscSegments");
   
@@ -76,13 +81,13 @@ void DTandCSCSegmentsinTracks::produce(edm::Event& iEvent, const edm::EventSetup
   iSetup.get<GlobalTrackingGeometryRecord>().get(theTrackingGeometry);
   
   edm::Handle<DTRecSegment4DCollection> all4DSegments;
-  iEvent.getByLabel(dt4DSegments, all4DSegments);	
+  iEvent.getByToken(dt4DSegments, all4DSegments);	
   
   edm::Handle<CSCSegmentCollection> allCSCSegments;
-  iEvent.getByLabel(cscSegments, allCSCSegments);
+  iEvent.getByToken(cscSegments, allCSCSegments);
   
   edm::Handle<reco::TrackCollection> alltracks;
-  iEvent.getByLabel(tracks,alltracks);
+  iEvent.getByToken(tracks,alltracks);
   
   reco::TrackCollection::const_iterator Track;
   DTRecSegment4DCollection::const_iterator segmentDT;
