@@ -1,0 +1,31 @@
+rm Eff*
+rm Seg*
+rm RE* -rf
+rm W* -rf
+rm in*
+rm resBarrel/ -rf
+rm resEndCap/ -rf
+rm *.png
+rm Sides -rf
+rm Distro -rf
+rm *.html
+rm DoubleGap*
+rm Pigi/ -rf
+rm bx* 
+rm MeanResiduals11.root  
+rm MeanResiduals.root  
+rm rollYeff.txt  
+rm RPCDetId_Eff.dat
+rm Alignment.dat
+chmod 755 Greg -R
+rm Greg/ -rf
+rm Pigi -rf 
+rm Pino* 
+chmod 755 CLS -R
+rm CLS -rf
+rm rollZeroEff.txt
+rm rollZeroPrediction.txt
+chmod 755 disks -R
+rm disks/ -rf
+rm *.txt
+rm database.dat

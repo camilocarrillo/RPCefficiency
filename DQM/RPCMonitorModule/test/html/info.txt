@@ -1,0 +1,14 @@
+/afs/cern.ch/user/c/carrillo/efficiency/CMSSW_5_2_0
+Test Release based on: CMSSW_5_2_0
+Base Release in: /afs/cern.ch/cms/slc5_amd64_gcc462/cms/cmssw/CMSSW_5_2_0
+Your Test release in: /afs/cern.ch/user/c/carrillo/efficiency/CMSSW_5_2_0
+--- Tag ---    -------- Package --------                        
+NoTag          CLSPT/CLSPT                                      
+Z_analysis2011data DQM/RPCMonitorModule                             
+Z_analysis2011data DTandCSCSegmentsinTracks/DTandCSCSegmentsinTracks 
+Z_analysis2011data MuonTools/Configuration                          
+Z_analysis2011data MuonTools/StandardSequences                      
+NoTag          RecoLocalMuon/RPCRecHit                          
+Z_analysis2011data TriggerFilter/TriggerFilter                      
+---------------------------------------
+total packages: 7 (7 displayed)

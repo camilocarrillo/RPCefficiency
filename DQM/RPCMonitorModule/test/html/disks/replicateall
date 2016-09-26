@@ -1,0 +1,12 @@
+cat RE1R2.html  | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > RE1R2nr.html
+cat RE1R3.html  | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > RE1R3nr.html
+cat RE2R2.html  | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > RE2R2nr.html
+cat RE2R3.html  | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > RE2R3nr.html
+cat RE3R2.html  | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > RE3R2nr.html
+cat RE3R3.html  | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > RE3R3nr html
+cat REm1R2.html | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > REm1R2nr.html
+cat REm1R3.html | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > REm1R3nr.html
+cat REm2R2.html | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > REm2R2nr.html
+cat REm2R3.html | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > REm2R3nr.html
+cat REm3R2.html | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > REm3R2nr.html
+cat REm3R3.html | sed -e "s|rot|/Profile_2D|g" | sed -e 's|="RE|\=\"../RE|g' > REm3R3nr.html

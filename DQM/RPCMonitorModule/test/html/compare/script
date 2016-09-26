@@ -1,0 +1,4 @@
+scp -r carrillo@cmsrpc402b20:/var/www/html/efficiency/_Cosmics_CRAFT09-PromptReco-v1_RECO/108264 .
+scp -r carrillo@cmsrpc402b20:/var/www/html/efficiency/_Cosmics_CRAFT09-PromptReco-v1_RECO/108671 .
+scp -r 220mV_Run_108671Vs210mV_Run_108624 carrillo@cmsrpc402b20:/var/www/html/comparison/
+
