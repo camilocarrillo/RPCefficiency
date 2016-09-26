@@ -53,7 +53,7 @@ process.maxEvents = cms.untracked.PSet(
 )
 process.source = cms.Source("PoolSource",
 #   fileNames = cms.untracked.vstring('/store/data/Run2016C/RPCMonitor/RAW/v2/000/275/963/00000/F44E5858-683E-E611-AE8A-02163E01183A.root')
-   fileNames = cms.untracked.vstring('file:/tmp/carrillo/F44E5858-683E-E611-AE8A-02163E01183A.root')
+   fileNames = cms.untracked.vstring('file:/tmp/carrillo/9A41754B-B052-E611-8CAE-02163E01346F.root')
 )
 
 process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
@@ -119,7 +119,7 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
 
     EffSaveRootFile = cms.untracked.bool(True),
     #EffRootFileName = cms.untracked.string('-output-'),
-    EffRootFileName = cms.untracked.string('test.root'),
+    EffRootFileName = cms.untracked.string('/tmp/carrillo/test.root'),
     EffSaveRootFileEventsInterval = cms.untracked.int32(100)
 )
 
