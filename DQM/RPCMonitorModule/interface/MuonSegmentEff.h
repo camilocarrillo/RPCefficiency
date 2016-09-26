@@ -1,5 +1,3 @@
-
-
 /** \class RPCEfficiency
  *
  * Class for RPC Monitoring using RPCDigi and DT and CSC Segments.

@@ -1,33 +1,11 @@
-// -*- C++ -*-
-//
-// Package:    RPCMonitorEfficiency
-// Class:      RPCMonitorEfficiency
-// 
-/**\class RPCMonitorEfficiency RPCMonitorEfficiency.cc DQM/RPCMonitorModule/src/RPCMonitorEfficiency.cc
-
- Description: <one line class summary>
-
- Implementation:
-     <Notes on implementation>
-*/
-//
 // Original Author:  pts/45
 //         Created:  Tue May 13 12:23:34 CEST 2008
 // $Id: RPCMonitorEfficiency.cc,v 1.2 2013/05/02 13:18:45 carrillo Exp $
-//
-//
-
-
-// system include files
 #include <memory>
-
-// user include files
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
-
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
-
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include <Geometry/RPCGeometry/interface/RPCGeometry.h>
 #include <Geometry/RPCGeometry/interface/RPCGeomServ.h>
@@ -58,7 +36,7 @@
 #include "TGraphErrors.h"
 
 //
-// class decleration
+// class declaration
 //
 
 class TFile;
@@ -345,9 +323,9 @@ public:
   TH1F * EffDistroD2far;
   TH1F * EffDistroD3far;
 
-  TH2F * IntegralMuography[48];//There are 48 different kind of rolls in CMS.
-  TH2F * IntegralMuographyObs[48];//There are 48 different kind of rolls in CMS.
-  TH2F * IntegralMuographyExp[48];//There are 48 different kind of rolls in CMS.
+  TH2F * IntegralMuography[48];//There are 48 different types of rolls in CMS.
+  TH2F * IntegralMuographyObs[48];//There are 48 different types of rolls in CMS.
+  TH2F * IntegralMuographyExp[48];//There are 48 different types of rolls in CMS.
 
   TH2F * Wheelm2Summary;
   TH2F * Wheelm1Summary;
@@ -890,7 +868,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
   for(int m =0; m<48;m++){
     std::ifstream ifin(("htmltemplates/"+namesIntegralMuography[m]+".txt").c_str());
-    if(!ifin) std::cout<<"Please copy the right html template!!!!!!! you will get seg fault"<<std::endl;
+    if(!ifin){
+	std::cout<<"Please copy the right html template!!!!!!! you will get seg fault"<<std::endl;
+	std::cout<<"File not found:"<<"htmltemplates/"+namesIntegralMuography[m]+".txt"<<std::endl;
+    }
     if(debug) std::cout<<"Calling file for Vector"<<"htmltemplates/"+namesIntegralMuography[m]+".txt"<<std::endl;
     IntegralMuographyRawIdsVector[m].clear();
     if(ifin.is_open()){
@@ -2077,8 +2058,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	    
 	    efftxt<<name<<"  "<<rpcId.rawId();
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
             DT_Int = float(histoDT->Integral());
 	    RPCpoints = float(histoRPC->Integral());
 
@@ -2105,8 +2084,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
             	 EffBarrelStrip<<" "<<occStrip<<" "<<expStrip<<" "<<effStrip;
              }
             EffBarrelStrip<<std::endl;
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	    if(debug) std::cout<<"Before the loop for the strips profiles"<<std::endl;
 
@@ -2461,14 +2438,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	  delete histoCLS;
 	  
 	  std::string camera = name.c_str();
-
-
-	  
-
-
-
-
-
 
 	  float nopredictionsratio = (float(NumberWithOutPrediction)/float(nstrips))*100.;
 
@@ -3120,8 +3089,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      }
 	    }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	    //Cesare
             CSCDen->Fill(pinoexpected);
 
             float pinoeffNOBL = (pinoobserved/pinoexpected)*100.;
@@ -3138,8 +3105,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
              }
             EffEndcapStrip<<std::endl;
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	    
 	    if(pinoexpected != 0){
 	      pinoeff = (pinoobserved/pinoexpected)*100.;
 	      pinoerr = 100.*sqrt((pinoobserved/pinoexpected)*(1.-(pinoobserved/pinoexpected))/pinoexpected);
@@ -3590,9 +3555,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	  er=er*100;
 
 	  //Filling azimutal GregHistograms
-	  
-	  //ojo aca!
-
 	  
 	  if(!IsBadRoll(rpcId.rawId(),blacklist)){
 	    if(rpcId.region()==1){
@@ -4151,8 +4113,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     }
   }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //Cesare
 
     TH1F * EfficiencyPerDisk = new TH1F("EfficiencyPerDisk","Efficiency per Disk",8,0.5,8.5);
 
@@ -4355,10 +4315,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
     StatisticsPerLayer->Write();
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  //Just one number for Negative EndCap
-
   float ExEndCapN = 
     ExGregDm3R3->Integral()+  
     ExGregDm2R3->Integral()+
@@ -4382,8 +4338,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     RollYEff<<"effEndCapN "<<effEndCapN<<" "<<errEndCapN<<std::endl;
   }
 
-  //Just one number for Positive EndCap
-  
   float ExEndCapP = 
     ExGregD3R3->Integral()+  
     ExGregD2R3->Integral()+

@@ -69,33 +69,13 @@ int distwheel(int wheel1,int wheel2){
 
 DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, const edm::EventSetup& iSetup,const edm::Event& iEvent,bool debug,double eyr){
 
-  /*
-  MinCosAng=iConfig.getUntrackedParameter<double>("MinCosAng",0.95);
-  MaxD=iConfig.getUntrackedParameter<double>("MaxD",80.);
-  MaxDrb4=iConfig.getUntrackedParameter<double>("MaxDrb4",150.);
-  */
   incldt=true;
   incldtMB4=true;
  
-  //By now hard coded parameters
   MinCosAng=0.85;
   MaxD=80.;
   MaxDrb4=150.;
   MaxDistanceBetweenSegments = 150;
-  /*
-
-  //These should be always true expect for debuggin porpouses
-  incldt=true;
-  incldtMB4=true;
-
-  
-    struct timespec start_time, stop_time;
-    time_t fs;
-    time_t fn;
-    time_t ls;
-    time_t ln;
-    clock_gettime(CLOCK_REALTIME, &start_time);
-  */
 
   _ThePoints = new RPCRecHitCollection();
 
@@ -108,16 +88,6 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
     iSetup.get<MuonGeometryRecord>().get(rpcGeo);
     iSetup.get<MuonGeometryRecord>().get(dtGeo);
 
-    /*
-      clock_gettime(CLOCK_REALTIME, &stop_time);
-      fs=start_time.tv_sec;
-      fn=start_time.tv_nsec;
-      ls=stop_time.tv_sec;
-      ln=stop_time.tv_nsec;
-      std::cout <<" =================|| "<<ls-fs<<" sec "<<ln-fn<<" us"<<std::endl;
-      clock_gettime(CLOCK_REALTIME, &start_time);
-    */
-  
     std::map<DTChamberId,int> DTSegmentCounter;
     DTRecSegment4DCollection::const_iterator segment;  
   
@@ -125,17 +95,6 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
       DTSegmentCounter[segment->chamberId()]++;
     }
   
-
-    /*
-      clock_gettime(CLOCK_REALTIME, &stop_time);
-      fs=start_time.tv_sec;
-      fn=start_time.tv_nsec;
-      ls=stop_time.tv_sec;
-      ln=stop_time.tv_nsec;
-      if(debug) std::cout <<" =================||| "<<ls-fs<<" sec "<<ln-fn<<" us"<<std::endl;
-      clock_gettime(CLOCK_REALTIME, &start_time);
-    */
-
     if(incldt){
       for (segment = all4DSegments->begin(); segment != all4DSegments->end(); ++segment){
       
@@ -146,8 +105,8 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 	if(debug) std::cout<<"DT  \t \t Is the only one in this DT? and is not in the 4th Station?"<<std::endl;
       
 	if(DTSegmentCounter[DTId]!=1 || DTId.station()==4){
-	  if(debug) std::cout<<"DT \t \t More than one segment in this chamber, or we are in Station 4"<<std::endl;
-	  continue;
+	    if(debug) std::cout<<"DT \t \t More than one segment in this chamber, or we are in Station 4"<<std::endl;
+	    continue;
 	}
       
 	int dtWheel = DTId.wheel();
@@ -207,7 +166,6 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 	assert(rollsForThisDT.size()>=1);
       
 	if(debug) std::cout<<"DT  \t \t Loop over all the rolls asociated to this DT"<<std::endl;
-	std::cout<<"EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
 	for (std::set<RPCDetId>::iterator iteraRoll = rollsForThisDT.begin();iteraRoll != rollsForThisDT.end(); iteraRoll++){
 	  const RPCRoll* rollasociated = rpcGeo->roll(*iteraRoll);
 	  RPCDetId rpcId = rollasociated->id();
@@ -349,7 +307,6 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 		  GlobalPoint segmentPositionMB3inGlobal = DTSurface3.toGlobal(segMB3->localPosition());
 		  GlobalPoint segmentPositionMB4inGlobal = DTSurface4.toGlobal(segmentPosition);
 		
-		  //LocalVector segDirMB4inMB3Frame=DTSurface3.toLocal(DTSurface4.toGlobal(segmentDirectionMB4));
 		  LocalVector segDirMB3inMB4Frame=DTSurface4.toLocal(DTSurface3.toGlobal(segmentDirectionMB3));
 		
 		  GlobalVector segDirMB4inGlobalFrame=DTSurface4.toGlobal(segmentDirectionMB4);
@@ -400,7 +357,7 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 		        
 		    if(debug) std::cout<<"MB4  \t \t Loop over all the rolls asociated to this DT"<<std::endl;
 		    for (std::set<RPCDetId>::iterator iteraRoll=rollsForThisDT.begin();iteraRoll != rollsForThisDT.end(); iteraRoll++){
-		      const RPCRoll* rollasociated = rpcGeo->roll(*iteraRoll); //roll asociado a MB4
+		      const RPCRoll* rollasociated = rpcGeo->roll(*iteraRoll); //roll asociated to MB4
 		      RPCDetId rpcId = rollasociated->id();
 		      const BoundPlane & RPCSurfaceRB4 = rollasociated->surface(); //surface MB4
 
@@ -529,18 +486,6 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
       }
     }
   }
-
-  
-  
-  
-  /*
-  clock_gettime(CLOCK_REALTIME, &stop_time);
-  fs=start_time.tv_sec;
-  fn=start_time.tv_nsec;
-  ls=stop_time.tv_sec;
-  ln=stop_time.tv_nsec;
-  std::cout <<" =================|||| "<<ls-fs<<" sec "<<ln-fn<<" us"<<std::endl;
-  */
 }
 
 

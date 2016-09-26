@@ -41,8 +41,8 @@ ObjectMapCSC::ObjectMapCSC(const edm::EventSetup& iSetup){
           int cscstation=station;
 	  RPCGeomServ rpcsrv(rpcId);
 	  int rpcsegment = rpcsrv.segment();
-	  int cscchamber = rpcsegment; //FIX THIS ACCORDING TO RPCGeomServ::segment()Definition
-          if((station==2||station==3)&&ring==3){//Adding Ring 3 of RPC to the CSC Ring 2
+	  int cscchamber = rpcsegment; 
+          if((station==2||station==3||station==4)&&ring==3){//Adding Ring 3 of RPC to the CSC Ring 2
 	   cscring = 2;
           }
 	  CSCStationIndex ind(region,cscstation,cscring,cscchamber);
