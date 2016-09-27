@@ -120,12 +120,12 @@ void gaussianResolutionMuonPaper(){
   Ca0->SetFillColor(0);
   
   string name,title;
-  name = "residuals RB1in (cm)"; title = "residualRB1in";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0_1->cd(); Ca0_1->SetFillColor(0);   setHisto(residuals,title,name,true); 
-  name = "residuals RB1out (cm)";title = "residualRB1out"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0_2->cd(); Ca0_2->SetFillColor(0);   setHisto(residuals,title,name,true); 
-  name = "residuals RB2in (cm)"; title = "residualRB2in";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0_3->cd(); Ca0_3->SetFillColor(0);   setHisto(residuals,title,name,true); 
-  name = "residuals RB2out (cm)";title = "residualRB2out"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0_4->cd(); Ca0_4->SetFillColor(0);   setHisto(residuals,title,name,true); 
-  name = "residuals RB3 (cm)";   title = "residualRB3";    TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0_5->cd(); Ca0_5->SetFillColor(0);   setHisto(residuals,title,name,true); 
-  name = "residuals RB4 (cm)";   title = "residualRB4";    TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0_6->cd(); Ca0_6->SetFillColor(0);   setHisto(residuals,title,name,true); 
+  name = "residuals RB1in (cm)"; title = "residualRB1in";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0->cd(1); Ca0_1->SetFillColor(0);   setHisto(residuals,title,name,true); 
+  name = "residuals RB1out (cm)";title = "residualRB1out"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0->cd(2); Ca0_2->SetFillColor(0);   setHisto(residuals,title,name,true); 
+  name = "residuals RB2in (cm)"; title = "residualRB2in";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0->cd(3); Ca0_3->SetFillColor(0);   setHisto(residuals,title,name,true); 
+  name = "residuals RB2out (cm)";title = "residualRB2out"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0->cd(4); Ca0_4->SetFillColor(0);   setHisto(residuals,title,name,true); 
+  name = "residuals RB3 (cm)";   title = "residualRB3";    TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0->cd(5); Ca0_5->SetFillColor(0);   setHisto(residuals,title,name,true); 
+  name = "residuals RB4 (cm)";   title = "residualRB4";    TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca0->cd(6); Ca0_6->SetFillColor(0);   setHisto(residuals,title,name,true); 
  
   Ca0->SaveAs("resolutionBarrel.png"); 
 
@@ -133,25 +133,25 @@ void gaussianResolutionMuonPaper(){
   Ca01->SetFillColor(0);
 
   string name,title;
-  name = "cluster-size RB1in"; title = "ClusterSizeForLayer1"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01_1->cd(); Ca01_1->SetFillColor(0);   setHistocls(cls,title,name,true); 
-  name = "cluster-size RB1out";title = "ClusterSizeForLayer2"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01_2->cd(); Ca01_2->SetFillColor(0);   setHistocls(cls,title,name,true); 
-  name = "cluster-size RB2in"; title = "ClusterSizeForLayer3"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01_3->cd(); Ca01_3->SetFillColor(0);   setHistocls(cls,title,name,true); 
-  name = "cluster-size RB2out";title = "ClusterSizeForLayer4"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01_4->cd(); Ca01_4->SetFillColor(0);   setHistocls(cls,title,name,true); 
-  name = "cluster-size RB3";   title = "ClusterSizeForLayer5"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01_5->cd(); Ca01_5->SetFillColor(0);   setHistocls(cls,title,name,true); 
-  name = "cluster-size RB4";   title = "ClusterSizeForLayer6"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01_6->cd(); Ca01_6->SetFillColor(0);   setHistocls(cls,title,name,true); 
+  name = "cluster-size RB1in"; title = "ClusterSizeForLayer1"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01->cd(1); Ca01_1->SetFillColor(0);   setHistocls(cls,title,name,true); 
+  name = "cluster-size RB1out";title = "ClusterSizeForLayer2"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01->cd(2); Ca01_2->SetFillColor(0);   setHistocls(cls,title,name,true); 
+  name = "cluster-size RB2in"; title = "ClusterSizeForLayer3"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01->cd(3); Ca01_3->SetFillColor(0);   setHistocls(cls,title,name,true); 
+  name = "cluster-size RB2out";title = "ClusterSizeForLayer4"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01->cd(4); Ca01_4->SetFillColor(0);   setHistocls(cls,title,name,true); 
+  name = "cluster-size RB3";   title = "ClusterSizeForLayer5"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01->cd(5); Ca01_5->SetFillColor(0);   setHistocls(cls,title,name,true); 
+  name = "cluster-size RB4";   title = "ClusterSizeForLayer6"; TH1F * cls = (TH1F*) (theFile->Get(title.c_str())); Ca01->cd(6); Ca01_6->SetFillColor(0);   setHistocls(cls,title,name,true); 
  
   Ca01->SaveAs("clsBarrel.png"); 
 
   TCanvas * Ca1 = new TCanvas("Ca1","Residuals",1200,800);  Ca1->Divide(3,3); Ca1->SetFillColor(0);
   
-  name = "residuals RE(1,2,3)/3/A(cm)";title = "residualStation123Ring3_A"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1_1->cd(); Ca1_1->SetFillColor(0); setHisto(residuals,title,name,false); 
-  name = "residuals RE(1,2,3)/3/B(cm)";title = "residualStation123Ring3_B"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1_2->cd(); Ca1_2->SetFillColor(0); setHisto(residuals,title,name,false); 
-  name = "residuals RE(1,2,3)/3/C(cm)";title = "residualStation123Ring3_C"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1_3->cd(); Ca1_3->SetFillColor(0); setHisto(residuals,title,name,false); 
-  name = "residuals RE(2,3)/2/A(cm)";title = "residualStation23Ring2_A";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1_4->cd(); Ca1_4->SetFillColor(0);   setHisto(residuals,title,name,false); 
-  name = "residuals RE(2,3)/2/B(cm)";title = "residualStation23Ring2_B";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1_5->cd(); Ca1_5->SetFillColor(0);   setHisto(residuals,title,name,false); 
-  name = "residuals RE(2,3)/2/C(cm)";title = "residualStation23Ring2_C";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1_6->cd(); Ca1_6->SetFillColor(0);   setHisto(residuals,title,name,false); 
-  name = "residuals RE1/2/A(cm)";title = "residualStation1Ring2_A";   TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1_7->cd(); Ca1_7->SetFillColor(0);       setHisto(residuals,title,name,false); 
-  name = "residuals RE1/2/B(cm)";title = "residualStation1Ring2_B";   TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1_8->cd(); Ca1_8->SetFillColor(0);       setHisto(residuals,title,name,false); 
+  name = "residuals RE(1,2,3)/3/A(cm)";title = "residualStation123Ring3_A"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1->cd(1); Ca1_1->SetFillColor(0); setHisto(residuals,title,name,false); 
+  name = "residuals RE(1,2,3)/3/B(cm)";title = "residualStation123Ring3_B"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1->cd(2); Ca1_2->SetFillColor(0); setHisto(residuals,title,name,false); 
+  name = "residuals RE(1,2,3)/3/C(cm)";title = "residualStation123Ring3_C"; TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1->cd(3); Ca1_3->SetFillColor(0); setHisto(residuals,title,name,false); 
+  name = "residuals RE(2,3)/2/A(cm)";title = "residualStation23Ring2_A";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1->cd(4); Ca1_4->SetFillColor(0);   setHisto(residuals,title,name,false); 
+  name = "residuals RE(2,3)/2/B(cm)";title = "residualStation23Ring2_B";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1->cd(5); Ca1_5->SetFillColor(0);   setHisto(residuals,title,name,false); 
+  name = "residuals RE(2,3)/2/C(cm)";title = "residualStation23Ring2_C";  TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1->cd(6); Ca1_6->SetFillColor(0);   setHisto(residuals,title,name,false); 
+  name = "residuals RE1/2/A(cm)";title = "residualStation1Ring2_A";   TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1->cd(7); Ca1_7->SetFillColor(0);       setHisto(residuals,title,name,false); 
+  name = "residuals RE1/2/B(cm)";title = "residualStation1Ring2_B";   TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1->cd(8); Ca1_8->SetFillColor(0);       setHisto(residuals,title,name,false); 
   name = "residuals RE1/2/C(cm)";title = "residualStation1Ring2_C";   TH1F * residuals = (TH1F*) (theFile->Get(title.c_str())); Ca1_9->cd(); Ca1_9->SetFillColor(0);       setHisto(residuals,title,name,false); 
 
   Ca1->SaveAs("resolutionEndCap.png"); 													     

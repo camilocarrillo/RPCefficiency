@@ -104,17 +104,17 @@ public:
   TH1F *  residualStation1Ring3_B;
   TH1F *  residualStation1Ring3_C; 			  	
 
-  TH1F * residualStation23Ring2_A;
-  TH1F * residualStation23Ring2_B;
-  TH1F * residualStation23Ring2_C;
+  TH1F * residualStation234Ring2_A;
+  TH1F * residualStation234Ring2_B;
+  TH1F * residualStation234Ring2_C;
 
-  TH1F * residualStation23Ring3_A;
-  TH1F * residualStation23Ring3_B;
-  TH1F * residualStation23Ring3_C;
+  TH1F * residualStation234Ring3_A;
+  TH1F * residualStation234Ring3_B;
+  TH1F * residualStation234Ring3_C;
 
-  TH1F * residualStation123Ring3_A;
-  TH1F * residualStation123Ring3_B;
-  TH1F * residualStation123Ring3_C;
+  TH1F * residualStation1234Ring3_A;
+  TH1F * residualStation1234Ring3_B;
+  TH1F * residualStation1234Ring3_C;
  
   TH1F *  residualRB1in;
   TH1F * residualRB1out;
@@ -199,6 +199,8 @@ public:
   TH1F * GregD2R3;  
   TH1F * GregD3R2;  
   TH1F * GregD3R3;  
+  TH1F * GregD4R2;  
+  TH1F * GregD4R3;  
 
   // For black list
   TH1F * GregD1R2_black;
@@ -207,13 +209,17 @@ public:
   TH1F * GregD2R3_black;
   TH1F * GregD3R2_black;
   TH1F * GregD3R3_black;
+  TH1F * GregD3R4_black;
+  TH1F * GregD3R4_black;
 
   TH1F * OcGregD1R2;  
   TH1F * OcGregD1R3;  
   TH1F * OcGregD2R2;  
   TH1F * OcGregD2R3;  
   TH1F * OcGregD3R2;  
-  TH1F * OcGregD3R3;  
+  TH1F * OcGregD3R3;
+  TH1F * OcGregD4R2;  
+  TH1F * OcGregD4R3;  
 
   TH1F * ExGregD1R2;  
   TH1F * ExGregD1R3;  
@@ -221,6 +227,8 @@ public:
   TH1F * ExGregD2R3;  
   TH1F * ExGregD3R2;  
   TH1F * ExGregD3R3;  
+  TH1F * ExGregD4R2;  
+  TH1F * ExGregD4R3;  
 
   TH1F * GregDm1R2;  
   TH1F * GregDm1R3;  
@@ -228,6 +236,8 @@ public:
   TH1F * GregDm2R3;  
   TH1F * GregDm3R2;  
   TH1F * GregDm3R3;
+  TH1F * GregDm4R2;  
+  TH1F * GregDm4R3;
 
   //For black list
   TH1F * GregDm1R2_black;   
@@ -236,6 +246,8 @@ public:
   TH1F * GregDm2R3_black;   
   TH1F * GregDm3R2_black;   
   TH1F * GregDm3R3_black;
+  TH1F * GregDm4R2_black;   
+  TH1F * GregDm4R3_black;
   
   TH1F * OcGregDm1R2;  
   TH1F * OcGregDm1R3;  
@@ -243,6 +255,8 @@ public:
   TH1F * OcGregDm2R3;  
   TH1F * OcGregDm3R2;  
   TH1F * OcGregDm3R3;  
+  TH1F * OcGregDm4R2;  
+  TH1F * OcGregDm4R3;  
 
   TH1F * ExGregDm1R2;  
   TH1F * ExGregDm1R3;  
@@ -250,6 +264,8 @@ public:
   TH1F * ExGregDm2R3;  
   TH1F * ExGregDm3R2;  
   TH1F * ExGregDm3R3;  
+  TH1F * ExGregDm4R2;  
+  TH1F * ExGregDm4R3;  
   
   TH1F * CLSWm2;  
   TH1F * CLSWm1;  
@@ -267,13 +283,13 @@ public:
   TH1F * CLSStation1Ring2_B;
   TH1F * CLSStation1Ring2_C;
 
-  TH1F * CLSStation23Ring2_A;
-  TH1F * CLSStation23Ring2_B;
-  TH1F * CLSStation23Ring2_C;
+  TH1F * CLSStation234Ring2_A;
+  TH1F * CLSStation234Ring2_B;
+  TH1F * CLSStation234Ring2_C;
 
-  TH1F * CLSStation123Ring3_A;
-  TH1F * CLSStation123Ring3_B;
-  TH1F * CLSStation123Ring3_C;
+  TH1F * CLSStation1234Ring3_A;
+  TH1F * CLSStation1234Ring3_B;
+  TH1F * CLSStation1234Ring3_C;
 
   TH1F * sectorCLSWm2[13];  
   TH1F * sectorCLSWm1[13];  
@@ -644,14 +660,14 @@ bool HasBadRoll(int region,uint32_t station,uint32_t ring,int k,std::vector<uint
 
   for(uint32_t roll =1;roll<=3;roll++){
     RPCDetId ThisDetId(region,ring,station,sector,1,subsector,roll);
-    std::cout<<"hasBadRoll For this input"<<region<<" "<<station<<" "<<ring<<" "<<k<<std::endl;
+    if(debug) std::cout<<"hasBadRoll For this input"<<region<<" "<<station<<" "<<ring<<" "<<k<<std::endl;
     RPCGeomServ rpcsrv(ThisDetId);
-    std::cout<<"hasBadRoll We are getting"<<rpcsrv.name()<<std::endl;
-    std::cout<<"hasBadRoll Trying to find in the list "<<ThisDetId.rawId()<<" "<<rpcsrv.name()<<std::endl;
+    if(debug) std::cout<<"hasBadRoll We are getting"<<rpcsrv.name()<<std::endl;
+    if(debug) std::cout<<"hasBadRoll Trying to find in the list "<<ThisDetId.rawId()<<" "<<rpcsrv.name()<<std::endl;
     bool thisroll = false;
     if(!(find(thelist.begin(),thelist.end(),ThisDetId.rawId())==thelist.end())){
-      std::cout<<"hasBadRoll \t found "<<rpcsrv.name()<<std::endl;
-      thisroll=true;
+	if(debug) std::cout<<"hasBadRoll \t found "<<rpcsrv.name()<<std::endl;
+	thisroll=true;
     }
     hasBadRoll=hasBadRoll+thisroll;
   }
@@ -958,13 +974,13 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   CLSStation1Ring2_B= new TH1F ("CLSStation1Ring2_B","CLSStation1Ring2_B",10,0.5,10.5);
   CLSStation1Ring2_C= new TH1F ("CLSStation1Ring2_C","CLSStation1Ring2_C",10,0.5,10.5);
 
-  CLSStation23Ring2_A= new TH1F ("CLSStation23Ring2_A","CLSStation23Ring2_A",10,0.5,10.5);
-  CLSStation23Ring2_B= new TH1F ("CLSStation23Ring2_B","CLSStation23Ring2_B",10,0.5,10.5);
-  CLSStation23Ring2_C= new TH1F ("CLSStation23Ring2_C","CLSStation23Ring2_C",10,0.5,10.5);
+  CLSStation234Ring2_A= new TH1F ("CLSStation234Ring2_A","CLSStation234Ring2_A",10,0.5,10.5);
+  CLSStation234Ring2_B= new TH1F ("CLSStation234Ring2_B","CLSStation234Ring2_B",10,0.5,10.5);
+  CLSStation234Ring2_C= new TH1F ("CLSStation234Ring2_C","CLSStation234Ring2_C",10,0.5,10.5);
 
-  CLSStation123Ring3_A= new TH1F ("CLSStation123Ring3_A","CLSStation123Ring3_A",10,0.5,10.5);
-  CLSStation123Ring3_B= new TH1F ("CLSStation123Ring3_B","CLSStation123Ring3_B",10,0.5,10.5);
-  CLSStation123Ring3_C= new TH1F ("CLSStation123Ring3_C","CLSStation123Ring3_C",10,0.5,10.5);
+  CLSStation1234Ring3_A= new TH1F ("CLSStation1234Ring3_A","CLSStation1234Ring3_A",10,0.5,10.5);
+  CLSStation1234Ring3_B= new TH1F ("CLSStation1234Ring3_B","CLSStation1234Ring3_B",10,0.5,10.5);
+  CLSStation1234Ring3_C= new TH1F ("CLSStation1234Ring3_C","CLSStation1234Ring3_C",10,0.5,10.5);
   
   residualRB1in  = new TH1F("residualRB1in","residualRB1in",101,-20.,20.);
   residualRB1out  = new TH1F("residualRB1out","residualRB1out",101,-20.,20.);
@@ -980,16 +996,16 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   residualStation1Ring3_B  = new TH1F("residualStation1Ring3_B","residualStation1Ring3_B",101,-20.,20.);
   residualStation1Ring3_C  = new TH1F("residualStation1Ring3_C","residualStation1Ring3_C",101,-20.,20.);
   
-  residualStation23Ring2_A = new TH1F("residualStation23Ring2_A","residualStation23Ring2_A",101,-20.,20.);
-  residualStation23Ring2_B = new TH1F("residualStation23Ring2_B","residualStation23Ring2_B",101,-20.,20.);
-  residualStation23Ring2_C = new TH1F("residualStation23Ring2_C","residualStation23Ring2_C",101,-20.,20.);
-  residualStation23Ring3_A = new TH1F("residualStation23Ring3_A","residualStation23Ring3_A",101,-20.,20.);
-  residualStation23Ring3_B = new TH1F("residualStation23Ring3_B","residualStation23Ring3_B",101,-20.,20.);
-  residualStation23Ring3_C = new TH1F("residualStation23Ring3_C","residualStation23Ring3_C",101,-20.,20.);
+  residualStation234Ring2_A = new TH1F("residualStation234Ring2_A","residualStation234Ring2_A",101,-20.,20.);
+  residualStation234Ring2_B = new TH1F("residualStation234Ring2_B","residualStation234Ring2_B",101,-20.,20.);
+  residualStation234Ring2_C = new TH1F("residualStation234Ring2_C","residualStation234Ring2_C",101,-20.,20.);
+  residualStation234Ring3_A = new TH1F("residualStation234Ring3_A","residualStation234Ring3_A",101,-20.,20.);
+  residualStation234Ring3_B = new TH1F("residualStation234Ring3_B","residualStation234Ring3_B",101,-20.,20.);
+  residualStation234Ring3_C = new TH1F("residualStation234Ring3_C","residualStation234Ring3_C",101,-20.,20.);
 
-  residualStation123Ring3_A = new TH1F("residualStation123Ring3_A","residualStation123Ring3_A",101,-20.,20.);
-  residualStation123Ring3_B = new TH1F("residualStation123Ring3_B","residualStation123Ring3_B",101,-20.,20.);
-  residualStation123Ring3_C = new TH1F("residualStation123Ring3_C","residualStation123Ring3_C",101,-20.,20.);
+  residualStation1234Ring3_A = new TH1F("residualStation1234Ring3_A","residualStation1234Ring3_A",101,-20.,20.);
+  residualStation1234Ring3_B = new TH1F("residualStation1234Ring3_B","residualStation1234Ring3_B",101,-20.,20.);
+  residualStation1234Ring3_C = new TH1F("residualStation1234Ring3_C","residualStation1234Ring3_C",101,-20.,20.);
     
   residualDiskm1Ring2 = new TH1F("residualDiskm1Ring2","Residuals for Disk -1 Ring 2",101,-20.,20.);
   residualDiskm1Ring3 = new TH1F("residualDiskm1Ring3","Residuals for Disk -1 Ring 3",101,-20.,20.);
@@ -1075,6 +1091,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   GregD2R3= new TH1F ("GregDistroD2R3","Efficiency for Station 2 Ring 3",36,0.5,36.5);
   GregD3R2= new TH1F ("GregDistroD3R2","Efficiency for Station 3 Ring 2",36,0.5,36.5);
   GregD3R3= new TH1F ("GregDistroD3R3","Efficiency for Station 3 Ring 3",36,0.5,36.5);
+  GregD4R2= new TH1F ("GregDistroD4R2","Efficiency for Station 4 Ring 2",36,0.5,36.5);
+  GregD4R3= new TH1F ("GregDistroD4R3","Efficiency for Station 4 Ring 3",36,0.5,36.5);
   
    // For black list
   GregD1R2_black= new TH1F ("GregDistroD1R2_black","Efficiency for Station 1 Ring 2 black",36,0.5,36.5);
@@ -1083,6 +1101,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   GregD2R3_black= new TH1F ("GregDistroD2R3_black","Efficiency for Station 2 Ring 3 black",36,0.5,36.5);
   GregD3R2_black= new TH1F ("GregDistroD3R2_black","Efficiency for Station 3 Ring 2 black",36,0.5,36.5);
   GregD3R3_black= new TH1F ("GregDistroD3R3_black","Efficiency for Station 3 Ring 3 black",36,0.5,36.5);
+  GregD4R2_black= new TH1F ("GregDistroD4R2_black","Efficiency for Station 4 Ring 2 black",36,0.5,36.5);
+  GregD4R3_black= new TH1F ("GregDistroD4R3_black","Efficiency for Station 4 Ring 3 black",36,0.5,36.5);
 
   OcGregD1R2= new TH1F ("OcGregDistroD1R2","Occupancy Distribution for Station 1 Ring 2",36,0.5,36.5);
   OcGregD1R3= new TH1F ("OcGregDistroD1R3","Occupancy Distribution for Station 1 Ring 3",36,0.5,36.5);
@@ -1090,6 +1110,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   OcGregD2R3= new TH1F ("OcGregDistroD2R3","Occupancy Distribution for Station 2 Ring 3",36,0.5,36.5);
   OcGregD3R2= new TH1F ("OcGregDistroD3R2","Occupancy Distribution for Station 3 Ring 2",36,0.5,36.5);
   OcGregD3R3= new TH1F ("OcGregDistroD3R3","Occupancy Distribution for Station 3 Ring 3",36,0.5,36.5);
+  OcGregD4R2= new TH1F ("OcGregDistroD4R2","Occupancy Distribution for Station 4 Ring 2",36,0.5,36.5);
+  OcGregD4R3= new TH1F ("OcGregDistroD4R3","Occupancy Distribution for Station 4 Ring 3",36,0.5,36.5);
 
   ExGregD1R2= new TH1F ("ExGregDistroD1R2","Expected Distribution for Station 1 Ring 2",36,0.5,36.5);
   ExGregD1R3= new TH1F ("ExGregDistroD1R3","Expected Distribution for Station 1 Ring 3",36,0.5,36.5);
@@ -1097,6 +1119,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   ExGregD2R3= new TH1F ("ExGregDistroD2R3","Expected Distribution for Station 2 Ring 3",36,0.5,36.5);
   ExGregD3R2= new TH1F ("ExGregDistroD3R2","Expected Distribution for Station 3 Ring 2",36,0.5,36.5);
   ExGregD3R3= new TH1F ("ExGregDistroD3R3","Expected Distribution for Station 3 Ring 3",36,0.5,36.5);
+  ExGregD4R2= new TH1F ("ExGregDistroD4R2","Expected Distribution for Station 4 Ring 2",36,0.5,36.5);
+  ExGregD4R3= new TH1F ("ExGregDistroD4R3","Expected Distribution for Station 4 Ring 3",36,0.5,36.5);
 
   GregDm1R2= new TH1F ("GregDistroDm1R2","Efficiency for Station - 1 Ring 2",36,0.5,36.5);
   GregDm1R3= new TH1F ("GregDistroDm1R3","Efficiency for Station - 1 Ring 3",36,0.5,36.5);
@@ -1104,7 +1128,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   GregDm2R3= new TH1F ("GregDistroDm2R3","Efficiency for Station - 2 Ring 3",36,0.5,36.5);
   GregDm3R2= new TH1F ("GregDistroDm3R2","Efficiency for Station - 3 Ring 2",36,0.5,36.5);
   GregDm3R3= new TH1F ("GregDistroDm3R3","Efficiency for Station - 3 Ring 3",36,0.5,36.5);
+  GregDm4R2= new TH1F ("GregDistroDm4R2","Efficiency for Station - 4 Ring 2",36,0.5,36.5);
+  GregDm4R3= new TH1F ("GregDistroDm4R3","Efficiency for Station - 4 Ring 3",36,0.5,36.5);
 
+  
   // For black list
   GregDm1R2_black= new TH1F ("GregDistroDm1R2_black","Efficiency for Station - 1 Ring 2 black",36,0.5,36.5);
   GregDm1R3_black= new TH1F ("GregDistroDm1R3_black","Efficiency for Station - 1 Ring 3 black",36,0.5,36.5);
@@ -1112,6 +1139,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   GregDm2R3_black= new TH1F ("GregDistroDm2R3_black","Efficiency for Station - 2 Ring 3 black",36,0.5,36.5);
   GregDm3R2_black= new TH1F ("GregDistroDm3R2_black","Efficiency for Station - 3 Ring 2 black",36,0.5,36.5);
   GregDm3R3_black= new TH1F ("GregDistroDm3R3_black","Efficiency for Station - 3 Ring 3 black",36,0.5,36.5);
+  GregDm4R2_black= new TH1F ("GregDistroDm4R2_black","Efficiency for Station - 4 Ring 2 black",36,0.5,36.5);
+  GregDm4R3_black= new TH1F ("GregDistroDm4R3_black","Efficiency for Station - 4 Ring 3 black",36,0.5,36.5);
 
   OcGregDm1R2= new TH1F ("OcGregDistroDm1R2","Occupancy Distribution for Station - 1 Ring 2",36,0.5,36.5);
   OcGregDm1R3= new TH1F ("OcGregDistroDm1R3","Occupancy Distribution for Station - 1 Ring 3",36,0.5,36.5);
@@ -1119,6 +1148,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   OcGregDm2R3= new TH1F ("OcGregDistroDm2R3","Occupancy Distribution for Station - 2 Ring 3",36,0.5,36.5);
   OcGregDm3R2= new TH1F ("OcGregDistroDm3R2","Occupancy Distribution for Station - 3 Ring 2",36,0.5,36.5);
   OcGregDm3R3= new TH1F ("OcGregDistroDm3R3","Occupancy Distribution for Station - 3 Ring 3",36,0.5,36.5);
+  OcGregDm4R2= new TH1F ("OcGregDistroDm4R2","Occupancy Distribution for Station - 4 Ring 2",36,0.5,36.5);
+  OcGregDm4R3= new TH1F ("OcGregDistroDm4R3","Occupancy Distribution for Station - 4 Ring 3",36,0.5,36.5);
 
   ExGregDm1R2= new TH1F ("ExGregDistroDm1R2","Expected Distribution for Station - 1 Ring 2",36,0.5,36.5);
   ExGregDm1R3= new TH1F ("ExGregDistroDm1R3","Expected Distribution for Station - 1 Ring 3",36,0.5,36.5);
@@ -1126,20 +1157,26 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   ExGregDm2R3= new TH1F ("ExGregDistroDm2R3","Expected Distribution for Station - 2 Ring 3",36,0.5,36.5);
   ExGregDm3R2= new TH1F ("ExGregDistroDm3R2","Expected Distribution for Station - 3 Ring 2",36,0.5,36.5);
   ExGregDm3R3= new TH1F ("ExGregDistroDm3R3","Expected Distribution for Station - 3 Ring 3",36,0.5,36.5);
+  ExGregDm4R2= new TH1F ("ExGregDistroDm4R2","Expected Distribution for Station - 4 Ring 2",36,0.5,36.5);
+  ExGregDm4R3= new TH1F ("ExGregDistroDm4R3","Expected Distribution for Station - 4 Ring 3",36,0.5,36.5);
 
+  EffDistroDm4= new TH1F ("EffDistroDm4near","Efficiency Distribution For Near Side Disk -4",20,0.5,100.5);  
   EffDistroDm3= new TH1F ("EffDistroDm3near","Efficiency Distribution For Near Side Disk -3",20,0.5,100.5);  
   EffDistroDm2= new TH1F ("EffDistroDm2near","Efficiency Distribution For Near Side Disk -2",20,0.5,100.5);
   EffDistroDm1= new TH1F ("EffDistroDm1near","Efficiency Distribution For Near Side Disk -1",20,0.5,100.5);
   EffDistroD1= new TH1F ("EffDistroD1near","Efficiency Distribution For Near Side Disk 1",20,0.5,100.5);
   EffDistroD2= new TH1F ("EffDistroD2near","Efficiency Distribution For Near Side Disk 2",20,0.5,100.5);
   EffDistroD3= new TH1F ("EffDistroD3near","Efficiency Distribution For Near Side Disk 3",20,0.5,100.5);
+  EffDistroD4= new TH1F ("EffDistroD4near","Efficiency Distribution For Near Side Disk 4",20,0.5,100.5);
 
+  EffDistroDm4far= new TH1F ("EffDistroDm4far","Efficiency Distribution For Far Side Disk -4",20,0.5,100.5);
   EffDistroDm3far= new TH1F ("EffDistroDm3far","Efficiency Distribution For Far Side Disk -3",20,0.5,100.5);
   EffDistroDm2far= new TH1F ("EffDistroDm2far","Efficiency Distribution For Far Side Disk -2",20,0.5,100.5);
   EffDistroDm1far= new TH1F ("EffDistroDm1far","Efficiency Distribution For Far Side Disk -1",20,0.5,100.5);
   EffDistroD1far= new TH1F ("EffDistroD1far","Efficiency Distribution For Far Side Disk 1",20,0.5,100.5);
   EffDistroD2far= new TH1F ("EffDistroD2far","Efficiency Distribution For Far Side Disk 2",20,0.5,100.5);
   EffDistroD3far= new TH1F ("EffDistroD3far","Efficiency Distribution For Far Side Disk 3",20,0.5,100.5);
+  EffDistroD4far= new TH1F ("EffDistroD4far","Efficiency Distribution For Far Side Disk 4",20,0.5,100.5);
 
   DoubleGapWm2= new TH1F ("DoubleGapEffWheel_-2near","Double Gap Efficiency Near Side Wheel -2",101,0.5,101.5);
   DoubleGapWm2far= new TH1F("DoubleGapEffWheel_-2far","Double Gap Efficiency Far Side Wheel -2",105,0.5,105.5);
@@ -1217,6 +1254,19 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   NoPredictionW2far= new TH1F ("NoPredictionWheel_2far","No Predictions Efficiency Far Side Wheel 2 ",105,0.5,105.5);
   
   //EndCap
+
+  EffGlobD4 = new TH1F ("GlobEfficiencyDisk_4near","Efficiency Near Side Disk 4",109,0.5,109.5);
+  EffGlobD4far =new TH1F ("GlobEfficiencyDisk_4far","Efficiency Far Side Disk 4",109,0.5,109.5);
+  BXGlobD4 = new TH1F ("GlobBXDisk_4near","BX Near Side Disk 4",109,0.5,109.5);
+  BXGlobD4far = new TH1F ("GlobBXDisk_4far","BX Far Side Disk 4",109,0.5,109.5);
+  Signal_BXGlobD4 = new TH1F ("Signal_GlobBXDisk_4near","Signal BX Near Side Disk 4",109,0.5,109.5);
+  Signal_BXGlobD4far = new TH1F ("Signal_GlobBXDisk_4far","Signal BX Far Side Disk 4",109,0.5,109.5);
+  MaskedGlobD4 = new TH1F ("GlobMaskedDisk_4near","Masked Near Side Disk 4",109,0.5,109.5);
+  MaskedGlobD4far = new TH1F ("GlobMaskedDisk_4far","Masked Far Side Disk 4",109,0.5,109.5);
+  AverageEffD4=new TH1F ("AverageEfficiencyDisk_4near","Average Efficiency Near Side Disk 4 ",109,0.5,109.5);
+  AverageEffD4far=new TH1F ("AverageEfficiencyDisk_4far","Average Efficiency Far Side Disk 4 ",109,0.5,109.5);
+  NoPredictionD4=new TH1F ("NoPredictionDisk_4near","No Predictions Near Side Disk 4 ",109,0.5,109.5);
+  NoPredictionD4far=new TH1F ("NoPredictionDisk_4far","No Predictions Efficiency Far Side Disk 4 ",109,0.5,109.5);
 
   EffGlobD3 = new TH1F ("GlobEfficiencyDisk_3near","Efficiency Near Side Disk 3",109,0.5,109.5);
   EffGlobD3far =new TH1F ("GlobEfficiencyDisk_3far","Efficiency Far Side Disk 3",109,0.5,109.5);
@@ -1297,6 +1347,20 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   NoPredictionDm3=new TH1F ("NoPredictionDisk_m3near","No Predictions Near Side Disk -3 ",109,0.5,109.5);
   NoPredictionDm3far=new TH1F ("NoPredictionDisk_m3far","No Predictions Efficiency Far Side Disk -3 ",109,0.5,109.5);
 
+  EffGlobDm4 = new TH1F ("GlobEfficiencyDisk_m4near","Efficiency Near Side Disk -4",109,0.5,109.5);
+  EffGlobDm4far =new TH1F ("GlobEfficiencyDisk_m4far","Efficiency Far Side Disk -4",109,0.5,109.5);
+  BXGlobDm4 = new TH1F ("GlobBXDisk_m4near","BX Near Side Disk -4",109,0.5,109.5);
+  BXGlobDm4far = new TH1F ("GlobBXDisk_m4far","BX Far Side Disk -4",109,0.5,109.5);
+  Signal_BXGlobDm4 = new TH1F ("Signal_GlobBXDisk_m4near","Signal BX Near Side Disk -4",109,0.5,109.5);
+  Signal_BXGlobDm4far = new TH1F ("Signal_GlobBXDisk_m4far","Signal BX Far Side Disk -4",109,0.5,109.5);
+  MaskedGlobDm4 = new TH1F ("GlobMaskedDisk_m4near","Masked Near Side Disk -4",109,0.5,109.5);
+  MaskedGlobDm4far = new TH1F ("GlobMaskedDisk_m4far","Masked Far Side Disk -4",109,0.5,109.5);
+  AverageEffDm4=new TH1F ("AverageEfficiencyDisk_m4near","Average Efficiency Near Side Disk -4 ",109,0.5,109.5);
+  AverageEffDm4far=new TH1F ("AverageEfficiencyDisk_m4far","Average Efficiency Far Side Disk -4 ",109,0.5,109.5);
+  if(debug) std::cout<<"Creating Problematic Histogram"<<std::endl;
+  NoPredictionDm4=new TH1F ("NoPredictionDisk_m4near","No Predictions Near Side Disk -4 ",109,0.5,109.5);
+  NoPredictionDm4far=new TH1F ("NoPredictionDisk_m4far","No Predictions Efficiency Far Side Disk -4 ",109,0.5,109.5);
+
   //Summary Histograms
   
   std::string os;
@@ -1311,6 +1375,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   os="Efficiency_Roll_vs_Sector_Wheel_+2";                                      
   Wheel2Summary = new TH2F (os.c_str(), os.c_str(), 12, 0.5,12.5, 22, 0.5, 22.5);
   
+  os="Efficiency_Roll_vs_Sector_Disk_-4";                                      
+  Diskm4Summary = new TH2F (os.c_str(), os.c_str(), 36, 0.5,36.5, 6, 0.5, 6.5);
   os="Efficiency_Roll_vs_Sector_Disk_-3";                                      
   Diskm3Summary = new TH2F (os.c_str(), os.c_str(), 36, 0.5,36.5, 6, 0.5, 6.5);
   os="Efficiency_Roll_vs_Sector_Disk_-2";                                      
@@ -1323,11 +1389,13 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   Disk2Summary = new TH2F (os.c_str(), os.c_str(), 36, 0.5,36.5, 6, 0.5, 6.5);
   os="Efficiency_Roll_vs_Sector_Disk_+3";                                      
   Disk3Summary = new TH2F (os.c_str(), os.c_str(), 36, 0.5,36.5, 6, 0.5, 6.5);
+  os="Efficiency_Roll_vs_Sector_Disk_+4";                                      
+  Disk4Summary = new TH2F (os.c_str(), os.c_str(), 36, 0.5,36.5, 6, 0.5, 6.5);
 
   os="PositiveEndCapSummary";
-  PositiveEndCapSummary = new TH2F (os.c_str(), os.c_str(), 36, 0.5,36.5, 6, 0.5, 6.5);
+  PositiveEndCapSummary = new TH2F (os.c_str(), os.c_str(), 36, 0.5,36.5, 8, 0.5, 8.5);
   os="NegativeEndCapSummary";                            
-  NegativeEndCapSummary = new TH2F (os.c_str(), os.c_str(), 36, 0.5,36.5, 6, 0.5, 6.5);
+  NegativeEndCapSummary = new TH2F (os.c_str(), os.c_str(), 36, 0.5,36.5, 8, 0.5, 8.5);
 
   
   MeanResiduals = new TH1F ("Mean_Residuals_Distribution","Mean_Residuals_Distribution",20,-5,5);
@@ -1604,12 +1672,12 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     indexWheelf[j]=0;
   }
 
-  int indexDisk[6];
+  int indexDisk[8];
   for(int j=0;j<6;j++){
     indexDisk[j]=0;
   }
   
-  int indexDiskf[6];
+  int indexDiskf[8];
   for(int j=0;j<6;j++){
     indexDiskf[j]=0;
   }
@@ -2864,15 +2932,15 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 		if(rpcId.roll()==3) CLSStation1Ring2_C->Add(histoCLS);
 	      }
 	      if(abs(rpcId.station())==2 || abs(rpcId.station())==3){
-		if(rpcId.roll()==1)CLSStation23Ring2_A->Add(histoCLS);
-		if(rpcId.roll()==2)CLSStation23Ring2_B->Add(histoCLS);
-		if(rpcId.roll()==3)CLSStation23Ring2_C->Add(histoCLS);
+		if(rpcId.roll()==1)CLSStation234Ring2_A->Add(histoCLS);
+		if(rpcId.roll()==2)CLSStation234Ring2_B->Add(histoCLS);
+		if(rpcId.roll()==3)CLSStation234Ring2_C->Add(histoCLS);
 	      }
 	    }
 	    if(rpcId.ring()==3){
-	      if(rpcId.roll()==1)CLSStation123Ring3_A->Add(histoCLS);
-	      if(rpcId.roll()==2)CLSStation123Ring3_B->Add(histoCLS);
-	      if(rpcId.roll()==3)CLSStation123Ring3_C->Add(histoCLS);
+	      if(rpcId.roll()==1)CLSStation1234Ring3_A->Add(histoCLS);
+	      if(rpcId.roll()==2)CLSStation1234Ring3_B->Add(histoCLS);
+	      if(rpcId.roll()==3)CLSStation1234Ring3_C->Add(histoCLS);
 	    }
 	  }
 	  
@@ -2985,14 +3053,14 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      }
 	      if(abs(rpcId.station())==2 || abs(rpcId.station())==3){
 		if(rpcId.ring()==2){
-		  if(rpcId.roll()==1) residualStation23Ring2_A->Add(histoResidual);
-		  if(rpcId.roll()==2) residualStation23Ring2_B->Add(histoResidual);
-		  if(rpcId.roll()==3) residualStation23Ring2_C->Add(histoResidual);
+		  if(rpcId.roll()==1) residualStation234Ring2_A->Add(histoResidual);
+		  if(rpcId.roll()==2) residualStation234Ring2_B->Add(histoResidual);
+		  if(rpcId.roll()==3) residualStation234Ring2_C->Add(histoResidual);
 		}
 		if(rpcId.ring()==3){
-		  if(rpcId.roll()==1) residualStation23Ring3_A->Add(histoResidual);
-		  if(rpcId.roll()==2) residualStation23Ring3_B->Add(histoResidual);
-		  if(rpcId.roll()==3) residualStation23Ring3_C->Add(histoResidual);
+		  if(rpcId.roll()==1) residualStation234Ring3_A->Add(histoResidual);
+		  if(rpcId.roll()==2) residualStation234Ring3_B->Add(histoResidual);
+		  if(rpcId.roll()==3) residualStation234Ring3_C->Add(histoResidual);
 		}
 	      }
 	    }
@@ -3558,19 +3626,23 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	  
 	  if(!IsBadRoll(rpcId.rawId(),blacklist)){
 	    if(rpcId.region()==1){
-	      if(rpcId.station()==1 && rpcId.ring()==2){ ExGregD1R2->Fill(rpcsrv.segment(),pinoexpected);OcGregD1R2->Fill(rpcsrv.segment(),pinoobserved); if(debug) std::cout<<name<<"GREG Filling D1 R2 with o="<<o<<" p="<<p<<" ef="<<ef<<std::endl;}
-	      if(rpcId.station()==1 && rpcId.ring()==3){ ExGregD1R3->Fill(rpcsrv.segment(),pinoexpected);OcGregD1R3->Fill(rpcsrv.segment(),pinoobserved); if(debug) std::cout<<name<<"GREG Filling D1 R3 with o="<<o<<" p="<<p<<" ef="<<ef<<std::endl;}
+	      if(rpcId.station()==1 && rpcId.ring()==2){ ExGregD1R2->Fill(rpcsrv.segment(),pinoexpected);OcGregD1R2->Fill(rpcsrv.segment(),pinoobserved);}
+	      if(rpcId.station()==1 && rpcId.ring()==3){ ExGregD1R3->Fill(rpcsrv.segment(),pinoexpected);OcGregD1R3->Fill(rpcsrv.segment(),pinoobserved);}
 	      if(rpcId.station()==2 && rpcId.ring()==2){ ExGregD2R2->Fill(rpcsrv.segment(),pinoexpected);OcGregD2R2->Fill(rpcsrv.segment(),pinoobserved);}
 	      if(rpcId.station()==2 && rpcId.ring()==3){ ExGregD2R3->Fill(rpcsrv.segment(),pinoexpected);OcGregD2R3->Fill(rpcsrv.segment(),pinoobserved);}
 	      if(rpcId.station()==3 && rpcId.ring()==2){ ExGregD3R2->Fill(rpcsrv.segment(),pinoexpected);OcGregD3R2->Fill(rpcsrv.segment(),pinoobserved);}
 	      if(rpcId.station()==3 && rpcId.ring()==3){ ExGregD3R3->Fill(rpcsrv.segment(),pinoexpected);OcGregD3R3->Fill(rpcsrv.segment(),pinoobserved);}
+	      if(rpcId.station()==4 && rpcId.ring()==2){ ExGregD4R2->Fill(rpcsrv.segment(),pinoexpected);OcGregD4R2->Fill(rpcsrv.segment(),pinoobserved);}
+	      if(rpcId.station()==4 && rpcId.ring()==3){ ExGregD4R3->Fill(rpcsrv.segment(),pinoexpected);OcGregD4R3->Fill(rpcsrv.segment(),pinoobserved);}
 	    }else if(rpcId.region()==-1){
-	      if(rpcId.station()==1 && rpcId.ring()==2){ ExGregDm1R2->Fill(rpcsrv.segment(),pinoexpected);OcGregDm1R2->Fill(rpcsrv.segment(),pinoobserved); if(debug) std::cout<<name<<"GREG Filling Dm1 R2 with o="<<o<<" p="<<p<<" ef="<<ef<<std::endl;}
-	      if(rpcId.station()==1 && rpcId.ring()==3){ ExGregDm1R3->Fill(rpcsrv.segment(),pinoexpected);OcGregDm1R3->Fill(rpcsrv.segment(),pinoobserved); if(debug) std::cout<<name<<"GREG Filling Dm1 R3 with o="<<o<<" p="<<p<<" ef="<<ef<<std::endl;}
+	      if(rpcId.station()==1 && rpcId.ring()==2){ ExGregDm1R2->Fill(rpcsrv.segment(),pinoexpected);OcGregDm1R2->Fill(rpcsrv.segment(),pinoobserved);}
+	      if(rpcId.station()==1 && rpcId.ring()==3){ ExGregDm1R3->Fill(rpcsrv.segment(),pinoexpected);OcGregDm1R3->Fill(rpcsrv.segment(),pinoobserved);}
 	      if(rpcId.station()==2 && rpcId.ring()==2){ ExGregDm2R2->Fill(rpcsrv.segment(),pinoexpected);OcGregDm2R2->Fill(rpcsrv.segment(),pinoobserved);}
 	      if(rpcId.station()==2 && rpcId.ring()==3){ ExGregDm2R3->Fill(rpcsrv.segment(),pinoexpected);OcGregDm2R3->Fill(rpcsrv.segment(),pinoobserved);}
 	      if(rpcId.station()==3 && rpcId.ring()==2){ ExGregDm3R2->Fill(rpcsrv.segment(),pinoexpected);OcGregDm3R2->Fill(rpcsrv.segment(),pinoobserved);}
 	      if(rpcId.station()==3 && rpcId.ring()==3){ ExGregDm3R3->Fill(rpcsrv.segment(),pinoexpected);OcGregDm3R3->Fill(rpcsrv.segment(),pinoobserved);}
+	      if(rpcId.station()==4 && rpcId.ring()==2){ ExGregDm4R2->Fill(rpcsrv.segment(),pinoexpected);OcGregDm4R2->Fill(rpcsrv.segment(),pinoobserved);}
+	      if(rpcId.station()==4 && rpcId.ring()==3){ ExGregDm4R3->Fill(rpcsrv.segment(),pinoexpected);OcGregDm4R3->Fill(rpcsrv.segment(),pinoobserved);}
 	    }
 	  }else{
 	    std::cout<<"blacklist skeeping roll "<<rpcId<<std::endl;
@@ -3607,24 +3679,49 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
 	  if(debug) std::cout<<"Pigi "<<camera<<" "<<rpcsrv.shortname()<<" "<<(*r)->id()<<" ef="<<pinoeff<<" Y="<<Y<<std::endl;
 
-	  if(Disk==-3) Diskm3Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
+	  if(Disk==-4) Diskm4Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
+	  else if(Disk==-3) Diskm3Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
 	  else if(Disk==-2) Diskm2Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
 	  else if(Disk==-1) Diskm1Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
 	  else if(Disk==1) Disk1Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
 	  else if(Disk==2) Disk2Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
 	  else if(Disk==3) Disk3Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
+	  else if(Disk==4) Disk4Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
 
 	  if(rpcId.region()==1){
-	    PositiveEndCapSummary->SetBinContent(rpcsrv.segment(),(rpcId.station()-1)*2+rpcId.ring()-1,pinoeff);
+	      PositiveEndCapSummary->SetBinContent(rpcsrv.segment(),(rpcId.station()-1)*2+rpcId.ring()-1,pinoeff);
 	  }else if(rpcId.region()==-1){
-	    NegativeEndCapSummary->SetBinContent(rpcsrv.segment(),(rpcId.station()-1)*2+rpcId.ring()-1,pinoeff);
+	      NegativeEndCapSummary->SetBinContent(rpcsrv.segment(),(rpcId.station()-1)*2+rpcId.ring()-1,pinoeff);
 	  }
-
 
  	  //Near Side
 
 	  if(sector==1||sector==2||sector==6){
-	    if(Disk==-3){
+	    if(Disk==-4){
+	      indexDisk[7]++;  
+	      EffGlobDm4->SetBinContent(indexDisk[7],pinoeff);  
+	      EffGlobDm4->SetBinError(indexDisk[7],pinoerr);  
+	      EffGlobDm4->GetXaxis()->SetBinLabel(indexDisk[7],camera.c_str());
+            
+	      BXGlobDm4->SetBinContent(indexDisk[7],mybxhisto);  
+	      BXGlobDm4->SetBinError(indexDisk[7],mybxerror);  
+	      BXGlobDm4->GetXaxis()->SetBinLabel(indexDisk[7],camera.c_str());
+
+	      Signal_BXGlobDm4->SetBinContent(indexDisk[7],signal_mybxhisto);  
+	      Signal_BXGlobDm4->SetBinError(indexDisk[7],signal_mybxerror);  
+	      Signal_BXGlobDm4->GetXaxis()->SetBinLabel(indexDisk[7],camera.c_str());
+      
+	      MaskedGlobDm4->SetBinContent(indexDisk[7],maskedratio);  
+	      MaskedGlobDm4->GetXaxis()->SetBinLabel(indexDisk[7],camera.c_str());
+
+	      AverageEffDm4->SetBinContent(indexDisk[7],averageeff);
+	      AverageEffDm4->SetBinError(indexDisk[7],averageerr);  
+	      AverageEffDm4->GetXaxis()->SetBinLabel(indexDisk[7],camera.c_str());
+	      
+	      if(debug) std::cout<<"Filling Problematic Histogram with"<<nopredictionsratio<<std::endl;
+	      NoPredictionDm4->SetBinContent(indexDisk[7],nopredictionsratio);
+              NoPredictionDm4->GetXaxis()->SetBinLabel(indexDisk[7],camera.c_str());
+  	    }if(Disk==-3){
 	      indexDisk[0]++;  
 	      EffGlobDm3->SetBinContent(indexDisk[0],pinoeff);  
 	      EffGlobDm3->SetBinError(indexDisk[0],pinoerr);  
@@ -3764,10 +3861,57 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      
 	      NoPredictionD3->SetBinContent(indexDisk[5],nopredictionsratio);
               NoPredictionD3->GetXaxis()->SetBinLabel(indexDisk[5],camera.c_str());	      
+	    }else if(Disk==4){
+	      indexDisk[6]++;
+	      EffGlobD4->SetBinContent(indexDisk[6],pinoeff);
+	      EffGlobD4->SetBinError(indexDisk[6],pinoerr);
+	      EffGlobD4->GetXaxis()->SetBinLabel(indexDisk[6],camera.c_str());
+
+	      BXGlobD4->SetBinContent(indexDisk[6],mybxhisto);  
+	      BXGlobD4->SetBinError(indexDisk[6],mybxerror);  
+	      BXGlobD4->GetXaxis()->SetBinLabel(indexDisk[6],camera.c_str());
+
+	      Signal_BXGlobD4->SetBinContent(indexDisk[6],signal_mybxhisto);  
+	      Signal_BXGlobD4->SetBinError(indexDisk[6],signal_mybxerror);  
+	      Signal_BXGlobD4->GetXaxis()->SetBinLabel(indexDisk[6],camera.c_str());
+
+	      MaskedGlobD4->SetBinContent(indexDisk[6],maskedratio);  
+	      MaskedGlobD4->GetXaxis()->SetBinLabel(indexDisk[6],camera.c_str());
+
+	      AverageEffD4->SetBinContent(indexDisk[6],averageeff);
+	      AverageEffD4->SetBinError(indexDisk[6],averageerr);  
+	      AverageEffD4->GetXaxis()->SetBinLabel(indexDisk[6],camera.c_str());
+	      
+	      NoPredictionD4->SetBinContent(indexDisk[6],nopredictionsratio);
+              NoPredictionD4->GetXaxis()->SetBinLabel(indexDisk[6],camera.c_str());	      
 	    }
-	  }else{//Far Side 
-	    
-	    if(Disk==-3){
+	  }else{//Far Side
+	    if(Disk==-4){
+	      indexDiskf[7]++;  
+	      EffGlobDm4far->SetBinContent(indexDiskf[7],pinoeff);  
+	      EffGlobDm4far->SetBinError(indexDiskf[7],pinoerr);  
+	      EffGlobDm4far->GetXaxis()->SetBinLabel(indexDiskf[7],camera.c_str());
+
+	      BXGlobDm4far->SetBinContent(indexDiskf[7],mybxhisto);  
+	      BXGlobDm4far->SetBinError(indexDiskf[7],mybxerror);  
+	      BXGlobDm4far->GetXaxis()->SetBinLabel(indexDiskf[7],camera.c_str());
+	      
+	      Signal_BXGlobDm4far->SetBinContent(indexDiskf[7],signal_mybxhisto);  
+	      Signal_BXGlobDm4far->SetBinError(indexDiskf[7],signal_mybxerror);  
+	      Signal_BXGlobDm4far->GetXaxis()->SetBinLabel(indexDiskf[7],camera.c_str());
+	      
+	      MaskedGlobDm4far->SetBinContent(indexDiskf[7],maskedratio);
+	      MaskedGlobDm4far->GetXaxis()->SetBinLabel(indexDiskf[7],camera.c_str());
+	      
+	      AverageEffDm4far->SetBinContent(indexDiskf[7],averageeff);
+              AverageEffDm4far->SetBinError(indexDiskf[7],averageerr);
+              AverageEffDm4far->GetXaxis()->SetBinLabel(indexDiskf[7],camera.c_str());
+
+              NoPredictionDm4far->SetBinContent(indexDisk[7],nopredictionsratio);
+              NoPredictionDm4far->GetXaxis()->SetBinLabel(indexDisk[7],camera.c_str());
+
+	    }
+	    else if(Disk==-3){
 	      indexDiskf[0]++;  
 	      EffGlobDm3far->SetBinContent(indexDiskf[0],pinoeff);  
 	      EffGlobDm3far->SetBinError(indexDiskf[0],pinoerr);  
@@ -3887,6 +4031,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
               NoPredictionD2far->SetBinContent(indexDiskf[4],nopredictionsratio);
               NoPredictionD2far->GetXaxis()->SetBinLabel(indexDiskf[4],camera.c_str());
+
 	    }else if(Disk==3){
 	      indexDiskf[5]++;
 	      EffGlobD3far->SetBinContent(indexDiskf[5],pinoeff);
@@ -3910,6 +4055,29 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
               NoPredictionD3far->SetBinContent(indexDiskf[5],nopredictionsratio);
               NoPredictionD3far->GetXaxis()->SetBinLabel(indexDiskf[5],camera.c_str());
+	    }else if(Disk==4){
+	      indexDiskf[6]++;
+	      EffGlobD4far->SetBinContent(indexDiskf[6],pinoeff);
+	      EffGlobD4far->SetBinError(indexDiskf[6],pinoerr);
+	      EffGlobD4far->GetXaxis()->SetBinLabel(indexDiskf[6],camera.c_str());
+
+	      BXGlobD4far->SetBinContent(indexDiskf[6],mybxhisto);  
+	      BXGlobD4far->SetBinError(indexDiskf[6],mybxerror);  
+	      BXGlobD4far->GetXaxis()->SetBinLabel(indexDiskf[6],camera.c_str());
+
+	      Signal_BXGlobD4far->SetBinContent(indexDiskf[6],signal_mybxhisto);  
+	      Signal_BXGlobD4far->SetBinError(indexDiskf[6],signal_mybxerror);  
+	      Signal_BXGlobD4far->GetXaxis()->SetBinLabel(indexDiskf[6],camera.c_str());
+	      
+	      MaskedGlobD4far->SetBinContent(indexDiskf[6],maskedratio);
+	      MaskedGlobD4far->GetXaxis()->SetBinLabel(indexDiskf[6],camera.c_str());
+
+	      AverageEffD4far->SetBinContent(indexDiskf[6],averageeff);
+              AverageEffD4far->SetBinError(indexDiskf[6],averageerr);
+              AverageEffD4far->GetXaxis()->SetBinLabel(indexDiskf[6],camera.c_str());
+
+              NoPredictionD4far->SetBinContent(indexDiskf[6],nopredictionsratio);
+              NoPredictionD4far->GetXaxis()->SetBinLabel(indexDiskf[6],camera.c_str());
 	    }
 	  }//Finishing EndCap
 	}
@@ -3920,6 +4088,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   if(debug) std::cout<<"Outside the loop of rolls"<<std::endl;
   
   if(makehtml){
+    command = "cat htmltemplates/indextail.html >> indexDm4near.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexDm3near.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexDm2near.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexDm1near.html"; system(command.c_str());
@@ -3927,7 +4096,9 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     command = "cat htmltemplates/indextail.html >> indexD1near.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexD2near.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexD3near.html"; system(command.c_str());
+    command = "cat htmltemplates/indextail.html >> indexD4near.html"; system(command.c_str());
 
+    command = "cat htmltemplates/indextail.html >> indexDm4far.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexDm3far.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexDm2far.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexDm1far.html"; system(command.c_str());
@@ -3935,6 +4106,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     command = "cat htmltemplates/indextail.html >> indexD1far.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexD2far.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexD3far.html"; system(command.c_str());
+    command = "cat htmltemplates/indextail.html >> indexD4far.html"; system(command.c_str());
 
     command = "cat htmltemplates/indextail.html >> indexWm2near.html"; system(command.c_str());
     command = "cat htmltemplates/indextail.html >> indexWm2far.html"; system(command.c_str());
@@ -4032,6 +4204,31 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     occCham = OcGregD3R3->GetBinContent(k);
     EffChamEndcap<<"D3R3"<<" "<<k<<" "<<eff<<" "<<err<<" "<<occCham<<" "<<N<<std::endl;
 
+    err=0; eff=0; N=ExGregD4R2->GetBinContent(k);
+    acumulatedexpected = N + acumulatedexpected;
+    acumulatedobserved = acumulatedobserved + OcGregD4R2->GetBinContent(k);
+    if(N!=0.){ eff = OcGregD4R2->GetBinContent(k)/N;err=sqrt(eff*(1-eff)/N);}
+    if(HasBadRoll(1,4,2,k,blacklist)){GregD4R2_black->SetBinContent(k,eff); GregD4R2_black->SetBinError(k,err);}
+    else{GregD4R2->SetBinContent(k,eff); GregD4R2->SetBinError(k,err);}
+    HeightVsEffR2->Fill(eff,h);
+    //Cesare
+    if(eff != 0) EndcapEffTot->Fill(100*eff);
+    occCham = OcGregD4R2->GetBinContent(k);
+    EffChamEndcap<<"D4R2"<<" "<<k<<" "<<eff<<" "<<err<<" "<<occCham<<" "<<N<<std::endl;
+
+    err=0; eff=0; N=ExGregD4R3->GetBinContent(k);
+    acumulatedexpected = N + acumulatedexpected;
+    acumulatedobserved = acumulatedobserved + OcGregD4R3->GetBinContent(k);
+    if(N!=0.){ eff = OcGregD4R3->GetBinContent(k)/N;err=sqrt(eff*(1-eff)/N);}
+    if(HasBadRoll(1,4,3,k,blacklist)){GregD4R3_black->SetBinContent(k,eff); GregD4R3_black->SetBinError(k,err);}
+    else{GregD4R3->SetBinContent(k,eff); GregD4R3->SetBinError(k,err);}
+    HeightVsEffR3->Fill(eff,h);
+    //Cesare
+    if(eff != 0) EndcapEffTot->Fill(100*eff);
+    occCham = OcGregD4R3->GetBinContent(k);
+    EffChamEndcap<<"D4R3"<<" "<<k<<" "<<eff<<" "<<err<<" "<<occCham<<" "<<N<<std::endl;
+
+    
     //Negative EndCap
 
     err=0; eff=0; N=ExGregDm1R2->GetBinContent(k);
@@ -4106,6 +4303,30 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     occCham = OcGregDm3R3->GetBinContent(k);
     EffChamEndcap<<"Dm3R3"<<" "<<k<<" "<<eff<<" "<<err<<" "<<occCham<<" "<<N<<std::endl;
 
+    err=0; eff=0; N=ExGregDm4R2->GetBinContent(k);
+    acumulatedexpected = N + acumulatedexpected;
+    acumulatedobserved = acumulatedobserved + OcGregDm4R2->GetBinContent(k);
+    if(N!=0.){ eff = OcGregDm4R2->GetBinContent(k)/N;err=sqrt(eff*(1-eff)/N);}
+    if(HasBadRoll(-1,4,2,k,blacklist)){GregDm4R2_black->SetBinContent(k,eff); GregDm4R2_black->SetBinError(k,err);}
+    else{GregDm4R2->SetBinContent(k,eff); GregDm4R2->SetBinError(k,err);}
+    HeightVsEffR2->Fill(eff,h);
+    //Cesare
+    if(eff != 0) EndcapEffTot->Fill(100*eff);
+    occCham = OcGregDm4R2->GetBinContent(k);
+    EffChamEndcap<<"Dm4R2"<<" "<<k<<" "<<eff<<" "<<err<<" "<<occCham<<" "<<N<<std::endl;
+
+    err=0; eff=0; N=ExGregDm4R3->GetBinContent(k);
+    acumulatedexpected = N + acumulatedexpected;
+    acumulatedobserved = acumulatedobserved + OcGregDm4R3->GetBinContent(k);
+    if(N!=0.){ eff = OcGregDm4R3->GetBinContent(k)/N;err=sqrt(eff*(1-eff)/N);}
+    if(HasBadRoll(-1,4,3,k,blacklist)){GregDm4R3_black->SetBinContent(k,eff); GregDm4R3_black->SetBinError(k,err);}
+    else{GregDm4R3->SetBinContent(k,eff); GregDm4R3->SetBinError(k,err);}
+    HeightVsEffR3->Fill(eff,h);
+    //Cesare
+    if(eff != 0) EndcapEffTot->Fill(100*eff);
+    occCham = OcGregDm4R3->GetBinContent(k);
+    EffChamEndcap<<"Dm4R3"<<" "<<k<<" "<<eff<<" "<<err<<" "<<occCham<<" "<<N<<std::endl;
+
     if(acumulatedexpected!=0){ 
       eff = acumulatedobserved/acumulatedexpected; err=sqrt(eff*(1-eff)/acumulatedexpected);
       EfficiencyPerChamberNumber->SetBinContent(k,eff); EfficiencyPerChamberNumber->SetBinError(k,err);
@@ -4115,6 +4336,13 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
 
     TH1F * EfficiencyPerDisk = new TH1F("EfficiencyPerDisk","Efficiency per Disk",8,0.5,8.5);
+
+    float exgDm4 = ExGregDm4R2->Integral()+ExGregDm4R3->Integral(); float obgDm4 = OcGregDm4R2->Integral()+OcGregDm4R3->Integral();
+    float effDm4 = obgDm4/exgDm4; float errDm4 = sqrt(effDm4*(1-effDm4)/exgDm4);
+    EfficiencyPerDisk->GetXaxis()->SetBinLabel(1,"Dm4");
+    //EfficiencyPerDisk->SetBinContent(1,EffDm4->GetMean());
+    EfficiencyPerDisk->SetBinContent(1,100*effDm4);
+    EfficiencyPerDisk->SetBinError(1,100*errDm4);
 
     float exgDm3 = ExGregDm3R2->Integral()+ExGregDm3R3->Integral(); float obgDm3 = OcGregDm3R2->Integral()+OcGregDm3R3->Integral();
     float effDm3 = obgDm3/exgDm3; float errDm3 = sqrt(effDm3*(1-effDm3)/exgDm3);
@@ -4158,9 +4386,12 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     EfficiencyPerDisk->SetBinContent(7,100*effD3);
     EfficiencyPerDisk->SetBinError(7,100*errD3);
 
-    EfficiencyPerDisk->GetXaxis()->SetBinLabel(1,"Dm4");
-
+    float exgD4 = ExGregD4R2->Integral()+ExGregD4R3->Integral(); float obgD4 = OcGregD4R2->Integral()+OcGregD4R3->Integral();
+    float effD4 = obgD4/exgD4; float errD4 = sqrt(effD4*(1-effD4)/exgD4);
     EfficiencyPerDisk->GetXaxis()->SetBinLabel(8,"D4");
+    //EfficiencyPerDisk->SetBinContent(7,EffD4->GetMean());
+    EfficiencyPerDisk->SetBinContent(8,100*effD4);
+    EfficiencyPerDisk->SetBinError(8,100*errD4);
 
     EfficiencyPerDisk->Write();
 
@@ -4172,13 +4403,20 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
     TH1F * EfficiencyPerStation = new TH1F("EfficiencyPerStation","Efficiency per Station",4,0.5,4.5);
 
+    float exgS4 = ExGregDm4R2->Integral()+ExGregDm4R3->Integral()+ExGregD4R2->Integral()+ExGregD4R3->Integral(); 
+    float obgS4 = OcGregDm4R2->Integral()+OcGregDm4R3->Integral()+OcGregD4R2->Integral()+OcGregD4R3->Integral();
+    float effS4 = obgS4/exgS4; float errS4 = sqrt(effS4*(1-effS4)/exgS4);
+    EfficiencyPerStation->GetXaxis()->SetBinLabel(4,"S4");
+    EfficiencyPerStation->SetBinContent(4,100*effS4);
+    EfficiencyPerStation->SetBinError(4,100*errS4);
+
     float exgS3 = ExGregDm3R2->Integral()+ExGregDm3R3->Integral()+ExGregD3R2->Integral()+ExGregD3R3->Integral(); 
     float obgS3 = OcGregDm3R2->Integral()+OcGregDm3R3->Integral()+OcGregD3R2->Integral()+OcGregD3R3->Integral();
     float effS3 = obgS3/exgS3; float errS3 = sqrt(effS3*(1-effS3)/exgS3);
     EfficiencyPerStation->GetXaxis()->SetBinLabel(3,"S3");
     EfficiencyPerStation->SetBinContent(3,100*effS3);
     EfficiencyPerStation->SetBinError(3,100*errS3);
-
+    
     float exgS2 = ExGregDm2R2->Integral()+ExGregDm2R3->Integral()+ExGregD2R2->Integral()+ExGregD2R3->Integral(); 
     float obgS2 = OcGregDm2R2->Integral()+OcGregDm2R3->Integral()+OcGregD2R2->Integral()+OcGregD2R3->Integral();
     float effS2 = obgS2/exgS2; float errS2 = sqrt(effS2*(1-effS2)/exgS2);
@@ -4193,11 +4431,23 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     EfficiencyPerStation->SetBinContent(1,100*effS1);
     EfficiencyPerStation->SetBinError(1,100*errS1);
 
-    EfficiencyPerStation->GetXaxis()->SetBinLabel(4,"S4");
-
     EfficiencyPerStation->Write();
 
     TH1F * EfficiencyPerStationRing = new TH1F("EfficiencyPerStationRing","Efficiency per Station",8,0.5,8.5);
+    
+    float exgS4R2 = ExGregDm4R2->Integral()+ExGregD4R2->Integral(); 
+    float obgS4R2 = OcGregDm4R2->Integral()+OcGregD4R2->Integral();
+    float effS4R2 = obgS4R2/exgS4R2; float errS4R2 = sqrt(effS4R2*(1-effS4R2)/exgS4R2);
+    EfficiencyPerStationRing->GetXaxis()->SetBinLabel(7,"S4R2");
+    EfficiencyPerStationRing->SetBinContent(7,100*effS4R2);
+    EfficiencyPerStationRing->SetBinError(7,100*errS4R2);
+
+    float exgS4R3 = ExGregDm4R3->Integral()+ExGregD4R3->Integral(); 
+    float obgS4R3 = OcGregDm4R3->Integral()+OcGregD4R3->Integral();
+    float effS4R3 = obgS4R3/exgS4R3; float errS4R3 = sqrt(effS4R3*(1-effS4R3)/exgS4R3);
+    EfficiencyPerStationRing->GetXaxis()->SetBinLabel(8,"S4R3");
+    EfficiencyPerStationRing->SetBinContent(8,100*effS4R3);
+    EfficiencyPerStationRing->SetBinError(8,100*errS4R3);
 
     float exgS3R2 = ExGregDm3R2->Integral()+ExGregD3R2->Integral(); 
     float obgS3R2 = OcGregDm3R2->Integral()+OcGregD3R2->Integral();
@@ -4241,11 +4491,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     EfficiencyPerStationRing->SetBinContent(2,100*effS1R3);
     EfficiencyPerStationRing->SetBinError(2,100*errS1R3);
 
-    EfficiencyPerStationRing->GetXaxis()->SetBinLabel(7,"S4R2");
-    EfficiencyPerStationRing->GetXaxis()->SetBinLabel(8,"S4R3");
-
     EfficiencyPerStationRing->Write();
-
 
     float Exp[7];
     float Obs[7];
@@ -4316,17 +4562,21 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     StatisticsPerLayer->Write();
 
   float ExEndCapN = 
+    ExGregDm4R3->Integral()+  
     ExGregDm3R3->Integral()+  
     ExGregDm2R3->Integral()+
     ExGregDm1R3->Integral()+
+    ExGregDm4R2->Integral()+  
     ExGregDm3R2->Integral()+  
     ExGregDm2R2->Integral()+
     ExGregDm1R2->Integral();
 
   float OcEndCapN = 
+    OcGregDm4R3->Integral()+  
     OcGregDm3R3->Integral()+  
     OcGregDm2R3->Integral()+
     OcGregDm1R3->Integral()+
+    OcGregDm4R2->Integral()+  
     OcGregDm3R2->Integral()+  
     OcGregDm2R2->Integral()+
     OcGregDm1R2->Integral();
@@ -4339,17 +4589,21 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   }
 
   float ExEndCapP = 
+    ExGregD4R3->Integral()+  
     ExGregD3R3->Integral()+  
     ExGregD2R3->Integral()+
     ExGregD1R3->Integral()+
+    ExGregD4R2->Integral()+  
     ExGregD3R2->Integral()+  
     ExGregD2R2->Integral()+
     ExGregD1R2->Integral();
 
   float OcEndCapP = 
+    OcGregD4R3->Integral()+  
     OcGregD3R3->Integral()+  
     OcGregD2R3->Integral()+
     OcGregD1R3->Integral()+
+    OcGregD4R2->Integral()+  
     OcGregD3R2->Integral()+  
     OcGregD2R2->Integral()+
     OcGregD1R2->Integral();
@@ -4362,18 +4616,35 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   
   std::cout<<"Doing Summary per disk"<<std::endl;
   
-  TH1F * EfficiencyPerRing = new TH1F("EfficiencyPerRing","Efficiency per Ring in the whole endcap",12,0.5,12.5);
-  TH1F * StatisticsPerRing = new TH1F("StatisticsPerRing","Statistics per Ring in the whole endcap",12,0.5,12.5);
+  TH1F * EfficiencyPerRing = new TH1F("EfficiencyPerRing","Efficiency per Ring in the whole endcap",16,0.5,16.5);
+  TH1F * StatisticsPerRing = new TH1F("StatisticsPerRing","Statistics per Ring in the whole endcap",16,0.5,16.5);
   
-  float exg = ExGregDm3R3->Integral(); float obg = OcGregDm3R3->Integral();
-  eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
-  if(debug) std::cout<<"Ring -3 Ring 3 expected "<<exg<<" observed "<<obg<<" eff "<<eff<<"+/-"<<err<<std::endl;
+  float exg=0;
+  
+  exg= ExGregDm4R3->Integral(); float obg = OcGregDm4R3->Integral();eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
+  std::cout<<"Ring -4 Ring 3 expected "<<exg<<" observed "<<obg<<" eff "<<eff<<"+/-"<<err<<std::endl;
+  std::cout<<"Disk_-4_Ring_3 "<<eff<<" "<<err<<std::endl;
+  EfficiencyPerRing->GetXaxis()->SetBinLabel(1,"RE-4/3");
+  EfficiencyPerRing->SetBinContent(1,eff);
+  EfficiencyPerRing->SetBinError(1,err);
+  StatisticsPerRing->GetXaxis()->SetBinLabel(1,"RE-4/3");
+  StatisticsPerRing->SetBinContent(1,exg);
+
+  exg = ExGregDm4R2->Integral(); obg = OcGregDmR2->Integral(); eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
+  std::cout<<"Disk -4 Ring 2 expected "<<exg<<" observed "<<obg<<" eff "<<eff<<"+/-"<<err<<std::endl;
+  std::cout<<"Disk_-4_Ring_2 "<<eff<<" "<<err<<std::endl;
+  EfficiencyPerRing->GetXaxis()->SetBinLabel(2,"RE-4/2");
+  EfficiencyPerRing->SetBinContent(2,eff);
+  EfficiencyPerRing->SetBinError(2,err);
+  StatisticsPerRing->GetXaxis()->SetBinLabel(2,"RE-4/2");
+  StatisticsPerRing->SetBinContent(2,exg);
+
+  exg= ExGregDm3R3->Integral(); float obg = OcGregDm3R3->Integral();eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
+  std::cout<<"Ring -3 Ring 3 expected "<<exg<<" observed "<<obg<<" eff "<<eff<<"+/-"<<err<<std::endl;
   std::cout<<"Disk_-3_Ring_3 "<<eff<<" "<<err<<std::endl;
-  
   EfficiencyPerRing->GetXaxis()->SetBinLabel(1,"RE-3/3");
   EfficiencyPerRing->SetBinContent(1,eff);
   EfficiencyPerRing->SetBinError(1,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(1,"RE-3/3");
   StatisticsPerRing->SetBinContent(1,exg);
   
@@ -4383,7 +4654,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(2,"RE-3/2");
   EfficiencyPerRing->SetBinContent(2,eff);
   EfficiencyPerRing->SetBinError(2,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(2,"RE-3/2");
   StatisticsPerRing->SetBinContent(2,exg);
 
@@ -4393,7 +4663,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(3,"RE-2/3");
   EfficiencyPerRing->SetBinContent(3,eff);
   EfficiencyPerRing->SetBinError(3,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(3,"RE-2/3");
   StatisticsPerRing->SetBinContent(3,exg);
 
@@ -4403,7 +4672,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(4,"RE-2/2");
   EfficiencyPerRing->SetBinContent(4,eff);
   EfficiencyPerRing->SetBinError(4,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(4,"RE-2/2");
   StatisticsPerRing->SetBinContent(4,exg);
 
@@ -4413,7 +4681,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(5,"RE-1/3");
   EfficiencyPerRing->SetBinContent(5,eff);
   EfficiencyPerRing->SetBinError(5,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(5,"RE-1/3");
   StatisticsPerRing->SetBinContent(5,exg);
 
@@ -4423,7 +4690,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(6,"RE-1/2");
   EfficiencyPerRing->SetBinContent(6,eff);
   EfficiencyPerRing->SetBinError(6,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(6,"RE-1/2");
   StatisticsPerRing->SetBinContent(6,exg);
     
@@ -4433,7 +4699,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(7,"RE+1/3");
   EfficiencyPerRing->SetBinContent(7,eff);
   EfficiencyPerRing->SetBinError(7,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(7,"RE+1/3");
   StatisticsPerRing->SetBinContent(7,exg);
 
@@ -4443,7 +4708,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(8,"RE+1/2");
   EfficiencyPerRing->SetBinContent(8,eff);
   EfficiencyPerRing->SetBinError(8,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(8,"RE+1/2");
   StatisticsPerRing->SetBinContent(8,exg);
   
@@ -4453,7 +4717,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(9,"RE+2/3");
   EfficiencyPerRing->SetBinContent(9,eff);
   EfficiencyPerRing->SetBinError(9,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(9,"RE+2/3");
   StatisticsPerRing->SetBinContent(9,exg);
 
@@ -4463,7 +4726,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(10,"RE+2/2");
   EfficiencyPerRing->SetBinContent(10,eff);
   EfficiencyPerRing->SetBinError(10,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(10,"RE+2/2");
   StatisticsPerRing->SetBinContent(10,exg);
 
@@ -4473,7 +4735,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(11,"RE+3/3");
   EfficiencyPerRing->SetBinContent(11,eff);
   EfficiencyPerRing->SetBinError(11,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(11,"RE+3/3");
   StatisticsPerRing->SetBinContent(11,exg);
 
@@ -4483,11 +4744,28 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EfficiencyPerRing->GetXaxis()->SetBinLabel(12,"RE+3/2");
   EfficiencyPerRing->SetBinContent(12,eff);
   EfficiencyPerRing->SetBinError(12,err);
-
   StatisticsPerRing->GetXaxis()->SetBinLabel(12,"RE+3/2");
   StatisticsPerRing->SetBinContent(12,exg);
   
+  exg = ExGregD4R3->Integral(); obg = OcGregD4R3->Integral(); eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
+  std::cout<<"Disk 4 Ring 3 expected "<<exg<<" observed "<<obg<<" eff "<<eff<<"+/-"<<err<<std::endl;
+  std::cout<<"Disk_4_Ring_3 "<<eff<<" "<<err<<std::endl;
+  EfficiencyPerRing->GetXaxis()->SetBinLabel(11,"RE+4/3");
+  EfficiencyPerRing->SetBinContent(11,eff);
+  EfficiencyPerRing->SetBinError(11,err);
+  StatisticsPerRing->GetXaxis()->SetBinLabel(11,"RE+4/3");
+  StatisticsPerRing->SetBinContent(11,exg);
+
+  exg = ExGregD4R2->Integral(); obg = OcGregD44R2->Integral(); eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
+  std::cout<<"Disk 4 Ring 2 expected "<<exg<<" observed "<<obg<<" eff "<<eff<<"+/-"<<err<<std::endl;
+  std::cout<<"Disk_4_Ring_2 "<<eff<<" "<<err<<std::endl;
+  EfficiencyPerRing->GetXaxis()->SetBinLabel(12,"RE+4/2");
+  EfficiencyPerRing->SetBinContent(12,eff);
+  EfficiencyPerRing->SetBinError(12,err);
+  StatisticsPerRing->GetXaxis()->SetBinLabel(12,"RE+4/2");
+  StatisticsPerRing->SetBinContent(12,exg);
   
+
   for(k=1;k<=12;k++){
     err=0; eff=0; N=ExsectorEffWm2->GetBinContent(k);
     if(N!=0.){ eff = OcsectorEffWm2->GetBinContent(k)/N;err=sqrt(eff*(1-eff)/N);}
@@ -4688,6 +4966,48 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     
   }if(endcap){  
     if(debug) std::cout<<"Label Options Near"<<std::endl;
+    NoPredictionDm4->GetXaxis()->LabelsOption("v");
+    if(debug) std::cout<<"Label Options AverageEffDm4"<<std::endl;
+    AverageEffDm4->GetXaxis()->LabelsOption("v");
+    if(debug) std::cout<<"Label Options EffGlobDm4"<<std::endl;
+    EffGlobDm4->GetXaxis()->LabelsOption("v");
+    BXGlobDm4->GetXaxis()->LabelsOption("v");
+    MaskedGlobDm4->GetXaxis()->LabelsOption("v");
+          
+    if(debug) std::cout<<"Label Options Far"<<std::endl;
+    NoPredictionDm4far->GetXaxis()->LabelsOption("v");
+    AverageEffDm4far->GetXaxis()->LabelsOption("v");
+    EffGlobDm4far->GetXaxis()->LabelsOption("v");
+    BXGlobDm4far->GetXaxis()->LabelsOption("v");
+    MaskedGlobDm4far->GetXaxis()->LabelsOption("v");
+    
+    if(debug) std::cout<<"Label Size"<<std::endl;
+    NoPredictionDm4->GetXaxis()->SetLabelSize(0.03);
+    AverageEffDm4->GetXaxis()->SetLabelSize(0.03);
+    EffGlobDm4->GetXaxis()->SetLabelSize(0.03);
+    BXGlobDm4->GetXaxis()->SetLabelSize(0.03);
+    MaskedGlobDm4->GetXaxis()->SetLabelSize(0.03);
+    NoPredictionDm4far->GetXaxis()->SetLabelSize(0.03);
+    AverageEffDm4far->GetXaxis()->SetLabelSize(0.03);
+    EffGlobDm4far->GetXaxis()->SetLabelSize(0.03);
+    BXGlobDm4far->GetXaxis()->SetLabelSize(0.03);
+    MaskedGlobDm4far->GetXaxis()->SetLabelSize(0.03);
+    
+    if(debug) std::cout<<"Range User"<<std::endl;
+    NoPredictionDm4->GetYaxis()->SetRangeUser(0.,100.);
+    AverageEffDm4->GetYaxis()->SetRangeUser(0.,100.);
+    EffGlobDm4->GetYaxis()->SetRangeUser(0.,100.);
+    MaskedGlobDm4->GetYaxis()->SetRangeUser(0.,100.);
+    NoPredictionDm4far->GetYaxis()->SetRangeUser(0.,100.);
+    AverageEffDm4far->GetYaxis()->SetRangeUser(0.,100.);
+    EffGlobDm4far->GetYaxis()->SetRangeUser(0.,100.);
+    MaskedGlobDm4far->GetYaxis()->SetRangeUser(0.,100.);
+    NoPredictionDm4->GetYaxis()->SetRangeUser(0.,100.);
+    MaskedGlobDm4far->GetYaxis()->SetRangeUser(0.,100.);
+
+    if(debug) std::cout<<"Done with Disk m 4"<<std::endl;
+
+    if(debug) std::cout<<"Label Options Near"<<std::endl;
     NoPredictionDm3->GetXaxis()->LabelsOption("v");
     if(debug) std::cout<<"Label Options AverageEffDm3"<<std::endl;
     AverageEffDm3->GetXaxis()->LabelsOption("v");
@@ -4724,7 +5044,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     AverageEffDm3far->GetYaxis()->SetRangeUser(0.,100.);
     EffGlobDm3far->GetYaxis()->SetRangeUser(0.,100.);
     MaskedGlobDm3far->GetYaxis()->SetRangeUser(0.,100.);
-    NoPredictionDm2->GetYaxis()->SetRangeUser(0.,100.);
+    NoPredictionDm3->GetYaxis()->SetRangeUser(0.,100.);
     MaskedGlobDm3far->GetYaxis()->SetRangeUser(0.,100.);
 
     if(debug) std::cout<<"Done with Disk m 3"<<std::endl;
@@ -4892,6 +5212,41 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     EffGlobD3far->GetYaxis()->SetRangeUser(0.,100.);
     MaskedGlobD3far->GetYaxis()->SetRangeUser(0.,100.);
 
+    if(debug) std::cout<<"Done with Disk 3"<<std::endl;
+    
+    NoPredictionD4->GetXaxis()->LabelsOption("v");
+    AverageEffD4->GetXaxis()->LabelsOption("v");
+    EffGlobD4->GetXaxis()->LabelsOption("v");
+    BXGlobD4->GetXaxis()->LabelsOption("v");
+    MaskedGlobD4->GetXaxis()->LabelsOption("v");
+    NoPredictionD4far->GetXaxis()->LabelsOption("v");
+    AverageEffD4far->GetXaxis()->LabelsOption("v");
+    EffGlobD4far->GetXaxis()->LabelsOption("v");
+    BXGlobD4far->GetXaxis()->LabelsOption("v");
+    MaskedGlobD4far->GetXaxis()->LabelsOption("v");
+  
+    NoPredictionD4->GetXaxis()->SetLabelSize(0.03);
+    AverageEffD4->GetXaxis()->SetLabelSize(0.03);
+    EffGlobD4->GetXaxis()->SetLabelSize(0.03);
+    BXGlobD4->GetXaxis()->SetLabelSize(0.03);
+    MaskedGlobD4->GetXaxis()->SetLabelSize(0.03);
+    NoPredictionD4far->GetXaxis()->SetLabelSize(0.03);
+    AverageEffD4far->GetXaxis()->SetLabelSize(0.03);
+    EffGlobD4far->GetXaxis()->SetLabelSize(0.03);
+    BXGlobD4far->GetXaxis()->SetLabelSize(0.03);
+    MaskedGlobD4far->GetXaxis()->SetLabelSize(0.03);
+
+    NoPredictionD4->GetYaxis()->SetRangeUser(0.,100.);
+    AverageEffD4->GetYaxis()->SetRangeUser(0.,100.);
+    EffGlobD4->GetYaxis()->SetRangeUser(0.,100.);
+    MaskedGlobD4->GetYaxis()->SetRangeUser(0.,100.);
+    NoPredictionD4far->GetYaxis()->SetRangeUser(0.,100.);
+    AverageEffD4far->GetYaxis()->SetRangeUser(0.,100.);
+    EffGlobD4far->GetYaxis()->SetRangeUser(0.,100.);
+    MaskedGlobD4far->GetYaxis()->SetRangeUser(0.,100.);
+
+    if(debug) std::cout<<"Done with Disk 4"<<std::endl;
+    
     residualRB1in->Write();
     residualRB1out->Write();
     residualRB2in->Write();
@@ -4906,25 +5261,25 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     residualStation1Ring3_B->Write();
     residualStation1Ring3_C->Write();
     
-    residualStation23Ring2_A->Write();
-    residualStation23Ring2_B->Write();
-    residualStation23Ring2_C->Write();
-    residualStation23Ring3_A->Write();
-    residualStation23Ring3_B->Write();
-    residualStation23Ring3_C->Write();
+    residualStation234Ring2_A->Write();
+    residualStation234Ring2_B->Write();
+    residualStation234Ring2_C->Write();
+    residualStation234Ring3_A->Write();
+    residualStation234Ring3_B->Write();
+    residualStation234Ring3_C->Write();
 
-    residualStation123Ring3_A->Add(residualStation23Ring3_A);
-    residualStation123Ring3_A->Add(residualStation1Ring3_A);
+    residualStation1234Ring3_A->Add(residualStation234Ring3_A);
+    residualStation1234Ring3_A->Add(residualStation1Ring3_A);
     
-    residualStation123Ring3_B->Add(residualStation23Ring3_B);
-    residualStation123Ring3_B->Add(residualStation1Ring3_B);
+    residualStation1234Ring3_B->Add(residualStation234Ring3_B);
+    residualStation1234Ring3_B->Add(residualStation1Ring3_B);
 
-    residualStation123Ring3_C->Add(residualStation23Ring3_C);
-    residualStation123Ring3_C->Add(residualStation1Ring3_C);
+    residualStation1234Ring3_C->Add(residualStation234Ring3_C);
+    residualStation1234Ring3_C->Add(residualStation1Ring3_C);
     
-    residualStation123Ring3_A->Write();
-    residualStation123Ring3_B->Write();
-    residualStation123Ring3_C->Write();
+    residualStation1234Ring3_A->Write();
+    residualStation1234Ring3_B->Write();
+    residualStation1234Ring3_C->Write();
 
     residualDiskm1Ring2->Write();
     residualDiskm1Ring3->Write();
@@ -5404,26 +5759,28 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   residualStation1Ring3_B->Draw(); labeltoSave = "resEndCap/residualStation1Ring3_B.png"; residualStation1Ring3_B->GetXaxis()->SetTitle("(cm)");   if(residualStation1Ring3_B->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
   residualStation1Ring3_C->Draw(); labeltoSave = "resEndCap/residualStation1Ring3_C.png"; residualStation1Ring3_C->GetXaxis()->SetTitle("(cm)");   if(residualStation1Ring3_C->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
   		       
-  residualStation23Ring2_A->Draw();  labeltoSave = "resEndCap/residualStation23Ring2_A.png"; residualStation23Ring2_A->GetXaxis()->SetTitle("(cm)");   if(residualStation23Ring2_A->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
-  residualStation23Ring2_B->Draw();  labeltoSave = "resEndCap/residualStation23Ring2_B.png"; residualStation23Ring2_B->GetXaxis()->SetTitle("(cm)");   if(residualStation23Ring2_B->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
-  residualStation23Ring2_C->Draw();  labeltoSave = "resEndCap/residualStation23Ring2_C.png"; residualStation23Ring2_C->GetXaxis()->SetTitle("(cm)");   if(residualStation23Ring2_C->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualStation234Ring2_A->Draw();  labeltoSave = "resEndCap/residualStation234Ring2_A.png"; residualStation234Ring2_A->GetXaxis()->SetTitle("(cm)");   if(residualStation234Ring2_A->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualStation234Ring2_B->Draw();  labeltoSave = "resEndCap/residualStation234Ring2_B.png"; residualStation234Ring2_B->GetXaxis()->SetTitle("(cm)");   if(residualStation234Ring2_B->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualStation234Ring2_C->Draw();  labeltoSave = "resEndCap/residualStation234Ring2_C.png"; residualStation234Ring2_C->GetXaxis()->SetTitle("(cm)");   if(residualStation234Ring2_C->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
 
-  residualStation23Ring3_A->Draw();  labeltoSave = "resEndCap/residualStation23Ring3_A.png"; residualStation23Ring3_A->GetXaxis()->SetTitle("(cm)");   if(residualStation23Ring3_A->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
-  residualStation23Ring3_B->Draw();  labeltoSave = "resEndCap/residualStation23Ring3_B.png"; residualStation23Ring3_B->GetXaxis()->SetTitle("(cm)");   if(residualStation23Ring3_B->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
-  residualStation23Ring3_C->Draw();  labeltoSave = "resEndCap/residualStation23Ring3_C.png"; residualStation23Ring3_C->GetXaxis()->SetTitle("(cm)");   if(residualStation23Ring3_C->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualStation234Ring3_A->Draw();  labeltoSave = "resEndCap/residualStation234Ring3_A.png"; residualStation234Ring3_A->GetXaxis()->SetTitle("(cm)");   if(residualStation234Ring3_A->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualStation234Ring3_B->Draw();  labeltoSave = "resEndCap/residualStation234Ring3_B.png"; residualStation234Ring3_B->GetXaxis()->SetTitle("(cm)");   if(residualStation234Ring3_B->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualStation234Ring3_C->Draw();  labeltoSave = "resEndCap/residualStation234Ring3_C.png"; residualStation234Ring3_C->GetXaxis()->SetTitle("(cm)");   if(residualStation234Ring3_C->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
 
-  residualStation123Ring3_A->Draw();  labeltoSave = "resEndCap/residualStation123Ring3_A.png"; residualStation123Ring3_A->GetXaxis()->SetTitle("(cm)");   if(residualStation123Ring3_A->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
-  residualStation123Ring3_B->Draw();  labeltoSave = "resEndCap/residualStation123Ring3_B.png"; residualStation123Ring3_B->GetXaxis()->SetTitle("(cm)");   if(residualStation123Ring3_B->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
-  residualStation123Ring3_C->Draw();  labeltoSave = "resEndCap/residualStation123Ring3_C.png"; residualStation123Ring3_C->GetXaxis()->SetTitle("(cm)");   if(residualStation123Ring3_C->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualStation1234Ring3_A->Draw();  labeltoSave = "resEndCap/residualStation1234Ring3_A.png"; residualStation1234Ring3_A->GetXaxis()->SetTitle("(cm)");   if(residualStation1234Ring3_A->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualStation1234Ring3_B->Draw();  labeltoSave = "resEndCap/residualStation1234Ring3_B.png"; residualStation1234Ring3_B->GetXaxis()->SetTitle("(cm)");   if(residualStation1234Ring3_B->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualStation1234Ring3_C->Draw();  labeltoSave = "resEndCap/residualStation1234Ring3_C.png"; residualStation1234Ring3_C->GetXaxis()->SetTitle("(cm)");   if(residualStation1234Ring3_C->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
 
   if(debug) std::cout<<"Producing Residual Plots for Disks in the End Cap"<<std::endl;
-
+  
   residualDiskm1Ring2->Draw(); labeltoSave = "resEndCap/residualDiskm1Ring2.png"; residualDiskm1Ring2->GetXaxis()->SetTitle("(cm)");   if(residualDiskm1Ring2->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
   residualDiskm1Ring3->Draw(); labeltoSave = "resEndCap/residualDiskm1Ring3.png"; residualDiskm1Ring3->GetXaxis()->SetTitle("(cm)");   if(residualDiskm1Ring3->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
   residualDiskm2Ring2->Draw(); labeltoSave = "resEndCap/residualDiskm2Ring2.png"; residualDiskm2Ring2->GetXaxis()->SetTitle("(cm)");   if(residualDiskm2Ring2->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
   residualDiskm2Ring3->Draw(); labeltoSave = "resEndCap/residualDiskm2Ring3.png"; residualDiskm2Ring3->GetXaxis()->SetTitle("(cm)");   if(residualDiskm2Ring3->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
   residualDiskm3Ring2->Draw(); labeltoSave = "resEndCap/residualDiskm3Ring2.png"; residualDiskm3Ring2->GetXaxis()->SetTitle("(cm)");   if(residualDiskm3Ring2->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
   residualDiskm3Ring3->Draw(); labeltoSave = "resEndCap/residualDiskm3Ring3.png"; residualDiskm3Ring3->GetXaxis()->SetTitle("(cm)");   if(residualDiskm3Ring3->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualDiskm4Ring2->Draw(); labeltoSave = "resEndCap/residualDiskm4Ring2.png"; residualDiskm4Ring2->GetXaxis()->SetTitle("(cm)");   if(residualDiskm4Ring2->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualDiskm4Ring3->Draw(); labeltoSave = "resEndCap/residualDiskm4Ring3.png"; residualDiskm4Ring3->GetXaxis()->SetTitle("(cm)");   if(residualDiskm4Ring3->GetEntries()!=0) Ca7->SetLogy(); Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
 
   if(debug) std::cout<<"Producing Residual Plots for Disks in the End Cap 2"<<std::endl;
 
@@ -5433,6 +5790,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   residualDisk2Ring3->Draw();  labeltoSave = "resEndCap/residualDisk2Ring3.png"; residualDisk2Ring3->GetXaxis()->SetTitle("(cm)");   if(residualDisk2Ring3->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
   residualDisk3Ring2->Draw();  labeltoSave = "resEndCap/residualDisk3Ring2.png"; residualDisk3Ring2->GetXaxis()->SetTitle("(cm)");   if(residualDisk3Ring2->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
   residualDisk3Ring3->Draw();  labeltoSave = "resEndCap/residualDisk3Ring3.png"; residualDisk3Ring3->GetXaxis()->SetTitle("(cm)");   if(residualDisk3Ring3->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualDisk4Ring2->Draw();  labeltoSave = "resEndCap/residualDisk4Ring2.png"; residualDisk4Ring2->GetXaxis()->SetTitle("(cm)");   if(residualDisk4Ring2->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
+  residualDisk4Ring3->Draw();  labeltoSave = "resEndCap/residualDisk4Ring3.png"; residualDisk4Ring3->GetXaxis()->SetTitle("(cm)");   if(residualDisk4Ring3->GetEntries()!=0) Ca7->SetLogy();   Ca7->SaveAs(labeltoSave.c_str()); Ca7->Clear();
 
   if(debug) std::cout<<"Closing Canvas and deleting"<<std::endl;
 
@@ -5452,16 +5811,16 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   delete residualStation1Ring3_B;
   delete residualStation1Ring3_C;
   
-  delete residualStation23Ring2_A;
-  delete residualStation23Ring2_B;
-  delete residualStation23Ring2_C;
-  delete residualStation23Ring3_A;
-  delete residualStation23Ring3_B;
-  delete residualStation23Ring3_C;
+  delete residualStation234Ring2_A;
+  delete residualStation234Ring2_B;
+  delete residualStation234Ring2_C;
+  delete residualStation234Ring3_A;
+  delete residualStation234Ring3_B;
+  delete residualStation234Ring3_C;
 
-  delete residualStation123Ring3_A;
-  delete residualStation123Ring3_B;
-  delete residualStation123Ring3_C;
+  delete residualStation1234Ring3_A;
+  delete residualStation1234Ring3_B;
+  delete residualStation1234Ring3_C;
 
   delete residualDiskm1Ring2;
   delete residualDiskm1Ring3;
@@ -5469,6 +5828,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   delete residualDiskm2Ring3;
   delete residualDiskm3Ring2;
   delete residualDiskm3Ring3;
+  delete residualDiskm4Ring2;
+  delete residualDiskm4Ring3;
   
   delete residualDisk1Ring2;
   delete residualDisk1Ring3;
@@ -5476,6 +5837,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   delete residualDisk2Ring3;
   delete residualDisk3Ring2;
   delete residualDisk3Ring3;
+  delete residualDisk4Ring2;
+  delete residualDisk4Ring3;
 
   std::cout<<"Writting Inegral Muographies and deleting all."<<std::endl;
   
@@ -5634,18 +5997,17 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
   if(debug) std::cout<<"Cluster Size For the EndCap"<<std::endl;
  
-
   CLSStation1Ring2_A->Draw(); CLSStation1Ring2_A->GetXaxis()->SetTitle("CLSStation1Ring2_A");  CLSStation1Ring2_A->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation1Ring2_A.png");  CLSStation1Ring2_A->Write();  Ca6->Clear(); 
   CLSStation1Ring2_B->Draw(); CLSStation1Ring2_B->GetXaxis()->SetTitle("CLSStation1Ring2_B");  CLSStation1Ring2_B->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation1Ring2_B.png");  CLSStation1Ring2_B->Write();  Ca6->Clear(); 
   CLSStation1Ring2_C->Draw(); CLSStation1Ring2_C->GetXaxis()->SetTitle("CLSStation1Ring2_C");  CLSStation1Ring2_C->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation1Ring2_C.png");  CLSStation1Ring2_C->Write();  Ca6->Clear(); 
 
-  CLSStation23Ring2_A->Draw(); CLSStation23Ring2_A->GetXaxis()->SetTitle("CLSStation23Ring2_A");  CLSStation23Ring2_A->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation23Ring2_A.png");  CLSStation23Ring2_A->Write();  Ca6->Clear(); 
-  CLSStation23Ring2_B->Draw(); CLSStation23Ring2_B->GetXaxis()->SetTitle("CLSStation23Ring2_B");  CLSStation23Ring2_B->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation23Ring2_B.png");  CLSStation23Ring2_B->Write();  Ca6->Clear(); 
-  CLSStation23Ring2_C->Draw(); CLSStation23Ring2_C->GetXaxis()->SetTitle("CLSStation23Ring2_C");  CLSStation23Ring2_C->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation23Ring2_C.png");  CLSStation23Ring2_C->Write();  Ca6->Clear(); 
+  CLSStation234Ring2_A->Draw(); CLSStation234Ring2_A->GetXaxis()->SetTitle("CLSStation234Ring2_A");  CLSStation234Ring2_A->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation234Ring2_A.png");  CLSStation234Ring2_A->Write();  Ca6->Clear(); 
+  CLSStation234Ring2_B->Draw(); CLSStation234Ring2_B->GetXaxis()->SetTitle("CLSStation234Ring2_B");  CLSStation234Ring2_B->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation234Ring2_B.png");  CLSStation234Ring2_B->Write();  Ca6->Clear(); 
+  CLSStation234Ring2_C->Draw(); CLSStation234Ring2_C->GetXaxis()->SetTitle("CLSStation234Ring2_C");  CLSStation234Ring2_C->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation234Ring2_C.png");  CLSStation234Ring2_C->Write();  Ca6->Clear(); 
 
-  CLSStation123Ring3_A->Draw(); CLSStation123Ring3_A->GetXaxis()->SetTitle("CLSStation123Ring3_A");  CLSStation123Ring3_A->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation123Ring3_A.png");  CLSStation123Ring3_A->Write();  Ca6->Clear(); 
-  CLSStation123Ring3_B->Draw(); CLSStation123Ring3_B->GetXaxis()->SetTitle("CLSStation123Ring3_B");  CLSStation123Ring3_B->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation123Ring3_B.png");  CLSStation123Ring3_B->Write();  Ca6->Clear(); 
-  CLSStation123Ring3_C->Draw(); CLSStation123Ring3_C->GetXaxis()->SetTitle("CLSStation123Ring3_C");  CLSStation123Ring3_C->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation123Ring3_C.png");  CLSStation123Ring3_C->Write();  Ca6->Clear(); 
+  CLSStation1234Ring3_A->Draw(); CLSStation1234Ring3_A->GetXaxis()->SetTitle("CLSStation1234Ring3_A");  CLSStation1234Ring3_A->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation1234Ring3_A.png");  CLSStation1234Ring3_A->Write();  Ca6->Clear(); 
+  CLSStation1234Ring3_B->Draw(); CLSStation1234Ring3_B->GetXaxis()->SetTitle("CLSStation1234Ring3_B");  CLSStation1234Ring3_B->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation1234Ring3_B.png");  CLSStation1234Ring3_B->Write();  Ca6->Clear(); 
+  CLSStation1234Ring3_C->Draw(); CLSStation1234Ring3_C->GetXaxis()->SetTitle("CLSStation1234Ring3_C");  CLSStation1234Ring3_C->GetYaxis()->SetTitle("Cluster Size"); Ca6->SaveAs("CLS/CLSStation1234Ring3_C.png");  CLSStation1234Ring3_C->Write();  Ca6->Clear(); 
 
   Ca6->Close();
 
@@ -5756,6 +6118,24 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   Ca5->SaveAs("Greg/D3R3.png");
   Ca5->Clear(); 
 
+  GregD4R2->Draw(); GregD4R2->GetXaxis()->SetTitle("Chamber");GregD4R2->GetYaxis()->SetRangeUser(-0.01,1.01);
+  GregD4R2_black->SetLineColor(kRed);
+  std::cout<<"drawing fifth black histogram"<<std::endl;
+  GregD4R2_black->Draw("same");
+  GregD4R2_black->SetMarkerSize(1.0);
+  GregD4R2_black->SetMarkerStyle(21);
+  Ca5->SaveAs("Greg/D4R2.png");
+  Ca5->Clear(); 
+  
+  GregD4R3->Draw(); GregD4R3->GetXaxis()->SetTitle("Chamber");GregD4R3->GetYaxis()->SetRangeUser(-0.01,1.01);
+  GregD4R3_black->SetLineColor(kRed);
+  std::cout<<"drawing sixth black histogram"<<std::endl;
+  GregD4R3_black->Draw("same");
+  GregD4R3_black->SetMarkerStyle(21);
+  GregD4R3_black->SetMarkerSize(1.0);
+  Ca5->SaveAs("Greg/D4R3.png");
+  Ca5->Clear(); 
+
   //Negative Endcap
 
   GregDm1R2->Draw(); GregDm1R2->GetXaxis()->SetTitle("Chamber"); GregDm1R2->GetYaxis()->SetRangeUser(-0.01,1.01);
@@ -5808,6 +6188,22 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   Ca5->SaveAs("Greg/Dm3R3.png");
   Ca5->Clear(); 
 
+  GregDm4R2->Draw(); GregDm4R2->GetXaxis()->SetTitle("Chamber");GregDm4R2->GetYaxis()->SetRangeUser(-0.01,1.01);
+  GregDm4R2_black->SetLineColor(kRed);
+  GregDm4R2_black->Draw("same");
+  GregDm4R2_black->SetMarkerStyle(21);
+  GregDm4R2_black->SetMarkerSize(1.0);
+  Ca5->SaveAs("Greg/Dm4R2.png");
+  Ca5->Clear(); 
+  
+  GregDm4R3->Draw(); GregDm4R3->GetXaxis()->SetTitle("Chamber");GregDm4R3->GetYaxis()->SetRangeUser(-0.01,1.01);
+  GregDm4R3_black->SetLineColor(kRed);
+  GregDm4R3_black->Draw("same");
+  GregDm4R3_black->SetMarkerStyle(21);
+  GregDm4R3_black->SetMarkerSize(1.0);
+  Ca5->SaveAs("Greg/Dm4R3.png");
+  Ca5->Clear(); 
+
   if(debug)std::cout<<"Deleting Greg histograms"<<std::endl;
   
   if(debug)std::cout<<"After Deleting Greg histograms"<<std::endl;
@@ -5819,6 +6215,13 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   //gStyle->SetPalette(20,colorPalette3);
 
   gStyle->SetPalette(1);
+
+  Diskm4Summary->SetMinimum(0);  
+  Diskm4Summary->SetMaximum(100);
+  Diskm4Summary->Draw(); Diskm4Summary->GetXaxis()->SetTitle("Chamber");
+  Diskm4Summary->SetDrawOption("COLZ");
+  Ca5->SaveAs("Pigi/Diskm4Summary.png"); 
+  Ca5->Clear();
 
   Diskm3Summary->SetMinimum(0);  
   Diskm3Summary->SetMaximum(100);
@@ -5841,11 +6244,11 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   Ca5->SaveAs("Pigi/Diskm1Summary.png"); 
   Ca5->Clear();
   
-  Disk3Summary->SetMinimum(0); 
-  Disk3Summary->SetMaximum(100);
-  Disk3Summary->Draw(); Disk3Summary->GetXaxis()->SetTitle("Chamber");
-  Disk3Summary->SetDrawOption("COLZ");
-  Ca5->SaveAs("Pigi/Disk3Summary.png"); 
+  Disk1Summary->SetMinimum(0); 
+  Disk1Summary->SetMaximum(100);
+  Disk1Summary->Draw(); Disk1Summary->GetXaxis()->SetTitle("Chamber");
+  Disk1Summary->SetDrawOption("COLZ");
+  Ca5->SaveAs("Pigi/Disk1Summary.png"); 
   Ca5->Clear();
   
   Disk2Summary->SetMinimum(0); 
@@ -5855,11 +6258,18 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   Ca5->SaveAs("Pigi/Disk2Summary.png"); 
   Ca5->Clear();
   
-  Disk1Summary->SetMinimum(0); 
-  Disk1Summary->SetMaximum(100);
-  Disk1Summary->Draw(); Disk1Summary->GetXaxis()->SetTitle("Chamber");
-  Disk1Summary->SetDrawOption("COLZ");
-  Ca5->SaveAs("Pigi/Disk1Summary.png"); 
+  Disk3Summary->SetMinimum(0); 
+  Disk3Summary->SetMaximum(100);
+  Disk3Summary->Draw(); Disk3Summary->GetXaxis()->SetTitle("Chamber");
+  Disk3Summary->SetDrawOption("COLZ");
+  Ca5->SaveAs("Pigi/Disk3Summary.png"); 
+  Ca5->Clear();
+  
+  Disk4Summary->SetMinimum(0); 
+  Disk4Summary->SetMaximum(100);
+  Disk4Summary->Draw(); Disk4Summary->GetXaxis()->SetTitle("Chamber");
+  Disk4Summary->SetDrawOption("COLZ");
+  Ca5->SaveAs("Pigi/Disk4Summary.png"); 
   Ca5->Clear();
   
   PositiveEndCapSummary->SetMinimum(0); 
@@ -6556,6 +6966,66 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
    Ca2->SaveAs("Sides/SegEff_D3near.png");
    Ca2->Clear();
    
+   EffGlobD4far->Draw();
+   EffGlobD4far->GetYaxis()->SetTitle("%");
+  
+   BXGlobD4far->SetMarkerColor(9);
+   BXGlobD4far->SetLineColor(9);
+   BXGlobD4far->Draw("same");
+
+   Signal_BXGlobD4far->SetMarkerColor(2);
+   Signal_BXGlobD4far->SetLineColor(2);
+   Signal_BXGlobD4far->Draw("same");
+
+   MaskedGlobD4far->SetMarkerColor(2);
+   MaskedGlobD4far->SetLineColor(2);
+   MaskedGlobD4far->Draw("same");
+
+   AverageEffD4far->SetMarkerColor(8);
+   AverageEffD4far->SetLineColor(8);
+   AverageEffD4far->Draw("same");
+
+   NoPredictionD4far->SetMarkerColor(5);
+   NoPredictionD4far->SetLineColor(5);
+   NoPredictionD4far->Draw("same");
+
+   pave->Draw();
+
+   bxAxisEndCap->Draw("same");
+  
+   Ca2->SaveAs("Sides/SegEff_D4far.png");
+   Ca2->Clear();
+
+   EffGlobD4->Draw();
+   EffGlobD4->GetYaxis()->SetTitle("%");
+  
+   BXGlobD4->SetMarkerColor(9);
+   BXGlobD4->SetLineColor(9);
+   BXGlobD4->Draw("same");
+
+   Signal_BXGlobD4->SetMarkerColor(2);
+   Signal_BXGlobD4->SetLineColor(2);
+   Signal_BXGlobD4->Draw("same");
+
+   MaskedGlobD4->SetMarkerColor(2);
+   MaskedGlobD4->SetLineColor(2);
+   MaskedGlobD4->Draw("same");
+
+   AverageEffD4->SetMarkerColor(8);
+   AverageEffD4->SetLineColor(8);
+   AverageEffD4->Draw("same");
+
+   NoPredictionD4->SetMarkerColor(5);
+   NoPredictionD4->SetLineColor(5);
+   NoPredictionD4->Draw("same");
+
+   pave->Draw();
+
+   bxAxisEndCap->Draw("same");
+  
+   Ca2->SaveAs("Sides/SegEff_D4near.png");
+   Ca2->Clear();
+   
    //NEGATIVE
 
    EffGlobDm1->Draw();
@@ -6740,6 +7210,67 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
    Ca2->SaveAs("Sides/SegEff_Dm3near.png");
    Ca2->Clear();
 
+
+   EffGlobDm4far->Draw();
+   EffGlobDm4far->GetYaxis()->SetTitle("%");
+  
+   BXGlobDm4far->SetMarkerColor(9);
+   BXGlobDm4far->SetLineColor(9);
+   BXGlobDm4far->Draw("same");
+
+   Signal_BXGlobDm4far->SetMarkerColor(2);
+   Signal_BXGlobDm4far->SetLineColor(2);
+   Signal_BXGlobDm4far->Draw("same");
+
+   MaskedGlobDm4far->SetMarkerColor(2);
+   MaskedGlobDm4far->SetLineColor(2);
+   MaskedGlobDm4far->Draw("same");
+
+   AverageEffDm4far->SetMarkerColor(8);
+   AverageEffDm4far->SetLineColor(8);
+   AverageEffDm4far->Draw("same");
+
+   NoPredictionDm4far->SetMarkerColor(5);
+   NoPredictionDm4far->SetLineColor(5);
+   NoPredictionDm4far->Draw("same");
+
+   pave->Draw();
+
+   bxAxisEndCap->Draw("same");
+  
+   Ca2->SaveAs("Sides/SegEff_Dm4far.png");
+   Ca2->Clear();
+
+   EffGlobDm4->Draw();
+   EffGlobDm4->GetYaxis()->SetTitle("%");
+  
+   BXGlobDm4->SetMarkerColor(9);
+   BXGlobDm4->SetLineColor(9);
+   BXGlobDm4->Draw("same");
+
+   Signal_BXGlobDm4->SetMarkerColor(2);
+   Signal_BXGlobDm4->SetLineColor(2);
+   Signal_BXGlobDm4->Draw("same");
+   
+   MaskedGlobDm4->SetMarkerColor(2);
+   MaskedGlobDm4->SetLineColor(2);
+   MaskedGlobDm4->Draw("same");
+
+   AverageEffDm4->SetMarkerColor(8);
+   AverageEffDm4->SetLineColor(8);
+   AverageEffDm4->Draw("same");
+
+   NoPredictionDm4->SetMarkerColor(5);
+   NoPredictionDm4->SetLineColor(5);
+   NoPredictionDm4->Draw("same");
+
+   pave->Draw();
+
+   bxAxisEndCap->Draw("same");
+  
+   Ca2->SaveAs("Sides/SegEff_Dm4near.png");
+   Ca2->Clear();
+
  }
  
  if(barrel){
@@ -6850,33 +7381,41 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
    badBXEffPositiveEndCap->GetXaxis()->SetTitle("%"); badBXEffPositiveEndCap->Draw(); Ca1->SaveAs("Distro/badBXEffPositiveDistroEndCap.png");badBXEffPositiveEndCap->Write();
    badBXEffNegativeEndCap->GetXaxis()->SetTitle("%"); badBXEffNegativeEndCap->Draw(); Ca1->SaveAs("Distro/badBXEffNegativeDistroEndCap.png");badBXEffNegativeEndCap->Write();
      
+   EffDistroDm4->GetXaxis()->SetTitle("%"); EffDistroDm4->Draw(); Ca1->SaveAs("Distro/EffDistroDm4.png");   
    EffDistroDm3->GetXaxis()->SetTitle("%"); EffDistroDm3->Draw(); Ca1->SaveAs("Distro/EffDistroDm3.png");   
    EffDistroDm2->GetXaxis()->SetTitle("%"); EffDistroDm2->Draw(); Ca1->SaveAs("Distro/EffDistroDm2.png"); 
    EffDistroDm1->GetXaxis()->SetTitle("%"); EffDistroDm1->Draw(); Ca1->SaveAs("Distro/EffDistroDm1.png"); 
    EffDistroD1->GetXaxis()->SetTitle("%");  EffDistroD1->Draw();  Ca1->SaveAs("Distro/EffDistroD1.png"); 
    EffDistroD2->GetXaxis()->SetTitle("%");  EffDistroD2->Draw();  Ca1->SaveAs("Distro/EffDistroD2.png"); 
    EffDistroD3->GetXaxis()->SetTitle("%");  EffDistroD3->Draw();  Ca1->SaveAs("Distro/EffDistroD3.png"); 
+   EffDistroD4->GetXaxis()->SetTitle("%");  EffDistroD4->Draw();  Ca1->SaveAs("Distro/EffDistroD4.png"); 
 
+   EffDistroDm4->Write();
    EffDistroDm3->Write();
    EffDistroDm2->Write();
    EffDistroDm1->Write();
    EffDistroD1->Write(); 
    EffDistroD2->Write(); 
    EffDistroD3->Write(); 
+   EffDistroD4->Write(); 
    
+   EffDistroDm4far->GetXaxis()->SetTitle("%"); EffDistroDm4far->Draw(); Ca1->SaveAs("Distro/EffDistroDm4far.png");   
    EffDistroDm3far->GetXaxis()->SetTitle("%"); EffDistroDm3far->Draw(); Ca1->SaveAs("Distro/EffDistroDm3far.png");   
    EffDistroDm2far->GetXaxis()->SetTitle("%"); EffDistroDm2far->Draw(); Ca1->SaveAs("Distro/EffDistroDm2far.png"); 
    EffDistroDm1far->GetXaxis()->SetTitle("%"); EffDistroDm1far->Draw(); Ca1->SaveAs("Distro/EffDistroDm1far.png"); 
    EffDistroD1far->GetXaxis()->SetTitle("%");  EffDistroD1far->Draw();  Ca1->SaveAs("Distro/EffDistroD1far.png"); 
    EffDistroD2far->GetXaxis()->SetTitle("%");  EffDistroD2far->Draw();  Ca1->SaveAs("Distro/EffDistroD2far.png"); 
    EffDistroD3far->GetXaxis()->SetTitle("%");  EffDistroD3far->Draw();  Ca1->SaveAs("Distro/EffDistroD3far.png"); 
+   EffDistroD4far->GetXaxis()->SetTitle("%");  EffDistroD4far->Draw();  Ca1->SaveAs("Distro/EffDistroD4far.png"); 
    
+   EffDistroDm4far->Write();
    EffDistroDm3far->Write();
    EffDistroDm2far->Write();
    EffDistroDm1far->Write();
    EffDistroD1far->Write(); 
-   EffDistroD2far->Write(); 
+   EffDistroD2far->Write();
    EffDistroD3far->Write(); 
+   EffDistroD4far->Write(); 
  }
 
  Ca1->Close();
@@ -7001,12 +7540,16 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  GregD2R3->Write();
  GregD3R2->Write();
  GregD3R3->Write();
+ GregD4R2->Write();
+ GregD4R3->Write();
  GregDm1R2->Write();
  GregDm1R3->Write();
  GregDm2R2->Write();
  GregDm2R3->Write();
  GregDm3R2->Write();
  GregDm3R3->Write();
+ GregDm4R2->Write();
+ GregDm4R3->Write();
 
 
  GregD1R2_black->Write(); 
@@ -7015,12 +7558,16 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  GregD2R3_black->Write();
  GregD3R2_black->Write();
  GregD3R3_black->Write();
+ GregD4R2_black->Write();
+ GregD4R3_black->Write();
  GregDm1R2_black->Write();
  GregDm1R3_black->Write();
  GregDm2R2_black->Write();
  GregDm2R3_black->Write();
  GregDm3R2_black->Write();
  GregDm3R3_black->Write();
+ GregDm4R2_black->Write();
+ GregDm4R3_black->Write();
 
  OcGregD1R2->Write();
  OcGregD1R3->Write();
@@ -7028,6 +7575,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  OcGregD2R3->Write();
  OcGregD3R2->Write();
  OcGregD3R3->Write();
+ OcGregD4R2->Write();
+ OcGregD4R3->Write();
 
  ExGregD1R2->Write();
  ExGregD1R3->Write();
@@ -7035,6 +7584,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  ExGregD2R3->Write();
  ExGregD3R2->Write();
  ExGregD3R3->Write();
+ ExGregD4R2->Write();
+ ExGregD4R3->Write();
 
  OcGregDm1R2->Write();
  OcGregDm1R3->Write();
@@ -7042,6 +7593,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  OcGregDm2R3->Write();
  OcGregDm3R2->Write();
  OcGregDm3R3->Write();
+ OcGregDm4R2->Write();
+ OcGregDm4R3->Write();
 
  ExGregDm1R2->Write();
  ExGregDm1R3->Write();
@@ -7049,20 +7602,26 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  ExGregDm2R3->Write();
  ExGregDm3R2->Write();
  ExGregDm3R3->Write();
+ ExGregDm4R2->Write();
+ ExGregDm4R3->Write();
 
+ EffDistroDm4->Write();  
  EffDistroDm3->Write();  
  EffDistroDm2->Write();
  EffDistroDm1->Write();
  EffDistroD1->Write();
  EffDistroD2->Write();
  EffDistroD3->Write();
+ EffDistroD4->Write();
 
+ EffDistroDm5far->Write();
  EffDistroDm3far->Write();
  EffDistroDm2far->Write();
  EffDistroDm1far->Write();
  EffDistroD1far->Write();
  EffDistroD2far->Write();
  EffDistroD3far->Write();
+ EffDistroD4far->Write();
 
  EffGlobWm2->Write();
  EffGlobWm1->Write();
@@ -7148,6 +7707,17 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  DoubleGapW1->Write();
  DoubleGapW2->Write();
 
+ NoPredictionDm4->Write();
+ AverageEffDm4->Write();
+ EffGlobDm4->Write();
+ BXGlobDm4->Write();
+ MaskedGlobDm4->Write();
+ NoPredictionDm4far->Write();
+ AverageEffDm4far->Write();
+ EffGlobDm4far->Write();
+ BXGlobDm4far->Write();
+ MaskedGlobDm4far->Write();
+
  NoPredictionDm3->Write();
  AverageEffDm3->Write();
  EffGlobDm3->Write();
@@ -7158,6 +7728,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  EffGlobDm3far->Write();
  BXGlobDm3far->Write();
  MaskedGlobDm3far->Write();
+
+
  NoPredictionDm2->Write();
  AverageEffDm2->Write();
  EffGlobDm2->Write();
@@ -7198,6 +7770,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  EffGlobD2far->Write();
  BXGlobD2far->Write();
  MaskedGlobD2far->Write();
+ 
  NoPredictionD3->Write();
  AverageEffD3->Write();
  EffGlobD3->Write();
@@ -7209,6 +7782,19 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  BXGlobD3far->Write();
  MaskedGlobD3far->Write();
 
+ NoPredictionD4->Write();
+ AverageEffD4->Write();
+ EffGlobD4->Write();
+ BXGlobD4->Write();
+ MaskedGlobD4->Write();
+ NoPredictionD4far->Write();
+ AverageEffD4far->Write();
+ EffGlobD4far->Write();
+ BXGlobD4far->Write();
+ MaskedGlobD4far->Write();
+
+ Signal_BXGlobDm4->Write();
+ Signal_BXGlobDm4far->Write();
  Signal_BXGlobDm3->Write();
  Signal_BXGlobDm3far->Write();
  Signal_BXGlobDm2->Write();
@@ -7221,6 +7807,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  Signal_BXGlobD2far->Write();
  Signal_BXGlobD3->Write();
  Signal_BXGlobD3far->Write();
+ Signal_BXGlobD4->Write();
+ Signal_BXGlobD4far->Write();
 
  Ca2->Close();
 
@@ -7269,12 +7857,16 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  delete GregD2R3_black;
  delete GregD3R2_black;
  delete GregD3R3_black;
+ delete GregD4R2_black;
+ delete GregD4R3_black;
  delete GregDm1R2_black;
  delete GregDm1R3_black;
  delete GregDm2R2_black;
  delete GregDm2R3_black;
  delete GregDm3R2_black;
  delete GregDm3R3_black;
+ delete GregDm4R2_black;
+ delete GregDm4R3_black;
  
  delete GregD1R2; 
  delete GregD1R3;
@@ -7282,12 +7874,16 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  delete GregD2R3;
  delete GregD3R2;
  delete GregD3R3;
+ delete GregD4R2;
+ delete GregD4R3;
  delete GregDm1R2;
  delete GregDm1R3;
  delete GregDm2R2;
  delete GregDm2R3;
  delete GregDm3R2;
  delete GregDm3R3;
+ delete GregDm4R2;
+ delete GregDm4R3;
 } 
 
 void 
