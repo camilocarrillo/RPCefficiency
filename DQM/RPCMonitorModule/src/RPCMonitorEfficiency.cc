@@ -131,6 +131,8 @@ public:
   TH1F * residualDisk2Ring3;
   TH1F * residualDisk3Ring2;
   TH1F * residualDisk3Ring3;
+  TH1F * residualDisk4Ring2;
+  TH1F * residualDisk4Ring3;
 
   TH1F * residualDiskm1Ring2;
   TH1F * residualDiskm1Ring3;
@@ -138,6 +140,8 @@ public:
   TH1F * residualDiskm2Ring3;
   TH1F * residualDiskm3Ring2;
   TH1F * residualDiskm3Ring3;
+  TH1F * residualDiskm4Ring2;
+  TH1F * residualDiskm4Ring3;
 
   TH1F * EffBarrel_black; //Average
   TH1F * DoubleGapBarrel_black; //Double GapEff
@@ -209,8 +213,8 @@ public:
   TH1F * GregD2R3_black;
   TH1F * GregD3R2_black;
   TH1F * GregD3R3_black;
-  TH1F * GregD3R4_black;
-  TH1F * GregD3R4_black;
+  TH1F * GregD4R2_black;
+  TH1F * GregD4R3_black;
 
   TH1F * OcGregD1R2;  
   TH1F * OcGregD1R3;  
@@ -325,19 +329,23 @@ public:
   TH1F * ExsectorEffW1;  
   TH1F * ExsectorEffW2;  
 
+  TH1F * EffDistroDm4;  
   TH1F * EffDistroDm3;  
   TH1F * EffDistroDm2;
   TH1F * EffDistroDm1;
   TH1F * EffDistroD1;
   TH1F * EffDistroD2;
   TH1F * EffDistroD3;
+  TH1F * EffDistroD4;
 
+  TH1F * EffDistroDm4far;
   TH1F * EffDistroDm3far;
   TH1F * EffDistroDm2far;
   TH1F * EffDistroDm1far;
   TH1F * EffDistroD1far;
   TH1F * EffDistroD2far;
   TH1F * EffDistroD3far;
+  TH1F * EffDistroD4far;
 
   TH2F * IntegralMuography[48];//There are 48 different types of rolls in CMS.
   TH2F * IntegralMuographyObs[48];//There are 48 different types of rolls in CMS.
@@ -349,12 +357,14 @@ public:
   TH2F * Wheel1Summary;
   TH2F * Wheel2Summary;
 
+  TH2F * Diskm4Summary;
   TH2F * Diskm3Summary;
   TH2F * Diskm2Summary;
   TH2F * Diskm1Summary;
   TH2F * Disk1Summary;
   TH2F * Disk2Summary;
   TH2F * Disk3Summary;
+  TH2F * Disk4Summary;
 
   TH2F * PositiveEndCapSummary;
   TH2F * NegativeEndCapSummary;
@@ -467,89 +477,113 @@ public:
   TH1F * NoPredictionW1far;
   TH1F * NoPredictionW2far;
 
+  TH1F * EffGlobDm4;
   TH1F * EffGlobDm3;
   TH1F * EffGlobDm2;
   TH1F * EffGlobDm1;
   TH1F * EffGlobD1;
   TH1F * EffGlobD2;
   TH1F * EffGlobD3;
+  TH1F * EffGlobD4;
 
+  TH1F * EffGlobDm4far;
   TH1F * EffGlobDm3far;
   TH1F * EffGlobDm2far;
   TH1F * EffGlobDm1far;
   TH1F * EffGlobD1far;
   TH1F * EffGlobD2far;
   TH1F * EffGlobD3far;
+  TH1F * EffGlobD4far;
 
+  TH1F * BXGlobDm4;
   TH1F * BXGlobDm3;
   TH1F * BXGlobDm2;
   TH1F * BXGlobDm1;
   TH1F * BXGlobD1;
   TH1F * BXGlobD2;
   TH1F * BXGlobD3;
+  TH1F * BXGlobD4;
   
+  TH1F * BXGlobDm4far;
   TH1F * BXGlobDm3far;
   TH1F * BXGlobDm2far;
   TH1F * BXGlobDm1far;
   TH1F * BXGlobD1far;
   TH1F * BXGlobD2far;
   TH1F * BXGlobD3far;
+  TH1F * BXGlobD4far;
 
+  TH1F * Signal_BXGlobDm4;
   TH1F * Signal_BXGlobDm3;
   TH1F * Signal_BXGlobDm2;
   TH1F * Signal_BXGlobDm1;
   TH1F * Signal_BXGlobD1;
   TH1F * Signal_BXGlobD2;
   TH1F * Signal_BXGlobD3;
+  TH1F * Signal_BXGlobD4;
   
+  TH1F * Signal_BXGlobDm4far;
   TH1F * Signal_BXGlobDm3far;
   TH1F * Signal_BXGlobDm2far;
   TH1F * Signal_BXGlobDm1far;
   TH1F * Signal_BXGlobD1far;
   TH1F * Signal_BXGlobD2far;
   TH1F * Signal_BXGlobD3far;
+  TH1F * Signal_BXGlobD4far;
 
+  TH1F * MaskedGlobDm4;
   TH1F * MaskedGlobDm3;
   TH1F * MaskedGlobDm2;
   TH1F * MaskedGlobDm1;
   TH1F * MaskedGlobD1;
   TH1F * MaskedGlobD2;
   TH1F * MaskedGlobD3;
+  TH1F * MaskedGlobD4;
   
+  TH1F * MaskedGlobDm4far;
   TH1F * MaskedGlobDm3far;
   TH1F * MaskedGlobDm2far;
   TH1F * MaskedGlobDm1far;
   TH1F * MaskedGlobD1far;
   TH1F * MaskedGlobD2far;
   TH1F * MaskedGlobD3far;
+  TH1F * MaskedGlobD4far;
 
+  TH1F * AverageEffDm4;
   TH1F * AverageEffDm3;
   TH1F * AverageEffDm2;
   TH1F * AverageEffDm1;
   TH1F * AverageEffD1;
   TH1F * AverageEffD2;
   TH1F * AverageEffD3;
+  TH1F * AverageEffD4;
 
+  TH1F * AverageEffDm4far;
   TH1F * AverageEffDm3far;
   TH1F * AverageEffDm2far;
   TH1F * AverageEffDm1far;
   TH1F * AverageEffD1far;
   TH1F * AverageEffD2far;
   TH1F * AverageEffD3far;
+  TH1F * AverageEffD4far;
 
+  TH1F * NoPredictionDm4;
   TH1F * NoPredictionDm3;
   TH1F * NoPredictionDm2;
   TH1F * NoPredictionDm1;
   TH1F * NoPredictionD1;
   TH1F * NoPredictionD2;
   TH1F * NoPredictionD3;
+  TH1F * NoPredictionD4;
 
+  TH1F * NoPredictionDm4far;
   TH1F * NoPredictionDm3far;
   TH1F * NoPredictionDm2far;
   TH1F * NoPredictionDm1far;
   TH1F * NoPredictionD1far;
   TH1F * NoPredictionD2far;
   TH1F * NoPredictionD3far;
+  TH1F * NoPredictionD4far;
 
   TH2F * ScatterPlotAlphaCLSLa1;
   TH2F * ScatterPlotAlphaCLSLa2;
@@ -586,6 +620,7 @@ public:
   TH1F * DistBorderClu3La5;
   TH1F * DistBorderClu3La6;
   TPaveText * pave;
+  bool debug;
 
 private:
   virtual void beginRun(const edm::Run&, const edm::EventSetup&);
@@ -608,7 +643,6 @@ private:
   std::string BlackListFile;
   bool prodimages;
   bool makehtml;
-  bool debug;
   bool stat;
   double threshold;
   double fiducialcut;
@@ -660,13 +694,13 @@ bool HasBadRoll(int region,uint32_t station,uint32_t ring,int k,std::vector<uint
 
   for(uint32_t roll =1;roll<=3;roll++){
     RPCDetId ThisDetId(region,ring,station,sector,1,subsector,roll);
-    if(debug) std::cout<<"hasBadRoll For this input"<<region<<" "<<station<<" "<<ring<<" "<<k<<std::endl;
+    std::cout<<"hasBadRoll For this input"<<region<<" "<<station<<" "<<ring<<" "<<k<<std::endl;
     RPCGeomServ rpcsrv(ThisDetId);
-    if(debug) std::cout<<"hasBadRoll We are getting"<<rpcsrv.name()<<std::endl;
-    if(debug) std::cout<<"hasBadRoll Trying to find in the list "<<ThisDetId.rawId()<<" "<<rpcsrv.name()<<std::endl;
+    std::cout<<"hasBadRoll We are getting"<<rpcsrv.name()<<std::endl;
+    std::cout<<"hasBadRoll Trying to find in the list "<<ThisDetId.rawId()<<" "<<rpcsrv.name()<<std::endl;
     bool thisroll = false;
     if(!(find(thelist.begin(),thelist.end(),ThisDetId.rawId())==thelist.end())){
-	if(debug) std::cout<<"hasBadRoll \t found "<<rpcsrv.name()<<std::endl;
+        std::cout<<"hasBadRoll \t found "<<rpcsrv.name()<<std::endl;
 	thisroll=true;
     }
     hasBadRoll=hasBadRoll+thisroll;
@@ -4630,7 +4664,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   StatisticsPerRing->GetXaxis()->SetBinLabel(1,"RE-4/3");
   StatisticsPerRing->SetBinContent(1,exg);
 
-  exg = ExGregDm4R2->Integral(); obg = OcGregDmR2->Integral(); eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
+  exg = ExGregDm4R2->Integral(); obg = OcGregDm4R2->Integral(); eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
   std::cout<<"Disk -4 Ring 2 expected "<<exg<<" observed "<<obg<<" eff "<<eff<<"+/-"<<err<<std::endl;
   std::cout<<"Disk_-4_Ring_2 "<<eff<<" "<<err<<std::endl;
   EfficiencyPerRing->GetXaxis()->SetBinLabel(2,"RE-4/2");
@@ -4639,7 +4673,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   StatisticsPerRing->GetXaxis()->SetBinLabel(2,"RE-4/2");
   StatisticsPerRing->SetBinContent(2,exg);
 
-  exg= ExGregDm3R3->Integral(); float obg = OcGregDm3R3->Integral();eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
+  exg= ExGregDm3R3->Integral(); obg = OcGregDm3R3->Integral();eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
   std::cout<<"Ring -3 Ring 3 expected "<<exg<<" observed "<<obg<<" eff "<<eff<<"+/-"<<err<<std::endl;
   std::cout<<"Disk_-3_Ring_3 "<<eff<<" "<<err<<std::endl;
   EfficiencyPerRing->GetXaxis()->SetBinLabel(1,"RE-3/3");
@@ -4756,7 +4790,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   StatisticsPerRing->GetXaxis()->SetBinLabel(11,"RE+4/3");
   StatisticsPerRing->SetBinContent(11,exg);
 
-  exg = ExGregD4R2->Integral(); obg = OcGregD44R2->Integral(); eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
+  exg = ExGregD4R2->Integral(); obg = OcGregD4R2->Integral(); eff = obg/exg; err = sqrt(eff*(1-eff)/exg);
   std::cout<<"Disk 4 Ring 2 expected "<<exg<<" observed "<<obg<<" eff "<<eff<<"+/-"<<err<<std::endl;
   std::cout<<"Disk_4_Ring_2 "<<eff<<" "<<err<<std::endl;
   EfficiencyPerRing->GetXaxis()->SetBinLabel(12,"RE+4/2");
@@ -7614,7 +7648,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  EffDistroD3->Write();
  EffDistroD4->Write();
 
- EffDistroDm5far->Write();
+ EffDistroDm4far->Write();
  EffDistroDm3far->Write();
  EffDistroDm2far->Write();
  EffDistroDm1far->Write();
