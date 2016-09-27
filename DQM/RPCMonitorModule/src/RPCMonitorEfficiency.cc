@@ -6030,7 +6030,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   sectorEffW1->Draw(); sectorEffW1->GetXaxis()->SetTitle("Sector");  sectorEffW1->GetYaxis()->SetRangeUser(0.,1.);
   Ca5->SaveAs("Greg/W1.png"); sectorEffW1->Write();
   Ca5->Clear(); 
-
+ 
   sectorEffW2->Draw(); sectorEffW2->GetXaxis()->SetTitle("Sector");  sectorEffW2->GetYaxis()->SetRangeUser(0.,1.);
   Ca5->SaveAs("Greg/W2.png"); sectorEffW2->Write();
   Ca5->Clear(); 
@@ -6099,7 +6099,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   GregD2R3_black->SetMarkerStyle(21);
   Ca5->SaveAs("Greg/D2R3.png");
   Ca5->Clear(); 
-  
+   
   GregD3R2->Draw(); GregD3R2->GetXaxis()->SetTitle("Chamber");GregD3R2->GetYaxis()->SetRangeUser(-0.01,1.01);
   GregD3R2_black->SetLineColor(kRed);
   std::cout<<"drawing fifth black histogram"<<std::endl;
