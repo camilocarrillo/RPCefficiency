@@ -180,7 +180,15 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 	  if(debug) std::cout<<"DT  \t \t \t DT Segment Point in DTLocal "<<segmentPosition<<std::endl;
 	
 	  GlobalPoint CenterPointRollGlobal = RPCSurface.toGlobal(LocalPoint(0,0,0));
-	
+
+
+	  ////////////////////orientacion
+
+	  //GlobalPoint p1cmPointRollGlobal = RPCSurface.toGlobal(LocalPoint(1,0,0));
+	  //GlobalPoint m1cmPointRollGlobal = RPCSurface.toGlobal(LocalPoint(-1,0,0));
+	  //std::cout<<"orientacion "<<nameRoll
+	  //<<" "<<(p1cmPointRollGlobal.phi()-m1cmPointRollGlobal.phi())/fabs(p1cmPointRollGlobal.phi()-m1cmPointRollGlobal.phi())<<std::endl;
+
 	  LocalPoint CenterRollinDTFrame = DTSurface.toLocal(CenterPointRollGlobal);
 	
 	  if(debug) std::cout<<"DT  \t \t \t Center (0,0,0) Roll In DTLocal"<<CenterRollinDTFrame<<std::endl;

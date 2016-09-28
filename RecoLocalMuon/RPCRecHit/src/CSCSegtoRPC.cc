@@ -43,7 +43,7 @@ ObjectMapCSC::ObjectMapCSC(const edm::EventSetup& iSetup){
 	  int rpcsegment = rpcsrv.segment();
 	  int cscchamber = rpcsegment; 
           if((station==2||station==3||station==4)&&ring==3){//Adding Ring 3 of RPC to the CSC Ring 2
-	   cscring = 2;
+	      cscring = 2;
           }
 	  CSCStationIndex ind(region,cscstation,cscring,cscchamber);
           std::set<RPCDetId> myrolls;
@@ -91,8 +91,7 @@ CSCSegtoRPC::CSCSegtoRPC(edm::Handle<CSCSegmentCollection> allCSCSegments, const
       if(debug) std::cout<<"CSC \t \t Number of segments in this CSC = "<<CSCSegmentsCounter[CSCId]<<std::endl;
       if(debug) std::cout<<"CSC \t \t Is the only one in this CSC? is not ind the ring 1 or station 4? Are there more than 2 segments in the event?"<<std::endl;
 
-      //if(CSCSegmentsCounter[CSCId]==1 && CSCId.station()!=4 && CSCId.ring()!=1 && allCSCSegments->size()>=2){
-      if(CSCSegmentsCounter[CSCId]==1 && CSCId.station()!=4 && CSCId.ring()!=1){
+      if(CSCSegmentsCounter[CSCId]==1 && CSCId.ring()!=1){
 	if(debug) std::cout<<"CSC \t \t yes"<<std::endl;
 	int cscEndCap = CSCId.endcap();
 	int cscStation = CSCId.station();

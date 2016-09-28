@@ -119,7 +119,7 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
 
     EffSaveRootFile = cms.untracked.bool(True),
     #EffRootFileName = cms.untracked.string('-output-'),
-    EffRootFileName = cms.untracked.string('/tmp/carrillo/test.root'),
+    EffRootFileName = cms.untracked.string('/tmp/carrillo/testori.root'),
     EffSaveRootFileEventsInterval = cms.untracked.int32(100)
 )
 

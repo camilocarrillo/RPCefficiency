@@ -1,0 +1,10 @@
+# Conditions read from  CMS_CONDITIONS  via FrontierProd 
+bbooking all histograms
+event without segmentsrun: 277420 lumi: 102 event: 55455433
+event without segmentsrun: 277420 lumi: 105 event: 61658945
+event without segmentsrun: 277420 lumi: 106 event: 63571630
+event without segmentsrun: 277420 lumi: 107 event: 64492950
+event without segmentsrun: 277420 lumi: 107 event: 64960247
+saving root file
+# Conditions read from  CMS_CONDITIONS  via FrontierProd 
+bbooking all histograms

@@ -629,6 +629,7 @@ private:
   std::string file;
   std::string fileout;
   std::ofstream RollYEff;
+  std::ofstream RollYBX;
   std::ofstream RollYEff_good;
   std::ofstream RollYEff_black;
   std::ofstream RollYEff_masked;
@@ -736,6 +737,7 @@ RPCMonitorEfficiency::RPCMonitorEfficiency(const edm::ParameterSet& iConfig){
   alignment.open("Alignment.dat");
   database.open("database.dat");
   RollYEff.open("rollYeff.txt");
+  RollYBX.open("rollYbx.txt");
   RollYEff_good.open("rollYeff_good.txt");
   RollYEff_black.open("rollYeff_black.txt");
   RollYEff_masked.open("rollYeff_masked.txt");
@@ -2064,6 +2066,9 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
 	    RollYEff<<std::endl;
 
+	    RollYBX<<name<<" "<<Signal_BXDistribution->GetMean()<<" "<<Signal_BXDistribution->GetRMS()<<" "<<Signal_BXDistribution->GetEntries()
+		         <<" "<<BXDistribution->GetMean()<<" "<<BXDistribution->GetRMS()<<" "<<BXDistribution->GetEntries()<<std::endl;
+
 	    float integralCLS = histoCLS->Integral()+histoCLS->GetBinContent(11);
 	    for(int bin=1;bin<=11;bin++){
 	      if(integralCLS!=0){
@@ -3229,6 +3234,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	    
 	    RollYEff<<std::endl;
 	    
+	    RollYBX<<name<<" "<<Signal_BXDistribution->GetMean()<<" "<<Signal_BXDistribution->GetRMS()<<" "<<Signal_BXDistribution->GetEntries()
+		         <<" "<<BXDistribution->GetMean()<<" "<<BXDistribution->GetRMS()<<" "<<BXDistribution->GetEntries()<<std::endl;
+
+
 	    float integralCLS = histoCLS->Integral()+histoCLS->GetBinContent(11);
 	    for(int bin=1;bin<=11;bin++){
 	      if(integralCLS!=0){
@@ -7857,6 +7866,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  EffEndcapStrip.close();
  EffChamEndcap.close();
  //
+
+ RollYBX.close();
 
  RollYEff.close();
  RollYEff_good.close();
