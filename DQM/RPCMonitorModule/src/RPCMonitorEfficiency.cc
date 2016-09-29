@@ -7513,7 +7513,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
  Ca11->Clear();
 
- std::stringstream meId_all_plus,meId_all_mins,meId_sig_plus,meId_sig_mins; 
+ meId_all_plus.str("");
+ meId_all_mins.str("");
+ meId_sig_plus.str("");
+ meId_sig_mins.str("");
   
   for(int station=1;station<=4;station++){
       for(int ring=2;ring<=3;ring++){

@@ -259,7 +259,14 @@ CSCSegtoRPC::CSCSegtoRPC(edm::Handle<CSCSegmentCollection> allCSCSegments, const
 		   fabs(PointExtrapolatedRPCFrame.y()) < stripl*eyr){ 
 		  if(debug) std::cout<<"CSC \t \t \t \t yes"<<std::endl;
 		  if(debug) std::cout<<"CSC \t \t \t \t Creating the RecHit"<<std::endl;
-		  RPCRecHit RPCPoint(rpcId,0,LocalPoint(PointExtrapolatedRPCFrame.x(),PointExtrapolatedRPCFrame.y(),segmentDirection.phi());
+
+		  LocalVector segmentDirection=segment->localDirection();
+		  float dx=segmentDirection.x();
+		  float dz=segmentDirection.z();
+		  float cosal = dx/sqrt(dx*dx+dz*dz);
+		  float angle = acos(cosal)*180/3.1415926;
+
+		  RPCRecHit RPCPoint(rpcId,0,LocalPoint(PointExtrapolatedRPCFrame.x(),PointExtrapolatedRPCFrame.y(),angle));
 		  if(debug) std::cout<<"CSC \t \t \t \t Clearing the vector"<<std::endl;	
 		  RPCPointVector.clear();
 		  if(debug) std::cout<<"CSC \t \t \t \t Pushing back"<<std::endl;	

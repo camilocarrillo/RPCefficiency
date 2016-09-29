@@ -235,9 +235,17 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 	       fabs(PointExtrapolatedRPCFrame.x()) < rsize*eyr && 
 	       fabs(PointExtrapolatedRPCFrame.y()) < stripl*eyr){
 	      if(debug) std::cout<<"DT  \t \t \t \t yes"<<std::endl;	
-	      if(debug) std::cout<<"DT  \t \t \t \t Creating the RecHit"<<std::endl;	
-	      RPCRecHit RPCPoint(rpcId,0,LocalPoint(PointExtrapolatedRPCFrame.x(),PointExtrapolatedRPCFrame.y(),segment->localDirection().phi());
-	      if(debug) std::cout<<"DT  \t \t \t \t Clearing the vector"<<std::endl;	
+	      if(debug) std::cout<<"DT  \t \t \t \t Creating the RecHit"<<std::endl;
+
+	      LocalVector segmentDirection=segment->localDirection();
+	      float dx=segmentDirection.x();
+	      float dz=segmentDirection.z();
+	      float cosal = dx/sqrt(dx*dx+dz*dz);
+	      float angle = acos(cosal)*180/3.1415926;
+	      
+	      RPCRecHit RPCPoint(rpcId,0,LocalPoint(PointExtrapolatedRPCFrame.x(),PointExtrapolatedRPCFrame.y(),angle));
+
+	      if(debug) std::cout<<"DT  \t \t \t \t Clearing the vector"<<std::endl; 
 	      RPCPointVector.clear();
 	      if(debug) std::cout<<"DT  \t \t \t \t Pushing back"<<std::endl;	
 	      RPCPointVector.push_back(RPCPoint); 
@@ -324,9 +332,9 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 		  float dy3=segDirMB3inGlobalFrame.y();
 				
 		  double cosAng=fabs(dx*dx3+dy*dy3/sqrt((dx3*dx3+dy3*dy3)*(dx*dx+dy*dy)));
-
+		  
 		  if(debug) std::cout<<"MB4 \t \t \t \t cosAng"<<cosAng<<"Beetween "<<dtid3<<" and "<<DTId<<std::endl;
-		
+		  
 		  if(debug){
 		    std::cout<<"MB4 \t \t \t \t dx="<<dx<<" dy="<<dy<<std::endl;
 		    std::cout<<"MB4 \t \t \t \t dx3="<<dx3<<" dy3="<<dy<<std::endl;
@@ -447,7 +455,14 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 			   fabs(PointExtrapolatedRPCFrame.y()) < stripl*eyr){
 			  if(debug) std::cout<<"MB4 \t \t \t \t yes"<<std::endl;
 			  if(debug) std::cout<<"MB4 \t \t \t \t Creating the RecHit"<<std::endl;
-			  RPCRecHit RPCPointMB4(rpcId,0,LocalPoint(PointExtrapolatedRPCFrame.x(),PointExtrapolatedRPCFrame.y(),segmentDirectionMB4.phi());
+
+			  LocalVector segmentDirection=segment->localDirection();
+			  float dx=segmentDirection.x();
+			  float dz=segmentDirection.z();
+			  float cosal = dx/sqrt(dx*dx+dz*dz);
+			  float angle = acos(cosal)*180/3.1415926;
+
+			  RPCRecHit RPCPointMB4(rpcId,0,LocalPoint(PointExtrapolatedRPCFrame.x(),PointExtrapolatedRPCFrame.y(),angle));
 			  if(debug) std::cout<<"MB4 \t \t \t \t Clearing the RPCPointVector"<<std::endl;
 			  RPCPointVector.clear();
 			  if(debug) std::cout<<"MB4 \t \t \t \t Pushing Back"<<std::endl;

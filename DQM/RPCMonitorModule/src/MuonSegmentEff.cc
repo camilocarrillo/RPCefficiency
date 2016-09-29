@@ -277,7 +277,7 @@ void MuonSegmentEff::beginRun(const edm::Run& run, const edm::EventSetup& iSetup
   }
   
   if(firstbook){
-    std::cout<<"bbooking all histograms"<<std::endl;
+    std::cout<<"booking all histograms"<<std::endl;
     iSetup.get<MuonGeometryRecord>().get(rpcGeo);
     iSetup.get<MuonGeometryRecord>().get(dtGeo);
     iSetup.get<MuonGeometryRecord>().get(cscGeo);
@@ -408,6 +408,9 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
       double dy=0;
       double dz=0;
 
+
+      std::cout<<"Starting loop on all the segments "<<std::endl;
+
       DTRecSegment4DCollection::const_iterator segment;  
       for (segment = all4DSegments->begin();segment!=all4DSegments->end(); ++segment){
 	DTChamberId DTId = segment->chamberId();
@@ -415,20 +418,19 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	if(dtSector==13) dtSector=4;
 	if(dtSector==14)  dtSector=10;
 	if(DTId.wheel()==rpcId.ring() && DTId.station()==rpcId.station() && dtSector==rpcId.sector()){
-	  if(debug) std::cout<<DTId<<std::endl;
+	  std::cout<<DTId<<std::endl;
 	  LocalVector segmentDirection=segment->localDirection();
-	  if(debug) std::cout<<<"segmentDirection.phi()="<segmentDirection.phi()<<" z_coordinateRPCPoint="<<PointExtrapolatedRPCFrame.z()<<std::endl;
 	  dx=segmentDirection.x();
 	  dy=segmentDirection.y();
 	  dz=segmentDirection.z();
 	  float cosal = dx/sqrt(dx*dx+dz*dz);
-	  float cosalp = dy/sqrt(dy*dy+dz*dz);
 	  float angle = acos(cosal)*180/3.1415926;
-	  float anglep = acos(cosalp)*180/3.1415926;
-	  if(debug) std::cout<<"Angle="<<angle<<"degree and phi="<<segmentDirection.phi()*180/3.1415926<<std::endl;
+	  std::cout<<"angle from the segment="<<angle<<" z_coordinateRPCPoint="<<PointExtrapolatedRPCFrame.z()<<std::endl;
 	  continue;
 	}
       }
+
+      std::cout<<"Finishing loop on all the segments "<<std::endl;
       
       const RPCRoll * rollasociated = rpcGeo->roll(rpcId);
       
