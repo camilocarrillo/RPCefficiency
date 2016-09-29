@@ -79,7 +79,7 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 
   _ThePoints = new RPCRecHitCollection();
 
-  if(all4DSegments->size()>8){
+  if(all4DSegments->size()>10){
     if(debug) std::cout<<"Too many segments in this event we are not doing the extrapolation"<<std::endl;
   }else{ 
     edm::ESHandle<RPCGeometry> rpcGeo;
@@ -181,9 +181,7 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 	
 	  GlobalPoint CenterPointRollGlobal = RPCSurface.toGlobal(LocalPoint(0,0,0));
 
-
 	  ////////////////////orientacion
-
 	  //GlobalPoint p1cmPointRollGlobal = RPCSurface.toGlobal(LocalPoint(1,0,0));
 	  //GlobalPoint m1cmPointRollGlobal = RPCSurface.toGlobal(LocalPoint(-1,0,0));
 	  //std::cout<<"orientacion "<<nameRoll
@@ -238,7 +236,7 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 	       fabs(PointExtrapolatedRPCFrame.y()) < stripl*eyr){
 	      if(debug) std::cout<<"DT  \t \t \t \t yes"<<std::endl;	
 	      if(debug) std::cout<<"DT  \t \t \t \t Creating the RecHit"<<std::endl;	
-	      RPCRecHit RPCPoint(rpcId,0,PointExtrapolatedRPCFrame);
+	      RPCRecHit RPCPoint(rpcId,0,LocalPoint(PointExtrapolatedRPCFrame.x(),PointExtrapolatedRPCFrame.y(),segment->localDirection().phi());
 	      if(debug) std::cout<<"DT  \t \t \t \t Clearing the vector"<<std::endl;	
 	      RPCPointVector.clear();
 	      if(debug) std::cout<<"DT  \t \t \t \t Pushing back"<<std::endl;	
@@ -297,7 +295,6 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 		DTChamberId dtid3 = segMB3->chamberId();  
 		
 		if(debug) std::cout<<"MB4  \t \t \t \t Segment in Chamber ="<<dtid3<<std::endl;
-
 	            
 		if(distsector(dtid3.sector(),DTId.sector())<=1 //The DT sector could be 13 or 14 and because is corrected in the calculation of the distance.
 		   && distwheel(dtid3.wheel(),DTId.wheel())<=1 //The we could have segments in neighbohr wheels in pp collisions 
@@ -450,7 +447,7 @@ DTSegtoRPC::DTSegtoRPC(edm::Handle<DTRecSegment4DCollection> all4DSegments, cons
 			   fabs(PointExtrapolatedRPCFrame.y()) < stripl*eyr){
 			  if(debug) std::cout<<"MB4 \t \t \t \t yes"<<std::endl;
 			  if(debug) std::cout<<"MB4 \t \t \t \t Creating the RecHit"<<std::endl;
-			  RPCRecHit RPCPointMB4(rpcId,0,PointExtrapolatedRPCFrame);
+			  RPCRecHit RPCPointMB4(rpcId,0,LocalPoint(PointExtrapolatedRPCFrame.x(),PointExtrapolatedRPCFrame.y(),segmentDirectionMB4.phi());
 			  if(debug) std::cout<<"MB4 \t \t \t \t Clearing the RPCPointVector"<<std::endl;
 			  RPCPointVector.clear();
 			  if(debug) std::cout<<"MB4 \t \t \t \t Pushing Back"<<std::endl;

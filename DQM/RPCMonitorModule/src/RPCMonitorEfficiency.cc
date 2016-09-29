@@ -188,7 +188,7 @@ public:
   TH1F * CentralEffEndCap; //Central Zone
   TH1F * BXEffEndCap; //Distribution for good synchronized chambers
   TH1F * badBXEffEndCap; //Distribution for bad synchronized chambers
-
+    
   TH1F * BXEffPositiveEndCap;
   TH1F * BXEffNegativeEndCap;
   TH1F * badBXEffPositiveEndCap;
@@ -619,6 +619,9 @@ public:
   TH1F * DistBorderClu3La4;
   TH1F * DistBorderClu3La5;
   TH1F * DistBorderClu3La6;
+
+  TH1F * LinkBoardBXEndCap[2][2][4][2][36];//[type all/signal][endcap +/-][station][ring][chamber]
+
   TPaveText * pave;
   bool debug;
 
@@ -989,7 +992,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   EffEndCap= new TH1F ("EffDistroEndCap ","Efficiency Distribution For All The EndCaps",51,-1,101);
   DoubleGapEndCap = new TH1F ("DoubleGapEndCap","Double Gap Efficiency Distribution For All The EndCaps",51,-1,101);
   BXEffEndCap = new TH1F ("BXEffEndCap","Efficiency Distribution For All The EndCap with good BX",51,-1,101);
-  badBXEffEndCap = new TH1F ("badBXEffEndCap","Efficiency Distribution For All The EndCap with bad BX",51,-1,101);
+  badBXEffEndCap = new TH1F ("badBXEffEndCap","Efficiency Distribution For All The EndCap with bad BX",51,-1,101);  
 
   BXEffPositiveEndCap = new TH1F ("BXEffPositiveEndCap","Efficiency Distribution Positive EndCap with good BX",51,0.5,100.5);
   BXEffNegativeEndCap = new TH1F ("BXEffNegativeEndCap","Efficiency Distribution Negative EndCap with good BX",51,0.5,100.5);
@@ -1056,10 +1059,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   residualDisk2Ring3  = new TH1F("residualDisk2Ring3","Residuals for Disk 2 Ring 3",101,-20.,20.);
   residualDisk3Ring2  = new TH1F("residualDisk3Ring2","Residuals for Disk 3 Ring 2",101,-20.,20.);
   residualDisk3Ring3  = new TH1F("residualDisk3Ring3","Residuals for Disk 3 Ring 3",101,-20.,20.);
-
+ 
   std::stringstream meId; 
   std::stringstream title; 
-  
+ 
   for(int k=1;k<=12;k++){
     meId <<"ClusterSizeWm2Sector"<<k; 
     title <<"Cluster Size Wheel - 2 Sector "<<k; 
@@ -1442,8 +1445,25 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   RMSResiduals = new TH1F ("RMS_Residuals_Distribution","RMS_Residuals_Distribution",20,-5,5);
   RMSResiduals11 = new TH1F ("RMS_Residuals_Distribution_1cm","RMS_Residuals_Distribution_1cm",20,-1,1);
   
-  //Producing plots for residuals and global statistics.
 
+  std::stringstream meId_all_plus,meId_all_mins,meId_sig_plus,meId_sig_mins; 
+  
+  for(int station=1;station<=4;station++){
+      for(int ring=2;ring<=3;ring++){
+	  for(int chamber=1;chamber<=36;chamber++){
+	      meId_all_plus <<"BX_all_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber; 
+	      meId_all_mins <<"BX_all_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber; 
+	      meId_sig_plus <<"BX_sig_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber; 
+	      meId_sig_mins <<"BX_sig_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber; 
+	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1] = new TH1F (meId_all_plus.str().c_str(),meId_all_plus.str().c_str(),10,0.5,10.5); meId.str(""); 
+	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1] = new TH1F (meId_all_mins.str().c_str(),meId_all_mins.str().c_str(),10,0.5,10.5); meId.str(""); 
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1] = new TH1F (meId_sig_plus.str().c_str(),meId_sig_plus.str().c_str(),10,0.5,10.5); meId.str(""); 
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1] = new TH1F (meId_sig_mins.str().c_str(),meId_sig_mins.str().c_str(),10,0.5,10.5); meId.str("");
+	  }
+      }
+  }
+
+  //Producing plots for residuals and global statistics.
   
   gStyle->SetOptStat(stat);
   gStyle->SetPalette(1);
@@ -7491,7 +7511,38 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
    Ca11->SaveAs("Distro/CentralEffEndCap_all_log.png");
  }
 
- Ca11->Close();
+ Ca11->Clear();
+
+ std::stringstream meId_all_plus,meId_all_mins,meId_sig_plus,meId_sig_mins; 
+  
+  for(int station=1;station<=4;station++){
+      for(int ring=2;ring<=3;ring++){
+	  for(int chamber=1;chamber<=36;chamber++){
+	      meId_all_plus <<"bx/BX_all_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png"; 
+	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->Draw();
+	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
+	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->Write();
+	      meId_sig_plus <<"bx/BX_sig_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->Draw("same");
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->Write();
+	      Ca11->SaveAs(meId_sig_plus.str().c_str()); Ca11->Clear();
+	      
+	      meId_all_mins <<"bx/BX_all_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
+	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->Draw();
+	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
+	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->Write();
+	      meId_sig_mins <<"bx/BX_sig_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
+	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->Draw("same");
+	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
+	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->Write();
+	      Ca11->SaveAs(meId_sig_mins.str().c_str()); Ca11->Clear();	      
+	  }
+      }
+  }
+
+  Ca11->Close();
+
  
  //Cesare
  EffBarrelRoll->Write();

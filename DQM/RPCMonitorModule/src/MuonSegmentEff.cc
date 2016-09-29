@@ -402,7 +402,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
       LocalPoint PointExtrapolatedRPCFrame = rpcPoint->localPosition();
       RPCDetId  rpcId = rpcPoint->rpcId();
       
-      if(debug) std::cout<<rpcId.rawId()<<" "<<PointExtrapolatedRPCFrame.x()<<" "<<PointExtrapolatedRPCFrame.y()<<std::endl;
+      if(debug) std::cout<<rpcId.rawId()<<" "<<PointExtrapolatedRPCFrame.x()<<" "<<PointExtrapolatedRPCFrame.y()<<" "<<PointExtrapolatedRPCFrame.z()<<std::endl;
             
       double dx=0;
       double dy=0;
@@ -417,9 +417,15 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	if(DTId.wheel()==rpcId.ring() && DTId.station()==rpcId.station() && dtSector==rpcId.sector()){
 	  if(debug) std::cout<<DTId<<std::endl;
 	  LocalVector segmentDirection=segment->localDirection();
+	  if(debug) std::cout<<<"segmentDirection.phi()="<segmentDirection.phi()<<" z_coordinateRPCPoint="<<PointExtrapolatedRPCFrame.z()<<std::endl;
 	  dx=segmentDirection.x();
 	  dy=segmentDirection.y();
 	  dz=segmentDirection.z();
+	  float cosal = dx/sqrt(dx*dx+dz*dz);
+	  float cosalp = dy/sqrt(dy*dy+dz*dz);
+	  float angle = acos(cosal)*180/3.1415926;
+	  float anglep = acos(cosalp)*180/3.1415926;
+	  if(debug) std::cout<<"Angle="<<angle<<"degree and phi="<<segmentDirection.phi()*180/3.1415926<<std::endl;
 	  continue;
 	}
       }
@@ -514,7 +520,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	}
       }
       
-      if(debug) std::cout<<"DT  \t \t \t \t \t "<<prediction<<anycoincidence<<std::endl;
+      if(debug) std::cout<<"DT  \t \t \t \t \t "<<prediction<<" "<<anycoincidence<<std::endl;
 
       if(prediction && anycoincidence){
 	float distobottom = stripl*0.5 + PointExtrapolatedRPCFrame.y();
@@ -786,18 +792,6 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	  if(rpcId.ring()==3&&rpcId.roll()==2){if(cluSize==1*dupli) hGlobalResClu1R3B->Fill(minres); if(cluSize==2*dupli) hGlobalResClu2R3B->Fill(minres); if(cluSize==3*dupli) hGlobalResClu3R3B->Fill(minres);}
 	  if(rpcId.ring()==3&&rpcId.roll()==3){if(cluSize==1*dupli) hGlobalResClu1R3C->Fill(minres); if(cluSize==2*dupli) hGlobalResClu2R3C->Fill(minres); if(cluSize==3*dupli) hGlobalResClu3R3C->Fill(minres);}
 	  
-	  
-	  //Filling High Resolution Histograms
-	  /*if(fabs(minres)<=0.5){
-	    distbord = stripPredicted - (int) stripPredicted;
-	    if(debug) std::cout<<"CSC \t \t \t \t \t Filling high resolution histograms with distbord"<<distbord
-	    <<" cosal=="<<cosal
-	    <<" cls="<<cluSize<<std::endl;
-	    //Mising high resolution hiistos for CSCs.
-	    }*/
-	  
-	  
-	  //------------------------
 	}
 	
 
