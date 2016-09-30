@@ -1052,6 +1052,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   residualDiskm2Ring3 = new TH1F("residualDiskm2Ring3","Residuals for Disk -2 Ring 3",101,-20.,20.);
   residualDiskm3Ring2 = new TH1F("residualDiskm3Ring2","Residuals for Disk -3 Ring 2",101,-20.,20.);
   residualDiskm3Ring3 = new TH1F("residualDiskm3Ring3","Residuals for Disk -3 Ring 3",101,-20.,20.);
+  residualDiskm4Ring2 = new TH1F("residualDiskm4Ring2","Residuals for Disk -4 Ring 2",101,-20.,20.);
+  residualDiskm4Ring3 = new TH1F("residualDiskm4Ring3","Residuals for Disk -4 Ring 3",101,-20.,20.);
 
   residualDisk1Ring2  = new TH1F("residualDisk1Ring2","Residuals for Disk 1 Ring 2",101,-20.,20.);
   residualDisk1Ring3  = new TH1F("residualDisk1Ring3","Residuals for Disk 1 Ring 3",101,-20.,20.);
@@ -1059,6 +1061,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   residualDisk2Ring3  = new TH1F("residualDisk2Ring3","Residuals for Disk 2 Ring 3",101,-20.,20.);
   residualDisk3Ring2  = new TH1F("residualDisk3Ring2","Residuals for Disk 3 Ring 2",101,-20.,20.);
   residualDisk3Ring3  = new TH1F("residualDisk3Ring3","Residuals for Disk 3 Ring 3",101,-20.,20.);
+  residualDisk4Ring2  = new TH1F("residualDisk4Ring2","Residuals for Disk 4 Ring 2",101,-20.,20.);
+  residualDisk4Ring3  = new TH1F("residualDisk4Ring3","Residuals for Disk 4 Ring 3",101,-20.,20.);
  
   std::stringstream meId; 
   std::stringstream title; 
@@ -1451,14 +1455,14 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   for(int station=1;station<=4;station++){
       for(int ring=2;ring<=3;ring++){
 	  for(int chamber=1;chamber<=36;chamber++){
-	      meId_all_plus <<"BX_all_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber; 
-	      meId_all_mins <<"BX_all_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber; 
-	      meId_sig_plus <<"BX_sig_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber; 
-	      meId_sig_mins <<"BX_sig_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber; 
-	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1] = new TH1F (meId_all_plus.str().c_str(),meId_all_plus.str().c_str(),10,0.5,10.5); meId.str(""); 
-	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1] = new TH1F (meId_all_mins.str().c_str(),meId_all_mins.str().c_str(),10,0.5,10.5); meId.str(""); 
-	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1] = new TH1F (meId_sig_plus.str().c_str(),meId_sig_plus.str().c_str(),10,0.5,10.5); meId.str(""); 
-	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1] = new TH1F (meId_sig_mins.str().c_str(),meId_sig_mins.str().c_str(),10,0.5,10.5); meId.str("");
+	      meId_all_plus.str("");meId_all_plus <<"BX_all_REp"<<station<<"_R"<<ring<<"_CH"<<chamber; 
+	      meId_all_mins.str("");meId_all_mins <<"BX_all_REm"<<station<<"_R"<<ring<<"_CH"<<chamber; 
+	      meId_sig_plus.str("");meId_sig_plus <<"BX_sig_REp"<<station<<"_R"<<ring<<"_CH"<<chamber; 
+              meId_sig_mins.str("");meId_sig_mins <<"BX_sig_REm"<<station<<"_R"<<ring<<"_CH"<<chamber; 
+	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1] = new TH1F (meId_all_plus.str().c_str(),meId_all_plus.str().c_str(),10,0.5,10.5);  
+	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1] = new TH1F (meId_all_mins.str().c_str(),meId_all_mins.str().c_str(),10,0.5,10.5);  
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1] = new TH1F (meId_sig_plus.str().c_str(),meId_sig_plus.str().c_str(),10,0.5,10.5);  
+	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1] = new TH1F (meId_sig_mins.str().c_str(),meId_sig_mins.str().c_str(),10,0.5,10.5); 
 	  }
       }
   }
@@ -1689,7 +1693,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     NegativeEndCapSummary->GetXaxis()->SetBinLabel(i,binLabel.str().c_str());
   }
 
-  for(int disk =1; disk <=3;disk++){
+  for(int disk =1; disk <=4;disk++){
     for(int ri=2;ri<=3;ri++){
       binLabel.str("");
       binLabel<<"RE+"<<disk<<"/"<<ri;
@@ -1729,12 +1733,12 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   }
 
   int indexDisk[8];
-  for(int j=0;j<6;j++){
+  for(int j=0;j<8;j++){
     indexDisk[j]=0;
   }
   
   int indexDiskf[8];
-  for(int j=0;j<6;j++){
+  for(int j=0;j<8;j++){
     indexDiskf[j]=0;
   }
 
@@ -3029,6 +3033,20 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	  BXDistribution = (TH1F*)theFile->Get(bxDistroId.c_str());if(!BXDistribution)if(debug) std::cout<<BXDistribution<<"Doesn't exist"<<std::endl;
 	  Signal_BXDistribution = (TH1F*)theFile->Get(signal_bxDistroId.c_str());
 	  histoRealRPC = (TH1F*)theFile->Get(meIdRealRPC.c_str());if(!histoRealRPC)if(debug) std::cout<<meIdRealRPC<<"Doesn't exist"<<std::endl;
+
+	  
+	  if(debug) std::cout<<"Filling up link board histograms for "<<rpcsrv.name()<<std::endl;
+
+	  if(rpcId.station()==1){
+	      LinkBoardBXEndCap[0][0][rpcId.station()-1][rpcId.ring()-2][rpcsrv.segment()-1]->Add(BXDistribution);
+	      LinkBoardBXEndCap[1][0][rpcId.station()-1][rpcId.ring()-2][rpcsrv.segment()-1]->Add(Signal_BXDistribution);
+	  }
+
+	  if(rpcId.station()==-1){
+	      LinkBoardBXEndCap[0][1][rpcId.station()-1][rpcId.ring()-2][rpcsrv.segment()-1]->Add(BXDistribution);
+	      LinkBoardBXEndCap[1][1][rpcId.station()-1][rpcId.ring()-2][rpcsrv.segment()-1]->Add(Signal_BXDistribution);
+	  }
+
 	  
 	  histoPRO= new TH1F (meIdPRO.c_str(),meIdPRO.c_str(),nstrips,0.5,nstrips+0.5);
 	  
@@ -3096,7 +3114,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
 	  if(histoRPC_2D && histoCSC_2D && histoResidual && endcap){
 
-	    //Residuals paper
+	      //Residuals paper
+	    if(debug) std::cout<<"\t residuals paper"<<std::endl;
 	    if(rpcId.region()!=0){
 	      if(abs(rpcId.station())==1){
 		if(rpcId.ring()==2){
@@ -3110,7 +3129,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 		  if(rpcId.roll()==3) residualStation1Ring3_C->Add(histoResidual);
 		}
 	      }
-	      if(abs(rpcId.station())==2 || abs(rpcId.station())==3){
+	      if(abs(rpcId.station())==2 || abs(rpcId.station())==3 || abs(rpcId.station())==4 ){
 		if(rpcId.ring()==2){
 		  if(rpcId.roll()==1) residualStation234Ring2_A->Add(histoResidual);
 		  if(rpcId.roll()==2) residualStation234Ring2_B->Add(histoResidual);
@@ -3124,6 +3143,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      }
 	    }
 	    
+	    
 	    if(rpcId.region()==1){
 	      if(rpcId.station()==1 && rpcId.ring()==2) residualDisk1Ring2->Add(histoResidual);
 	      if(rpcId.station()==1 && rpcId.ring()==3) residualDisk1Ring3->Add(histoResidual);
@@ -3131,6 +3151,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      if(rpcId.station()==2 && rpcId.ring()==3) residualDisk2Ring3->Add(histoResidual);
 	      if(rpcId.station()==3 && rpcId.ring()==2) residualDisk3Ring2->Add(histoResidual);
 	      if(rpcId.station()==3 && rpcId.ring()==3) residualDisk3Ring3->Add(histoResidual);
+	      if(rpcId.station()==4 && rpcId.ring()==2) residualDisk4Ring2->Add(histoResidual);
+	      if(rpcId.station()==4 && rpcId.ring()==3) residualDisk4Ring3->Add(histoResidual);
 	    }
 	    if(rpcId.region()==-1){
 	      if(rpcId.station()==1 && rpcId.ring()==2) residualDiskm1Ring2->Add(histoResidual);
@@ -3139,8 +3161,11 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      if(rpcId.station()==2 && rpcId.ring()==3) residualDiskm2Ring3->Add(histoResidual);
 	      if(rpcId.station()==3 && rpcId.ring()==2) residualDiskm3Ring2->Add(histoResidual);
 	      if(rpcId.station()==3 && rpcId.ring()==3) residualDiskm3Ring3->Add(histoResidual);
+	      if(rpcId.station()==4 && rpcId.ring()==2) residualDiskm4Ring2->Add(histoResidual);
+	      if(rpcId.station()==4 && rpcId.ring()==3) residualDiskm4Ring3->Add(histoResidual);
 	    }
-
+	    
+	    if(debug) std::cout<<"\t residuals paper finished"<<std::endl;
 
 	    for(int i=1;i<=2*(int)(0.6*nstrips*stripw);++i){
 	      for(int j=1;j<=2*(int)(0.6*stripl);++j){
@@ -3751,11 +3776,15 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	  else if(Disk==3) Disk3Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
 	  else if(Disk==4) Disk4Summary->SetBinContent(rpcsrv.segment(),Y,pinoeff);
 
+	  if(debug) std::cout<<"Filled Disk summaries "<<std::endl;
+
 	  if(rpcId.region()==1){
 	      PositiveEndCapSummary->SetBinContent(rpcsrv.segment(),(rpcId.station()-1)*2+rpcId.ring()-1,pinoeff);
 	  }else if(rpcId.region()==-1){
 	      NegativeEndCapSummary->SetBinContent(rpcsrv.segment(),(rpcId.station()-1)*2+rpcId.ring()-1,pinoeff);
 	  }
+
+	  if(debug) std::cout<<"Filled Disk summaries station + ring "<<std::endl;
 
  	  //Near Side
 
@@ -5350,6 +5379,9 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     residualDiskm2Ring3->Write();
     residualDiskm3Ring2->Write();
     residualDiskm3Ring3->Write();
+    residualDiskm4Ring2->Write();
+    residualDiskm4Ring3->Write();
+
   
     residualDisk1Ring2->Write(); 
     residualDisk1Ring3->Write(); 
@@ -5357,6 +5389,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     residualDisk2Ring3->Write(); 
     residualDisk3Ring2->Write(); 
     residualDisk3Ring3->Write(); 
+    residualDisk4Ring2->Write(); 
+    residualDisk4Ring3->Write(); 
     
   }
 
@@ -6384,6 +6418,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   Ca5->SaveAs("Pigi/Wheel2Summary.png"); 
   Ca5->Clear();
 
+  if(debug)std::cout<<"Saving Pigis files"<<std::endl;
+
   Ca5->Close();
 
   Ca9->Clear();
@@ -6498,7 +6534,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
     Ca2->SaveAs("Sides/SegEff_Dm1near.png");
     Ca2->Clear();
   }
- 
+
+
+  if(debug)std::cout<<"Starting with the barrel"<<std::endl; 
+
  //Barrel
  if(barrel){
    
@@ -6847,6 +6886,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
  //Positive EndCap
 
+ if(debug)std::cout<<"Starting with the endcap"<<std::endl;
+
  if(endcap){
    //POSITIVE
    EffGlobD1->Draw();
@@ -7028,6 +7069,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   
    Ca2->SaveAs("Sides/SegEff_D3near.png");
    Ca2->Clear();
+
+   if(debug)std::cout<<"Saving image for EffGlobD4far"<<std::endl;
    
    EffGlobD4far->Draw();
    EffGlobD4far->GetYaxis()->SetTitle("%");
@@ -7518,24 +7561,43 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  meId_sig_plus.str("");
  meId_sig_mins.str("");
   
+
+ command = "mkdir bx"; system(command.c_str());
+
+ if(debug)std::cout<<"Saving Link Board Histograms"<<std::endl;
+ 
   for(int station=1;station<=4;station++){
       for(int ring=2;ring<=3;ring++){
 	  for(int chamber=1;chamber<=36;chamber++){
-	      meId_all_plus <<"bx/BX_all_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png"; 
+
+	      if(debug) std::cout<<"\t Station "<<station<<"_R"<<ring<<"_CH"<<chamber<<std::endl; 
+
+	      if(debug) std::cout<<"\t Positive Endcap all"<<std::endl; 
+	      meId_all_plus.str("");
+	      meId_all_plus <<"bx/BX_all_REp"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png"; 
 	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->Draw();
 	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
 	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->Write();
-	      meId_sig_plus <<"bx/BX_sig_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
+
+	      if(debug) std::cout<<"\t Positive Endcap sig"<<std::endl; 
+	      meId_sig_plus.str("");
+	      meId_sig_plus <<"bx/BX_sig_REp"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
 	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->Draw("same");
 	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
 	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->Write();
 	      Ca11->SaveAs(meId_sig_plus.str().c_str()); Ca11->Clear();
 	      
-	      meId_all_mins <<"bx/BX_all_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
+	      if(debug) std::cout<<"\t Negative Endcap"<<std::endl; 
+	      
+	      meId_all_mins.str("");
+	      meId_all_mins <<"bx/BX_all_REm"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
 	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->Draw();
 	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
 	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->Write();
-	      meId_sig_mins <<"bx/BX_sig_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
+
+	      if(debug) std::cout<<"\t Negative Endcap sig"<<std::endl; 
+	      meId_sig_mins.str("");
+	      meId_sig_mins <<"bx/BX_sig_REm"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
 	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->Draw("same");
 	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
 	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->Write();
