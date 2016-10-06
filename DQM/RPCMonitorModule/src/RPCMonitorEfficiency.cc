@@ -620,7 +620,7 @@ public:
   TH1F * DistBorderClu3La5;
   TH1F * DistBorderClu3La6;
 
-  TH1F * LinkBoardBXEndCap[2][2][4][2][36];//[type all/signal][endcap +/-][station][ring][chamber]
+  TH1F * LinkBoardBXEndCap[2][2][4][2][36];//[all/signal][+/-][station][ring][chamber]
 
   TPaveText * pave;
   bool debug;
@@ -1459,10 +1459,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      meId_all_mins.str("");meId_all_mins <<"BX_all_REm"<<station<<"_R"<<ring<<"_CH"<<chamber; 
 	      meId_sig_plus.str("");meId_sig_plus <<"BX_sig_REp"<<station<<"_R"<<ring<<"_CH"<<chamber; 
               meId_sig_mins.str("");meId_sig_mins <<"BX_sig_REm"<<station<<"_R"<<ring<<"_CH"<<chamber; 
-	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1] = new TH1F (meId_all_plus.str().c_str(),meId_all_plus.str().c_str(),10,0.5,10.5);  
-	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1] = new TH1F (meId_all_mins.str().c_str(),meId_all_mins.str().c_str(),10,0.5,10.5);  
-	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1] = new TH1F (meId_sig_plus.str().c_str(),meId_sig_plus.str().c_str(),10,0.5,10.5);  
-	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1] = new TH1F (meId_sig_mins.str().c_str(),meId_sig_mins.str().c_str(),10,0.5,10.5); 
+	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1] = new TH1F (meId_all_plus.str().c_str(),meId_all_plus.str().c_str(),11,-5.5, 5.5); 
+	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1] = new TH1F (meId_all_mins.str().c_str(),meId_all_mins.str().c_str(),11,-5.5, 5.5);  
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1] = new TH1F (meId_sig_plus.str().c_str(),meId_sig_plus.str().c_str(),11,-5.5, 5.5);
+	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1] = new TH1F (meId_sig_mins.str().c_str(),meId_sig_mins.str().c_str(),11,-5.5, 5.5);
 	  }
       }
   }
@@ -1813,7 +1813,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	     
 	  std::string detUnitLabel, meIdRPC, meIdRPC_2D, meIdDT, meIdDT_2D, meIdPRO, meIdPROY, meIdPROX,  signal_bxDistroId, bxDistroId, meIdRealRPC, meIdPRO_2D, meIdResidual, meIdResidual1, meIdResidual2, meIdResidual3, meIdResidualO, meIdCLS,meIdBXY,meIdINEF,meIdCEll_2D;
 	  
-	  RPCBookFolderStructure *  folderStr = new RPCBookFolderStructure(); //Anna
+	  RPCBookFolderStructure *  folderStr = new RPCBookFolderStructure();
 	  std::string folder = "DQMData/Muons/MuonSegEff/" +  folderStr->folderStructure(rpcId);
 
 	  delete folderStr;
@@ -2063,8 +2063,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	    int firstybin = int(0.1*stripl+fiducialcuty);
 	    int lastybin = int(1.1*stripl-fiducialcuty);
 	    
-	    if(debug) std::cout<<" firstxbin "<<firstxbin<<" lastxbin "<<lastxbin;
-	    if(debug) std::cout<<" firstybin "<<firstybin<<" lastybin "<<lastybin;
+	    //if(debug) std::cout<<" firstxbin "<<firstxbin<<" lastxbin "<<lastxbin;
+	    //if(debug) std::cout<<" firstybin "<<firstybin<<" lastybin "<<lastybin;
 	      
 	    pinoobserved = histoRPC_2D->Integral(firstxbin,lastxbin,firstybin,lastybin);
 	    pinoexpected = histoDT_2D->Integral(firstxbin,lastxbin,firstybin,lastybin);
@@ -2376,9 +2376,9 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      Ca0->Clear();
 	      
 	      BXDistribution->GetXaxis()->SetTitle("BX");
-	      BXDistribution->Draw();
+	      BXDistribution->Draw("hist");
 	      Signal_BXDistribution->SetFillColor(2);
-	      Signal_BXDistribution->Draw("same");
+	      Signal_BXDistribution->Draw("histsame");
 	      labeltoSave = name + "/BXDistribution.png";
 	      Ca0->SaveAs(labeltoSave.c_str());
 	      Ca0->Clear();
@@ -3037,12 +3037,14 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	  
 	  if(debug) std::cout<<"Filling up link board histograms for "<<rpcsrv.name()<<std::endl;
 
-	  if(rpcId.station()==1){
+	  if(rpcId.region()==1){
+	      if(debug) std::cout<<"\t ->"<<rpcsrv.name()<<" Int-BX="<<BXDistribution->GetEntries()<<" Int-Sig="<<Signal_BXDistribution->GetEntries()<<std::endl;
 	      LinkBoardBXEndCap[0][0][rpcId.station()-1][rpcId.ring()-2][rpcsrv.segment()-1]->Add(BXDistribution);
 	      LinkBoardBXEndCap[1][0][rpcId.station()-1][rpcId.ring()-2][rpcsrv.segment()-1]->Add(Signal_BXDistribution);
 	  }
 
-	  if(rpcId.station()==-1){
+	  if(rpcId.region()==-1){
+	      if(debug) std::cout<<"\t ->"<<rpcsrv.name()<<" Int-BX="<<BXDistribution->GetEntries()<<" Int-Sig="<<Signal_BXDistribution->GetEntries()<<std::endl;
 	      LinkBoardBXEndCap[0][1][rpcId.station()-1][rpcId.ring()-2][rpcsrv.segment()-1]->Add(BXDistribution);
 	      LinkBoardBXEndCap[1][1][rpcId.station()-1][rpcId.ring()-2][rpcsrv.segment()-1]->Add(Signal_BXDistribution);
 	  }
@@ -3544,9 +3546,9 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      Ca0->Clear();
 	      
 	      BXDistribution->GetXaxis()->SetTitle("BX");
-	      BXDistribution->Draw();
+	      BXDistribution->Draw("hist");
 	      Signal_BXDistribution->SetFillColor(2);
-	      Signal_BXDistribution->Draw("same");
+	      Signal_BXDistribution->Draw("histsame");
 	      labeltoSave = name + "/BXDistribution.png";
 	      Ca0->SaveAs(labeltoSave.c_str());
 	      Ca0->Clear();
@@ -7562,50 +7564,42 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  meId_sig_mins.str("");
   
 
+ gStyle->SetOptStat(1111111);
+
  command = "mkdir bx"; system(command.c_str());
 
- if(debug)std::cout<<"Saving Link Board Histograms"<<std::endl;
+ if(debug)std::cout<<"Saving + Images Link Board Histograms"<<std::endl;
  
-  for(int station=1;station<=4;station++){
+ for(int station=1;station<=4;station++){
       for(int ring=2;ring<=3;ring++){
 	  for(int chamber=1;chamber<=36;chamber++){
+	      if(debug) std::cout<<"\t Station_"<<station<<"_R"<<ring<<"_CH"<<chamber<<std::endl; 
 
-	      if(debug) std::cout<<"\t Station "<<station<<"_R"<<ring<<"_CH"<<chamber<<std::endl; 
+	      if(debug) std::cout<<"\t Positive Endcap"<<std::endl; 
 
-	      if(debug) std::cout<<"\t Positive Endcap all"<<std::endl; 
-	      meId_all_plus.str("");
-	      meId_all_plus <<"bx/BX_all_REp"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png"; 
-	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->Draw();
-	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
-	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->Write();
+	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1]->Draw("hist");
+	      meId_all_plus.str("");meId_all_plus<<"bx/BX_all_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
+	      Ca11->SaveAs(meId_all_plus.str().c_str()); Ca11->Clear();
 
-	      if(debug) std::cout<<"\t Positive Endcap sig"<<std::endl; 
-	      meId_sig_plus.str("");
-	      meId_sig_plus <<"bx/BX_sig_REp"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
-	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->Draw("same");
-	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
-	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->Write();
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->Draw("hist");
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->SetFillColor(2);
+	      meId_sig_plus.str("");meId_sig_plus<<"bx/BX_sig_RE+"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
 	      Ca11->SaveAs(meId_sig_plus.str().c_str()); Ca11->Clear();
 	      
-	      if(debug) std::cout<<"\t Negative Endcap"<<std::endl; 
-	      
-	      meId_all_mins.str("");
-	      meId_all_mins <<"bx/BX_all_REm"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
-	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->Draw();
-	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
-	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->Write();
+	      if(debug) std::cout<<"\t Negative Endcap"<<std::endl;
 
-	      if(debug) std::cout<<"\t Negative Endcap sig"<<std::endl; 
-	      meId_sig_mins.str("");
-	      meId_sig_mins <<"bx/BX_sig_REm"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
-	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->Draw("same");
-	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetXaxis()->SetTitle("BX");
-	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->Write();
-	      Ca11->SaveAs(meId_sig_mins.str().c_str()); Ca11->Clear();	      
+	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1]->Draw("hist");
+	      meId_all_mins.str("");meId_all_mins<<"bx/BX_all_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
+	      Ca11->SaveAs(meId_all_mins.str().c_str()); Ca11->Clear();
+
+	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->Draw("hist");
+	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->SetFillColor(2);
+	      meId_sig_mins.str("");meId_sig_mins<<"bx/BX_sig_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
+	      Ca11->SaveAs(meId_sig_mins.str().c_str()); Ca11->Clear();
 	  }
       }
   }
-
+ 
   Ca11->Close();
 
  

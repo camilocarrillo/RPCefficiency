@@ -39,7 +39,7 @@ ObjectMapCSC::ObjectMapCSC(const edm::EventSetup& iSetup){
 	  RPCGeomServ rpcsrv(rpcId);
 	  int rpcsegment = rpcsrv.segment();
 	  int cscchamber = rpcsegment; 
-          if(rpcId.station()>1&&rpcId.ring()==3){//Adding Ring 3 of RPC to the CSC Ring 2 for stations > 1 (2,3,4)
+          if(rpcId.station()>1&&rpcId.ring()==3){
 	      cscring = 2;
           }
 	  CSCStationIndex ind(rpcId.region(),cscstation,cscring,cscchamber);
@@ -86,7 +86,7 @@ CSCSegtoRPC::CSCSegtoRPC(edm::Handle<CSCSegmentCollection> allCSCSegments, const
 	
       if(debug) std::cout<<"CSC \t \t This Segment is in Chamber id: "<<CSCId<<std::endl;
       if(debug) std::cout<<"CSC \t \t Number of segments in this CSC = "<<CSCSegmentsCounter[CSCId]<<std::endl;
-      if(debug) std::cout<<"CSC \t \t Is the only one in this CSC? is not ind the ring 1 or station 4? Are there more than 2 segments in the event?"<<std::endl;
+      if(debug) std::cout<<"CSC \t \t Is the only one in this CSC? is not in the ring 1? Are there more than 2 segments in the event?"<<std::endl;
 
       if(CSCSegmentsCounter[CSCId]==1 && CSCId.ring()!=1){
 	if(debug) std::cout<<"CSC \t \t yes"<<std::endl;
@@ -142,7 +142,8 @@ CSCSegtoRPC::CSCSegtoRPC(edm::Handle<CSCSegmentCollection> allCSCSegments, const
 	  
 	  if(debug) std::cout<<"CSC \t \t Printing The Id"<<TheId<<std::endl;
 
-	  if(rpcRing!=1&&rpcStation!=4){//They don't exist!
+
+	  if(rpcRing!=1){
 	  
 	    assert(rollsForThisCSC.size()>=1);
 
@@ -150,11 +151,12 @@ CSCSegtoRPC::CSCSegtoRPC(edm::Handle<CSCSegmentCollection> allCSCSegments, const
 	    for (std::set<RPCDetId>::iterator iteraRoll = rollsForThisCSC.begin();iteraRoll != rollsForThisCSC.end(); iteraRoll++){
 	      const RPCRoll* rollasociated = rpcGeo->roll(*iteraRoll);
 	      RPCDetId rpcId = rollasociated->id();
+	      RPCGeomServ rpcsrv(rpcId);
 		
-	      if(debug) std::cout<<"CSC \t \t \t We are in the roll getting the surface"<<rpcId<<std::endl;
+	      if(debug) std::cout<<"CSC \t \t \t We are in the roll getting the surface"<<rpcsrv.name()<<std::endl;
 	      const BoundPlane & RPCSurface = rollasociated->surface(); 
 
-	      if(debug) std::cout<<"CSC \t \t \t RollID: "<<rpcId<<std::endl;
+	      if(debug) std::cout<<"CSC \t \t \t Roll associated to "<<TheId<<" is: "<<rpcsrv.name()<<std::endl;
 		
 	      if(debug) std::cout<<"CSC \t \t \t Doing the extrapolation to this roll"<<std::endl;
 	      if(debug) std::cout<<"CSC \t \t \t CSC Segment Direction in CSCLocal "<<segmentDirection<<std::endl;
@@ -273,6 +275,11 @@ CSCSegtoRPC::CSCSegtoRPC(edm::Handle<CSCSegmentCollection> allCSCSegments, const
 		  RPCPointVector.push_back(RPCPoint); 
 		  if(debug) std::cout<<"CSC \t \t \t \t Putting the vector"<<std::endl;	
 		  _ThePoints->put(rpcId,RPCPointVector.begin(),RPCPointVector.end());
+		}else{
+		    if(debug) std::cout<<"CSC \t \t \t \t no"<<std::endl;
+		    if(debug) std::cout<<"CSC \t \t \t \t \t x"<<fabs(PointExtrapolatedRPCFrame.x())<<"< "<<rsize*eyr<<" ?"<<std::endl;
+		    if(debug) std::cout<<"CSC \t \t \t \t \t y"<<fabs(PointExtrapolatedRPCFrame.y())<<"< "<<stripl*eyr<<"? "<<std::endl;
+		    if(debug) std::cout<<"CSC \t \t \t \t \t z"<<fabs(PointExtrapolatedRPCFrame.z())<<"< 1 ?"<<std::endl;
 		}
 	      }
 	    }
