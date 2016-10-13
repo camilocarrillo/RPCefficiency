@@ -625,6 +625,9 @@ public:
   TPaveText * pave;
   bool debug;
 
+  std::string maplbch[2][5][4][37];
+
+
 private:
   virtual void beginRun(const edm::Run&, const edm::EventSetup&);
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
@@ -633,6 +636,7 @@ private:
   std::string fileout;
   std::ofstream RollYEff;
   std::ofstream RollYBX;
+  std::ofstream LBYBX;
   std::ofstream RollYEff_good;
   std::ofstream RollYEff_black;
   std::ofstream RollYEff_masked;
@@ -664,6 +668,9 @@ private:
   std::ofstream EffChamEndcap;
   std::ofstream EffBarrelStrip;
   std::ofstream EffEndcapStrip;
+
+  int bin0=4;
+
 };
 
 int rollY(std::string shortname,std::map<int,std::string> rollNames){
@@ -686,6 +693,22 @@ bool IsBadRoll(uint32_t rawId,std::vector<uint32_t> thelist){
     isBadRoll=true;
   }
   return isBadRoll;
+}
+
+std::string LinkBoardName(int region,int station,int ring,int chamber){
+    //LB_RE+4_S8_EP42_CH0  mean:  2.99537 rms: 0.107545 counts:    0    2    1  859    1    0    0    0      
+    std::stringstream name;
+    name.str("");
+    if(region==1){
+	name<<"LB_RE+"<<station<<"_S"<<chamber<<"_EP"<<station<<ring<<"_CH";
+	return name.str();
+    }
+    if(region==-1){
+	name<<"LB_RE-"<<station<<"_S"<<chamber<<"_EP"<<station<<ring<<"_CH";
+	return name.str();
+    }
+    std::cout<<"FAILED to find a LinkBoardName"<<std::endl;
+    return "";
 }
 
 
@@ -740,6 +763,7 @@ RPCMonitorEfficiency::RPCMonitorEfficiency(const edm::ParameterSet& iConfig){
   alignment.open("Alignment.dat");
   database.open("database.dat");
   RollYEff.open("rollYeff.txt");
+  LBYBX.open("lbYbx.txt");
   RollYBX.open("rollYbx.txt");
   RollYEff_good.open("rollYeff_good.txt");
   RollYEff_black.open("rollYeff_black.txt");
@@ -787,6 +811,589 @@ void RPCMonitorEfficiency::beginRun(const edm::Run&,const edm::EventSetup&){
   
   std::cout<<"Black list has "<<blacklist.size()<<" rolls"<<std::endl;
   ifin.close();
+
+
+//[endcap(0,1)=(+/-)][station][ring][chamber]
+maplbch[1][1][2][36]="LB_RE-1_S1_EN12_CH1";
+maplbch[1][1][2][1]="LB_RE-1_S1_EN12_CH0";
+maplbch[1][1][2][2]="LB_RE-1_S1_EN12_CH2";
+maplbch[1][1][3][36]="LB_RE-1_S1_EN13_CH1";
+maplbch[1][1][3][1]="LB_RE-1_S1_EN13_CH0";
+maplbch[1][1][3][2]="LB_RE-1_S1_EN13_CH2";
+maplbch[1][2][2][2]="LB_RE-1_S1_EN22_CH1";
+maplbch[1][2][2][3]="LB_RE-1_S1_EN22_CH0";
+maplbch[1][2][2][4]="LB_RE-1_S1_EN22_CH2";
+maplbch[1][2][3][2]="LB_RE-1_S1_EN23_CH1";
+maplbch[1][2][3][3]="LB_RE-1_S1_EN23_CH0";
+maplbch[1][2][3][4]="LB_RE-1_S1_EN23_CH2";
+maplbch[1][1][2][27]="LB_RE-1_S10_EN12_CH1";
+maplbch[1][1][2][28]="LB_RE-1_S10_EN12_CH0";
+maplbch[1][1][2][29]="LB_RE-1_S10_EN12_CH2";
+maplbch[1][1][3][27]="LB_RE-1_S10_EN13_CH1";
+maplbch[1][1][3][28]="LB_RE-1_S10_EN13_CH0";
+maplbch[1][1][3][29]="LB_RE-1_S10_EN13_CH2";
+maplbch[1][2][2][29]="LB_RE-1_S10_EN22_CH1";
+maplbch[1][2][2][30]="LB_RE-1_S10_EN22_CH0";
+maplbch[1][2][2][31]="LB_RE-1_S10_EN22_CH2";
+maplbch[1][2][3][29]="LB_RE-1_S10_EN23_CH1";
+maplbch[1][2][3][30]="LB_RE-1_S10_EN23_CH0";
+maplbch[1][2][3][31]="LB_RE-1_S10_EN23_CH2";
+maplbch[1][1][2][30]="LB_RE-1_S11_EN12_CH1";
+maplbch[1][1][2][31]="LB_RE-1_S11_EN12_CH0";
+maplbch[1][1][2][32]="LB_RE-1_S11_EN12_CH2";
+maplbch[1][1][3][30]="LB_RE-1_S11_EN13_CH1";
+maplbch[1][1][3][31]="LB_RE-1_S11_EN13_CH0";
+maplbch[1][1][3][32]="LB_RE-1_S11_EN13_CH2";
+maplbch[1][2][2][32]="LB_RE-1_S11_EN22_CH1";
+maplbch[1][2][2][33]="LB_RE-1_S11_EN22_CH0";
+maplbch[1][2][2][34]="LB_RE-1_S11_EN22_CH2";
+maplbch[1][2][3][32]="LB_RE-1_S11_EN23_CH1";
+maplbch[1][2][3][33]="LB_RE-1_S11_EN23_CH0";
+maplbch[1][2][3][34]="LB_RE-1_S11_EN23_CH2";
+maplbch[1][1][2][33]="LB_RE-1_S12_EN12_CH1";
+maplbch[1][1][2][34]="LB_RE-1_S12_EN12_CH0";
+maplbch[1][1][2][35]="LB_RE-1_S12_EN12_CH2";
+maplbch[1][1][3][33]="LB_RE-1_S12_EN13_CH1";
+maplbch[1][1][3][34]="LB_RE-1_S12_EN13_CH0";
+maplbch[1][1][3][35]="LB_RE-1_S12_EN13_CH2";
+maplbch[1][2][2][35]="LB_RE-1_S12_EN22_CH1";
+maplbch[1][2][2][36]="LB_RE-1_S12_EN22_CH0";
+maplbch[1][2][2][1]="LB_RE-1_S12_EN22_CH2";
+maplbch[1][2][3][35]="LB_RE-1_S12_EN23_CH1";
+maplbch[1][2][3][36]="LB_RE-1_S12_EN23_CH0";
+maplbch[1][2][3][1]="LB_RE-1_S12_EN23_CH2";
+maplbch[1][1][2][3]="LB_RE-1_S2_EN12_CH1";
+maplbch[1][1][2][4]="LB_RE-1_S2_EN12_CH0";
+maplbch[1][1][2][5]="LB_RE-1_S2_EN12_CH2";
+maplbch[1][1][3][3]="LB_RE-1_S2_EN13_CH1";
+maplbch[1][1][3][4]="LB_RE-1_S2_EN13_CH0";
+maplbch[1][1][3][5]="LB_RE-1_S2_EN13_CH2";
+maplbch[1][2][2][5]="LB_RE-1_S2_EN22_CH1";
+maplbch[1][2][2][6]="LB_RE-1_S2_EN22_CH0";
+maplbch[1][2][2][7]="LB_RE-1_S2_EN22_CH2";
+maplbch[1][2][3][5]="LB_RE-1_S2_EN23_CH1";
+maplbch[1][2][3][6]="LB_RE-1_S2_EN23_CH0";
+maplbch[1][2][3][7]="LB_RE-1_S2_EN23_CH2";
+maplbch[1][1][2][6]="LB_RE-1_S3_EN12_CH1";
+maplbch[1][1][2][7]="LB_RE-1_S3_EN12_CH0";
+maplbch[1][1][2][8]="LB_RE-1_S3_EN12_CH2";
+maplbch[1][1][3][6]="LB_RE-1_S3_EN13_CH1";
+maplbch[1][1][3][7]="LB_RE-1_S3_EN13_CH0";
+maplbch[1][1][3][8]="LB_RE-1_S3_EN13_CH2";
+maplbch[1][2][2][8]="LB_RE-1_S3_EN22_CH1";
+maplbch[1][2][2][9]="LB_RE-1_S3_EN22_CH0";
+maplbch[1][2][2][10]="LB_RE-1_S3_EN22_CH2";
+maplbch[1][2][3][8]="LB_RE-1_S3_EN23_CH1";
+maplbch[1][2][3][9]="LB_RE-1_S3_EN23_CH0";
+maplbch[1][2][3][10]="LB_RE-1_S3_EN23_CH2";
+maplbch[1][1][2][9]="LB_RE-1_S4_EN12_CH1";
+maplbch[1][1][2][10]="LB_RE-1_S4_EN12_CH0";
+maplbch[1][1][2][11]="LB_RE-1_S4_EN12_CH2";
+maplbch[1][1][3][9]="LB_RE-1_S4_EN13_CH1";
+maplbch[1][1][3][10]="LB_RE-1_S4_EN13_CH0";
+maplbch[1][1][3][11]="LB_RE-1_S4_EN13_CH2";
+maplbch[1][2][2][11]="LB_RE-1_S4_EN22_CH1";
+maplbch[1][2][2][12]="LB_RE-1_S4_EN22_CH0";
+maplbch[1][2][2][13]="LB_RE-1_S4_EN22_CH2";
+maplbch[1][2][3][11]="LB_RE-1_S4_EN23_CH1";
+maplbch[1][2][3][12]="LB_RE-1_S4_EN23_CH0";
+maplbch[1][2][3][13]="LB_RE-1_S4_EN23_CH2";
+maplbch[1][1][2][12]="LB_RE-1_S5_EN12_CH1";
+maplbch[1][1][2][13]="LB_RE-1_S5_EN12_CH0";
+maplbch[1][1][2][14]="LB_RE-1_S5_EN12_CH2";
+maplbch[1][1][3][12]="LB_RE-1_S5_EN13_CH1";
+maplbch[1][1][3][13]="LB_RE-1_S5_EN13_CH0";
+maplbch[1][1][3][14]="LB_RE-1_S5_EN13_CH2";
+maplbch[1][2][2][14]="LB_RE-1_S5_EN22_CH1";
+maplbch[1][2][2][15]="LB_RE-1_S5_EN22_CH0";
+maplbch[1][2][2][16]="LB_RE-1_S5_EN22_CH2";
+maplbch[1][2][3][14]="LB_RE-1_S5_EN23_CH1";
+maplbch[1][2][3][15]="LB_RE-1_S5_EN23_CH0";
+maplbch[1][2][3][16]="LB_RE-1_S5_EN23_CH2";
+maplbch[1][1][2][15]="LB_RE-1_S6_EN12_CH1";
+maplbch[1][1][2][16]="LB_RE-1_S6_EN12_CH0";
+maplbch[1][1][2][17]="LB_RE-1_S6_EN12_CH2";
+maplbch[1][1][3][15]="LB_RE-1_S6_EN13_CH1";
+maplbch[1][1][3][16]="LB_RE-1_S6_EN13_CH0";
+maplbch[1][1][3][17]="LB_RE-1_S6_EN13_CH2";
+maplbch[1][2][2][17]="LB_RE-1_S6_EN22_CH1";
+maplbch[1][2][2][18]="LB_RE-1_S6_EN22_CH0";
+maplbch[1][2][2][19]="LB_RE-1_S6_EN22_CH2";
+maplbch[1][2][3][17]="LB_RE-1_S6_EN23_CH1";
+maplbch[1][2][3][18]="LB_RE-1_S6_EN23_CH0";
+maplbch[1][2][3][19]="LB_RE-1_S6_EN23_CH2";
+maplbch[1][1][2][18]="LB_RE-1_S7_EN12_CH1";
+maplbch[1][1][2][19]="LB_RE-1_S7_EN12_CH0";
+maplbch[1][1][2][20]="LB_RE-1_S7_EN12_CH2";
+maplbch[1][1][3][18]="LB_RE-1_S7_EN13_CH1";
+maplbch[1][1][3][19]="LB_RE-1_S7_EN13_CH0";
+maplbch[1][1][3][20]="LB_RE-1_S7_EN13_CH2";
+maplbch[1][2][2][20]="LB_RE-1_S7_EN22_CH1";
+maplbch[1][2][2][21]="LB_RE-1_S7_EN22_CH0";
+maplbch[1][2][2][22]="LB_RE-1_S7_EN22_CH2";
+maplbch[1][2][3][20]="LB_RE-1_S7_EN23_CH1";
+maplbch[1][2][3][21]="LB_RE-1_S7_EN23_CH0";
+maplbch[1][2][3][22]="LB_RE-1_S7_EN23_CH2";
+maplbch[1][1][2][21]="LB_RE-1_S8_EN12_CH1";
+maplbch[1][1][2][22]="LB_RE-1_S8_EN12_CH0";
+maplbch[1][1][2][23]="LB_RE-1_S8_EN12_CH2";
+maplbch[1][1][3][21]="LB_RE-1_S8_EN13_CH1";
+maplbch[1][1][3][22]="LB_RE-1_S8_EN13_CH0";
+maplbch[1][1][3][23]="LB_RE-1_S8_EN13_CH2";
+maplbch[1][2][2][23]="LB_RE-1_S8_EN22_CH1";
+maplbch[1][2][2][24]="LB_RE-1_S8_EN22_CH0";
+maplbch[1][2][2][25]="LB_RE-1_S8_EN22_CH2";
+maplbch[1][2][3][23]="LB_RE-1_S8_EN23_CH1";
+maplbch[1][2][3][24]="LB_RE-1_S8_EN23_CH0";
+maplbch[1][2][3][25]="LB_RE-1_S8_EN23_CH2";
+maplbch[1][1][2][24]="LB_RE-1_S9_EN12_CH1";
+maplbch[1][1][2][25]="LB_RE-1_S9_EN12_CH0";
+maplbch[1][1][2][26]="LB_RE-1_S9_EN12_CH2";
+maplbch[1][1][3][24]="LB_RE-1_S9_EN13_CH1";
+maplbch[1][1][3][25]="LB_RE-1_S9_EN13_CH0";
+maplbch[1][1][3][26]="LB_RE-1_S9_EN13_CH2";
+maplbch[1][2][2][26]="LB_RE-1_S9_EN22_CH1";
+maplbch[1][2][2][27]="LB_RE-1_S9_EN22_CH0";
+maplbch[1][2][2][28]="LB_RE-1_S9_EN22_CH2";
+maplbch[1][2][3][26]="LB_RE-1_S9_EN23_CH1";
+maplbch[1][2][3][27]="LB_RE-1_S9_EN23_CH0";
+maplbch[1][2][3][28]="LB_RE-1_S9_EN23_CH2";
+maplbch[1][4][2][27]="LB_RE-4_S10_EN42_CH1";
+maplbch[1][4][2][28]="LB_RE-4_S10_EN42_CH0";
+maplbch[1][4][2][29]="LB_RE-4_S10_EN42_CH2";
+maplbch[1][4][3][27]="LB_RE-4_S10_EN43_CH1";
+maplbch[1][4][3][28]="LB_RE-4_S10_EN43_CH0";
+maplbch[1][4][3][29]="LB_RE-4_S10_EN43_CH2";
+maplbch[1][4][2][30]="LB_RE-4_S11_EN42_CH1";
+maplbch[1][4][2][31]="LB_RE-4_S11_EN42_CH0";
+maplbch[1][4][2][32]="LB_RE-4_S11_EN42_CH2";
+maplbch[1][4][3][30]="LB_RE-4_S11_EN43_CH1";
+maplbch[1][4][3][31]="LB_RE-4_S11_EN43_CH0";
+maplbch[1][4][3][32]="LB_RE-4_S11_EN43_CH2";
+maplbch[1][4][2][33]="LB_RE-4_S12_EN42_CH1";
+maplbch[1][4][2][34]="LB_RE-4_S12_EN42_CH0";
+maplbch[1][4][2][35]="LB_RE-4_S12_EN42_CH2";
+maplbch[1][4][3][33]="LB_RE-4_S12_EN43_CH1";
+maplbch[1][4][3][34]="LB_RE-4_S12_EN43_CH0";
+maplbch[1][4][3][35]="LB_RE-4_S12_EN43_CH2";
+maplbch[1][4][2][36]="LB_RE-4_S1_EN42_CH1";
+maplbch[1][4][2][1]="LB_RE-4_S1_EN42_CH0";
+maplbch[1][4][2][2]="LB_RE-4_S1_EN42_CH2";
+maplbch[1][4][3][36]="LB_RE-4_S1_EN43_CH1";
+maplbch[1][4][3][1]="LB_RE-4_S1_EN43_CH0";
+maplbch[1][4][3][2]="LB_RE-4_S1_EN43_CH2";
+maplbch[1][4][2][3]="LB_RE-4_S2_EN42_CH1";
+maplbch[1][4][2][4]="LB_RE-4_S2_EN42_CH0";
+maplbch[1][4][2][5]="LB_RE-4_S2_EN42_CH2";
+maplbch[1][4][3][3]="LB_RE-4_S2_EN43_CH1";
+maplbch[1][4][3][4]="LB_RE-4_S2_EN43_CH0";
+maplbch[1][4][3][5]="LB_RE-4_S2_EN43_CH2";
+maplbch[1][4][2][6]="LB_RE-4_S3_EN42_CH1";
+maplbch[1][4][2][7]="LB_RE-4_S3_EN42_CH0";
+maplbch[1][4][2][8]="LB_RE-4_S3_EN42_CH2";
+maplbch[1][4][3][6]="LB_RE-4_S3_EN43_CH1";
+maplbch[1][4][3][7]="LB_RE-4_S3_EN43_CH0";
+maplbch[1][4][3][8]="LB_RE-4_S3_EN43_CH2";
+maplbch[1][4][2][9]="LB_RE-4_S4_EN42_CH1";
+maplbch[1][4][2][10]="LB_RE-4_S4_EN42_CH0";
+maplbch[1][4][2][11]="LB_RE-4_S4_EN42_CH2";
+maplbch[1][4][3][9]="LB_RE-4_S4_EN43_CH1";
+maplbch[1][4][3][10]="LB_RE-4_S4_EN43_CH0";
+maplbch[1][4][3][11]="LB_RE-4_S4_EN43_CH2";
+maplbch[1][4][2][12]="LB_RE-4_S5_EN42_CH1";
+maplbch[1][4][2][13]="LB_RE-4_S5_EN42_CH0";
+maplbch[1][4][2][14]="LB_RE-4_S5_EN42_CH2";
+maplbch[1][4][3][12]="LB_RE-4_S5_EN43_CH1";
+maplbch[1][4][3][13]="LB_RE-4_S5_EN43_CH0";
+maplbch[1][4][3][14]="LB_RE-4_S5_EN43_CH2";
+maplbch[1][4][2][15]="LB_RE-4_S6_EN42_CH1";
+maplbch[1][4][2][16]="LB_RE-4_S6_EN42_CH0";
+maplbch[1][4][2][17]="LB_RE-4_S6_EN42_CH2";
+maplbch[1][4][3][15]="LB_RE-4_S6_EN43_CH1";
+maplbch[1][4][3][16]="LB_RE-4_S6_EN43_CH0";
+maplbch[1][4][3][17]="LB_RE-4_S6_EN43_CH2";
+maplbch[1][4][2][18]="LB_RE-4_S7_EN42_CH1";
+maplbch[1][4][2][19]="LB_RE-4_S7_EN42_CH0";
+maplbch[1][4][2][20]="LB_RE-4_S7_EN42_CH2";
+maplbch[1][4][3][18]="LB_RE-4_S7_EN43_CH1";
+maplbch[1][4][3][19]="LB_RE-4_S7_EN43_CH0";
+maplbch[1][4][3][20]="LB_RE-4_S7_EN43_CH2";
+maplbch[1][4][2][21]="LB_RE-4_S8_EN42_CH1";
+maplbch[1][4][2][22]="LB_RE-4_S8_EN42_CH0";
+maplbch[1][4][2][23]="LB_RE-4_S8_EN42_CH2";
+maplbch[1][4][3][21]="LB_RE-4_S8_EN43_CH1";
+maplbch[1][4][3][22]="LB_RE-4_S8_EN43_CH0";
+maplbch[1][4][3][23]="LB_RE-4_S8_EN43_CH2";
+maplbch[1][4][2][24]="LB_RE-4_S9_EN42_CH1";
+maplbch[1][4][2][25]="LB_RE-4_S9_EN42_CH0";
+maplbch[1][4][2][26]="LB_RE-4_S9_EN42_CH2";
+maplbch[1][4][3][24]="LB_RE-4_S9_EN43_CH1";
+maplbch[1][4][3][25]="LB_RE-4_S9_EN43_CH0";
+maplbch[1][4][3][26]="LB_RE-4_S9_EN43_CH2";
+maplbch[1][3][2][27]="LB_RE-3_S10_EN32_CH1";
+maplbch[1][3][2][28]="LB_RE-3_S10_EN32_CH0";
+maplbch[1][3][2][29]="LB_RE-3_S10_EN32_CH2";
+maplbch[1][3][3][27]="LB_RE-3_S10_EN33_CH1";
+maplbch[1][3][3][28]="LB_RE-3_S10_EN33_CH0";
+maplbch[1][3][3][29]="LB_RE-3_S10_EN33_CH2";
+maplbch[1][3][2][30]="LB_RE-3_S11_EN32_CH1";
+maplbch[1][3][2][31]="LB_RE-3_S11_EN32_CH0";
+maplbch[1][3][2][32]="LB_RE-3_S11_EN32_CH2";
+maplbch[1][3][3][30]="LB_RE-3_S11_EN33_CH1";
+maplbch[1][3][3][31]="LB_RE-3_S11_EN33_CH0";
+maplbch[1][3][3][32]="LB_RE-3_S11_EN33_CH2";
+maplbch[1][3][2][33]="LB_RE-3_S12_EN32_CH1";
+maplbch[1][3][2][34]="LB_RE-3_S12_EN32_CH0";
+maplbch[1][3][2][35]="LB_RE-3_S12_EN32_CH2";
+maplbch[1][3][3][33]="LB_RE-3_S12_EN33_CH1";
+maplbch[1][3][3][34]="LB_RE-3_S12_EN33_CH0";
+maplbch[1][3][3][35]="LB_RE-3_S12_EN33_CH2";
+maplbch[1][3][2][36]="LB_RE-3_S1_EN32_CH1";
+maplbch[1][3][2][1]="LB_RE-3_S1_EN32_CH0";
+maplbch[1][3][2][2]="LB_RE-3_S1_EN32_CH2";
+maplbch[1][3][3][36]="LB_RE-3_S1_EN33_CH1";
+maplbch[1][3][3][1]="LB_RE-3_S1_EN33_CH0";
+maplbch[1][3][3][2]="LB_RE-3_S1_EN33_CH2";
+maplbch[1][3][2][3]="LB_RE-3_S2_EN32_CH1";
+maplbch[1][3][2][4]="LB_RE-3_S2_EN32_CH0";
+maplbch[1][3][2][5]="LB_RE-3_S2_EN32_CH2";
+maplbch[1][3][3][3]="LB_RE-3_S2_EN33_CH1";
+maplbch[1][3][3][4]="LB_RE-3_S2_EN33_CH0";
+maplbch[1][3][3][5]="LB_RE-3_S2_EN33_CH2";
+maplbch[1][3][2][6]="LB_RE-3_S3_EN32_CH1";
+maplbch[1][3][2][7]="LB_RE-3_S3_EN32_CH0";
+maplbch[1][3][2][8]="LB_RE-3_S3_EN32_CH2";
+maplbch[1][3][3][6]="LB_RE-3_S3_EN33_CH1";
+maplbch[1][3][3][7]="LB_RE-3_S3_EN33_CH0";
+maplbch[1][3][3][8]="LB_RE-3_S3_EN33_CH2";
+maplbch[1][3][2][9]="LB_RE-3_S4_EN32_CH1";
+maplbch[1][3][2][10]="LB_RE-3_S4_EN32_CH0";
+maplbch[1][3][2][11]="LB_RE-3_S4_EN32_CH2";
+maplbch[1][3][3][9]="LB_RE-3_S4_EN33_CH1";
+maplbch[1][3][3][10]="LB_RE-3_S4_EN33_CH0";
+maplbch[1][3][3][11]="LB_RE-3_S4_EN33_CH2";
+maplbch[1][3][2][12]="LB_RE-3_S5_EN32_CH1";
+maplbch[1][3][2][13]="LB_RE-3_S5_EN32_CH0";
+maplbch[1][3][2][14]="LB_RE-3_S5_EN32_CH2";
+maplbch[1][3][3][12]="LB_RE-3_S5_EN33_CH1";
+maplbch[1][3][3][13]="LB_RE-3_S5_EN33_CH0";
+maplbch[1][3][3][14]="LB_RE-3_S5_EN33_CH2";
+maplbch[1][3][2][15]="LB_RE-3_S6_EN32_CH1";
+maplbch[1][3][2][16]="LB_RE-3_S6_EN32_CH0";
+maplbch[1][3][2][17]="LB_RE-3_S6_EN32_CH2";
+maplbch[1][3][3][15]="LB_RE-3_S6_EN33_CH1";
+maplbch[1][3][3][16]="LB_RE-3_S6_EN33_CH0";
+maplbch[1][3][3][17]="LB_RE-3_S6_EN33_CH2";
+maplbch[1][3][2][18]="LB_RE-3_S7_EN32_CH1";
+maplbch[1][3][2][19]="LB_RE-3_S7_EN32_CH0";
+maplbch[1][3][2][20]="LB_RE-3_S7_EN32_CH2";
+maplbch[1][3][3][18]="LB_RE-3_S7_EN33_CH1";
+maplbch[1][3][3][19]="LB_RE-3_S7_EN33_CH0";
+maplbch[1][3][3][20]="LB_RE-3_S7_EN33_CH2";
+maplbch[1][3][2][21]="LB_RE-3_S8_EN32_CH1";
+maplbch[1][3][2][22]="LB_RE-3_S8_EN32_CH0";
+maplbch[1][3][2][23]="LB_RE-3_S8_EN32_CH2";
+maplbch[1][3][3][21]="LB_RE-3_S8_EN33_CH1";
+maplbch[1][3][3][22]="LB_RE-3_S8_EN33_CH0";
+maplbch[1][3][3][23]="LB_RE-3_S8_EN33_CH2";
+maplbch[1][3][2][24]="LB_RE-3_S9_EN32_CH1";
+maplbch[1][3][2][25]="LB_RE-3_S9_EN32_CH0";
+maplbch[1][3][2][26]="LB_RE-3_S9_EN32_CH2";
+maplbch[1][3][3][24]="LB_RE-3_S9_EN33_CH1";
+maplbch[1][3][3][25]="LB_RE-3_S9_EN33_CH0";
+maplbch[1][3][3][26]="LB_RE-3_S9_EN33_CH2";
+maplbch[0][1][2][36]="LB_RE+1_S1_EP12_CH1";
+maplbch[0][1][2][1]="LB_RE+1_S1_EP12_CH0";
+maplbch[0][1][2][2]="LB_RE+1_S1_EP12_CH2";
+maplbch[0][1][3][36]="LB_RE+1_S1_EP13_CH1";
+maplbch[0][1][3][1]="LB_RE+1_S1_EP13_CH0";
+maplbch[0][1][3][2]="LB_RE+1_S1_EP13_CH2";
+maplbch[0][2][2][2]="LB_RE+1_S1_EP22_CH1";
+maplbch[0][2][2][3]="LB_RE+1_S1_EP22_CH0";
+maplbch[0][2][2][4]="LB_RE+1_S1_EP22_CH2";
+maplbch[0][2][3][2]="LB_RE+1_S1_EP23_CH1";
+maplbch[0][2][3][3]="LB_RE+1_S1_EP23_CH0";
+maplbch[0][2][3][4]="LB_RE+1_S1_EP23_CH2";
+maplbch[0][1][2][27]="LB_RE+1_S10_EP12_CH1";
+maplbch[0][1][2][28]="LB_RE+1_S10_EP12_CH0";
+maplbch[0][1][2][29]="LB_RE+1_S10_EP12_CH2";
+maplbch[0][1][3][27]="LB_RE+1_S10_EP13_CH1";
+maplbch[0][1][3][28]="LB_RE+1_S10_EP13_CH0";
+maplbch[0][1][3][29]="LB_RE+1_S10_EP13_CH2";
+maplbch[0][2][2][29]="LB_RE+1_S10_EP22_CH1";
+maplbch[0][2][2][30]="LB_RE+1_S10_EP22_CH0";
+maplbch[0][2][2][31]="LB_RE+1_S10_EP22_CH2";
+maplbch[0][2][3][29]="LB_RE+1_S10_EP23_CH1";
+maplbch[0][2][3][30]="LB_RE+1_S10_EP23_CH0";
+maplbch[0][2][3][31]="LB_RE+1_S10_EP23_CH2";
+maplbch[0][1][2][30]="LB_RE+1_S11_EP12_CH1";
+maplbch[0][1][2][31]="LB_RE+1_S11_EP12_CH0";
+maplbch[0][1][2][32]="LB_RE+1_S11_EP12_CH2";
+maplbch[0][1][3][30]="LB_RE+1_S11_EP13_CH1";
+maplbch[0][1][3][31]="LB_RE+1_S11_EP13_CH0";
+maplbch[0][1][3][32]="LB_RE+1_S11_EP13_CH2";
+maplbch[0][2][2][32]="LB_RE+1_S11_EP22_CH1";
+maplbch[0][2][2][33]="LB_RE+1_S11_EP22_CH0";
+maplbch[0][2][2][34]="LB_RE+1_S11_EP22_CH2";
+maplbch[0][2][3][32]="LB_RE+1_S11_EP23_CH1";
+maplbch[0][2][3][33]="LB_RE+1_S11_EP23_CH0";
+maplbch[0][2][3][34]="LB_RE+1_S11_EP23_CH2";
+maplbch[0][1][2][33]="LB_RE+1_S12_EP12_CH1";
+maplbch[0][1][2][34]="LB_RE+1_S12_EP12_CH0";
+maplbch[0][1][2][35]="LB_RE+1_S12_EP12_CH2";
+maplbch[0][1][3][33]="LB_RE+1_S12_EP13_CH1";
+maplbch[0][1][3][34]="LB_RE+1_S12_EP13_CH0";
+maplbch[0][1][3][35]="LB_RE+1_S12_EP13_CH2";
+maplbch[0][2][2][35]="LB_RE+1_S12_EP22_CH1";
+maplbch[0][2][2][36]="LB_RE+1_S12_EP22_CH0";
+maplbch[0][2][2][1]="LB_RE+1_S12_EP22_CH2";
+maplbch[0][2][3][35]="LB_RE+1_S12_EP23_CH1";
+maplbch[0][2][3][36]="LB_RE+1_S12_EP23_CH0";
+maplbch[0][2][3][1]="LB_RE+1_S12_EP23_CH2";
+maplbch[0][1][2][3]="LB_RE+1_S2_EP12_CH1";
+maplbch[0][1][2][4]="LB_RE+1_S2_EP12_CH0";
+maplbch[0][1][2][5]="LB_RE+1_S2_EP12_CH2";
+maplbch[0][1][3][3]="LB_RE+1_S2_EP13_CH1";
+maplbch[0][1][3][4]="LB_RE+1_S2_EP13_CH0";
+maplbch[0][1][3][5]="LB_RE+1_S2_EP13_CH2";
+maplbch[0][2][2][5]="LB_RE+1_S2_EP22_CH1";
+maplbch[0][2][2][6]="LB_RE+1_S2_EP22_CH0";
+maplbch[0][2][2][7]="LB_RE+1_S2_EP22_CH2";
+maplbch[0][2][3][5]="LB_RE+1_S2_EP23_CH1";
+maplbch[0][2][3][6]="LB_RE+1_S2_EP23_CH0";
+maplbch[0][2][3][7]="LB_RE+1_S2_EP23_CH2";
+maplbch[0][1][1][3]="LB_RE+1_S2_EP11_CH0";
+maplbch[0][1][1][4]="LB_RE+1_S2_EP11_CH2";
+maplbch[0][1][2][6]="LB_RE+1_S3_EP12_CH1";
+maplbch[0][1][2][7]="LB_RE+1_S3_EP12_CH0";
+maplbch[0][1][2][8]="LB_RE+1_S3_EP12_CH2";
+maplbch[0][1][3][6]="LB_RE+1_S3_EP13_CH1";
+maplbch[0][1][3][7]="LB_RE+1_S3_EP13_CH0";
+maplbch[0][1][3][8]="LB_RE+1_S3_EP13_CH2";
+maplbch[0][1][1][1]="LB_RE+1_S1_EP11_CH0";
+maplbch[0][1][1][2]="LB_RE+1_S1_EP11_CH2";
+maplbch[0][2][2][8]="LB_RE+1_S3_EP22_CH1";
+maplbch[0][2][2][9]="LB_RE+1_S3_EP22_CH0";
+maplbch[0][2][2][10]="LB_RE+1_S3_EP22_CH2";
+maplbch[0][2][3][8]="LB_RE+1_S3_EP23_CH1";
+maplbch[0][2][3][9]="LB_RE+1_S3_EP23_CH0";
+maplbch[0][2][3][10]="LB_RE+1_S3_EP23_CH2";
+maplbch[0][1][2][9]="LB_RE+1_S4_EP12_CH1";
+maplbch[0][1][2][10]="LB_RE+1_S4_EP12_CH0";
+maplbch[0][1][2][11]="LB_RE+1_S4_EP12_CH2";
+maplbch[0][1][3][9]="LB_RE+1_S4_EP13_CH1";
+maplbch[0][1][3][10]="LB_RE+1_S4_EP13_CH0";
+maplbch[0][1][3][11]="LB_RE+1_S4_EP13_CH2";
+maplbch[0][2][2][11]="LB_RE+1_S4_EP22_CH1";
+maplbch[0][2][2][12]="LB_RE+1_S4_EP22_CH0";
+maplbch[0][2][2][13]="LB_RE+1_S4_EP22_CH2";
+maplbch[0][2][3][11]="LB_RE+1_S4_EP23_CH1";
+maplbch[0][2][3][12]="LB_RE+1_S4_EP23_CH0";
+maplbch[0][2][3][13]="LB_RE+1_S4_EP23_CH2";
+maplbch[0][1][2][12]="LB_RE+1_S5_EP12_CH1";
+maplbch[0][1][2][13]="LB_RE+1_S5_EP12_CH0";
+maplbch[0][1][2][14]="LB_RE+1_S5_EP12_CH2";
+maplbch[0][1][3][12]="LB_RE+1_S5_EP13_CH1";
+maplbch[0][1][3][13]="LB_RE+1_S5_EP13_CH0";
+maplbch[0][1][3][14]="LB_RE+1_S5_EP13_CH2";
+maplbch[0][2][2][14]="LB_RE+1_S5_EP22_CH1";
+maplbch[0][2][2][15]="LB_RE+1_S5_EP22_CH0";
+maplbch[0][2][2][16]="LB_RE+1_S5_EP22_CH2";
+maplbch[0][2][3][14]="LB_RE+1_S5_EP23_CH1";
+maplbch[0][2][3][15]="LB_RE+1_S5_EP23_CH0";
+maplbch[0][2][3][16]="LB_RE+1_S5_EP23_CH2";
+maplbch[0][1][2][15]="LB_RE+1_S6_EP12_CH1";
+maplbch[0][1][2][16]="LB_RE+1_S6_EP12_CH0";
+maplbch[0][1][2][17]="LB_RE+1_S6_EP12_CH2";
+maplbch[0][1][3][15]="LB_RE+1_S6_EP13_CH1";
+maplbch[0][1][3][16]="LB_RE+1_S6_EP13_CH0";
+maplbch[0][1][3][17]="LB_RE+1_S6_EP13_CH2";
+maplbch[0][2][2][17]="LB_RE+1_S6_EP22_CH1";
+maplbch[0][2][2][18]="LB_RE+1_S6_EP22_CH0";
+maplbch[0][2][2][19]="LB_RE+1_S6_EP22_CH2";
+maplbch[0][2][3][17]="LB_RE+1_S6_EP23_CH1";
+maplbch[0][2][3][18]="LB_RE+1_S6_EP23_CH0";
+maplbch[0][2][3][19]="LB_RE+1_S6_EP23_CH2";
+maplbch[0][1][2][18]="LB_RE+1_S7_EP12_CH1";
+maplbch[0][1][2][19]="LB_RE+1_S7_EP12_CH0";
+maplbch[0][1][2][20]="LB_RE+1_S7_EP12_CH2";
+maplbch[0][1][3][18]="LB_RE+1_S7_EP13_CH1";
+maplbch[0][1][3][19]="LB_RE+1_S7_EP13_CH0";
+maplbch[0][1][3][20]="LB_RE+1_S7_EP13_CH2";
+maplbch[0][2][2][20]="LB_RE+1_S7_EP22_CH1";
+maplbch[0][2][2][21]="LB_RE+1_S7_EP22_CH0";
+maplbch[0][2][2][22]="LB_RE+1_S7_EP22_CH2";
+maplbch[0][2][3][20]="LB_RE+1_S7_EP23_CH1";
+maplbch[0][2][3][21]="LB_RE+1_S7_EP23_CH0";
+maplbch[0][2][3][22]="LB_RE+1_S7_EP23_CH2";
+maplbch[0][1][2][21]="LB_RE+1_S8_EP12_CH1";
+maplbch[0][1][2][22]="LB_RE+1_S8_EP12_CH0";
+maplbch[0][1][2][23]="LB_RE+1_S8_EP12_CH2";
+maplbch[0][1][3][21]="LB_RE+1_S8_EP13_CH1";
+maplbch[0][1][3][22]="LB_RE+1_S8_EP13_CH0";
+maplbch[0][1][3][23]="LB_RE+1_S8_EP13_CH2";
+maplbch[0][2][2][23]="LB_RE+1_S8_EP22_CH1";
+maplbch[0][2][2][24]="LB_RE+1_S8_EP22_CH0";
+maplbch[0][2][2][25]="LB_RE+1_S8_EP22_CH2";
+maplbch[0][2][3][23]="LB_RE+1_S8_EP23_CH1";
+maplbch[0][2][3][24]="LB_RE+1_S8_EP23_CH0";
+maplbch[0][2][3][25]="LB_RE+1_S8_EP23_CH2";
+maplbch[0][1][2][24]="LB_RE+1_S9_EP12_CH1";
+maplbch[0][1][2][25]="LB_RE+1_S9_EP12_CH0";
+maplbch[0][1][2][26]="LB_RE+1_S9_EP12_CH2";
+maplbch[0][1][3][24]="LB_RE+1_S9_EP13_CH1";
+maplbch[0][1][3][25]="LB_RE+1_S9_EP13_CH0";
+maplbch[0][1][3][26]="LB_RE+1_S9_EP13_CH2";
+maplbch[0][2][2][26]="LB_RE+1_S9_EP22_CH1";
+maplbch[0][2][2][27]="LB_RE+1_S9_EP22_CH0";
+maplbch[0][2][2][28]="LB_RE+1_S9_EP22_CH2";
+maplbch[0][2][3][26]="LB_RE+1_S9_EP23_CH1";
+maplbch[0][2][3][27]="LB_RE+1_S9_EP23_CH0";
+maplbch[0][2][3][28]="LB_RE+1_S9_EP23_CH2";
+maplbch[0][4][2][27]="LB_RE+4_S10_EP42_CH1";
+maplbch[0][4][2][28]="LB_RE+4_S10_EP42_CH0";
+maplbch[0][4][2][29]="LB_RE+4_S10_EP42_CH2";
+maplbch[0][4][3][27]="LB_RE+4_S10_EP43_CH1";
+maplbch[0][4][3][28]="LB_RE+4_S10_EP43_CH0";
+maplbch[0][4][3][29]="LB_RE+4_S10_EP43_CH2";
+maplbch[0][4][2][30]="LB_RE+4_S11_EP42_CH1";
+maplbch[0][4][2][31]="LB_RE+4_S11_EP42_CH0";
+maplbch[0][4][2][32]="LB_RE+4_S11_EP42_CH2";
+maplbch[0][4][3][30]="LB_RE+4_S11_EP43_CH1";
+maplbch[0][4][3][31]="LB_RE+4_S11_EP43_CH0";
+maplbch[0][4][3][32]="LB_RE+4_S11_EP43_CH2";
+maplbch[0][4][2][33]="LB_RE+4_S12_EP42_CH1";
+maplbch[0][4][2][34]="LB_RE+4_S12_EP42_CH0";
+maplbch[0][4][2][35]="LB_RE+4_S12_EP42_CH2";
+maplbch[0][4][3][33]="LB_RE+4_S12_EP43_CH1";
+maplbch[0][4][3][34]="LB_RE+4_S12_EP43_CH0";
+maplbch[0][4][3][35]="LB_RE+4_S12_EP43_CH2";
+maplbch[0][4][2][36]="LB_RE+4_S1_EP42_CH1";
+maplbch[0][4][2][1]="LB_RE+4_S1_EP42_CH0";
+maplbch[0][4][2][2]="LB_RE+4_S1_EP42_CH2";
+maplbch[0][4][3][36]="LB_RE+4_S1_EP43_CH1";
+maplbch[0][4][3][1]="LB_RE+4_S1_EP43_CH0";
+maplbch[0][4][3][2]="LB_RE+4_S1_EP43_CH2";
+maplbch[0][4][2][3]="LB_RE+4_S2_EP42_CH1";
+maplbch[0][4][2][4]="LB_RE+4_S2_EP42_CH0";
+maplbch[0][4][2][5]="LB_RE+4_S2_EP42_CH2";
+maplbch[0][4][3][3]="LB_RE+4_S2_EP43_CH1";
+maplbch[0][4][3][4]="LB_RE+4_S2_EP43_CH0";
+maplbch[0][4][3][5]="LB_RE+4_S2_EP43_CH2";
+maplbch[0][4][2][6]="LB_RE+4_S3_EP42_CH1";
+maplbch[0][4][2][7]="LB_RE+4_S3_EP42_CH0";
+maplbch[0][4][2][8]="LB_RE+4_S3_EP42_CH2";
+maplbch[0][4][3][6]="LB_RE+4_S3_EP43_CH1";
+maplbch[0][4][3][7]="LB_RE+4_S3_EP43_CH0";
+maplbch[0][4][3][8]="LB_RE+4_S3_EP43_CH2";
+maplbch[0][4][2][9]="LB_RE+4_S4_EP42_CH1";
+maplbch[0][4][2][10]="LB_RE+4_S4_EP42_CH0";
+maplbch[0][4][2][11]="LB_RE+4_S4_EP42_CH2";
+maplbch[0][4][3][9]="LB_RE+4_S4_EP43_CH1";
+maplbch[0][4][3][10]="LB_RE+4_S4_EP43_CH0";
+maplbch[0][4][3][11]="LB_RE+4_S4_EP43_CH2";
+maplbch[0][4][2][12]="LB_RE+4_S5_EP42_CH1";
+maplbch[0][4][2][13]="LB_RE+4_S5_EP42_CH0";
+maplbch[0][4][2][14]="LB_RE+4_S5_EP42_CH2";
+maplbch[0][4][3][12]="LB_RE+4_S5_EP43_CH1";
+maplbch[0][4][3][13]="LB_RE+4_S5_EP43_CH0";
+maplbch[0][4][3][14]="LB_RE+4_S5_EP43_CH2";
+maplbch[0][4][2][15]="LB_RE+4_S6_EP42_CH1";
+maplbch[0][4][2][16]="LB_RE+4_S6_EP42_CH0";
+maplbch[0][4][2][17]="LB_RE+4_S6_EP42_CH2";
+maplbch[0][4][3][15]="LB_RE+4_S6_EP43_CH1";
+maplbch[0][4][3][16]="LB_RE+4_S6_EP43_CH0";
+maplbch[0][4][3][17]="LB_RE+4_S6_EP43_CH2";
+maplbch[0][4][2][18]="LB_RE+4_S7_EP42_CH1";
+maplbch[0][4][2][19]="LB_RE+4_S7_EP42_CH0";
+maplbch[0][4][2][20]="LB_RE+4_S7_EP42_CH2";
+maplbch[0][4][3][18]="LB_RE+4_S7_EP43_CH1";
+maplbch[0][4][3][19]="LB_RE+4_S7_EP43_CH0";
+maplbch[0][4][3][20]="LB_RE+4_S7_EP43_CH2";
+maplbch[0][4][2][21]="LB_RE+4_S8_EP42_CH1";
+maplbch[0][4][2][22]="LB_RE+4_S8_EP42_CH0";
+maplbch[0][4][2][23]="LB_RE+4_S8_EP42_CH2";
+maplbch[0][4][3][21]="LB_RE+4_S8_EP43_CH1";
+maplbch[0][4][3][22]="LB_RE+4_S8_EP43_CH0";
+maplbch[0][4][3][23]="LB_RE+4_S8_EP43_CH2";
+maplbch[0][4][2][24]="LB_RE+4_S9_EP42_CH1";
+maplbch[0][4][2][25]="LB_RE+4_S9_EP42_CH0";
+maplbch[0][4][2][26]="LB_RE+4_S9_EP42_CH2";
+maplbch[0][4][3][24]="LB_RE+4_S9_EP43_CH1";
+maplbch[0][4][3][25]="LB_RE+4_S9_EP43_CH0";
+maplbch[0][4][3][26]="LB_RE+4_S9_EP43_CH2";
+maplbch[0][3][2][27]="LB_RE+3_S10_EP32_CH1";
+maplbch[0][3][2][28]="LB_RE+3_S10_EP32_CH0";
+maplbch[0][3][2][29]="LB_RE+3_S10_EP32_CH2";
+maplbch[0][3][3][27]="LB_RE+3_S10_EP33_CH1";
+maplbch[0][3][3][28]="LB_RE+3_S10_EP33_CH0";
+maplbch[0][3][3][29]="LB_RE+3_S10_EP33_CH2";
+maplbch[0][3][2][30]="LB_RE+3_S11_EP32_CH1";
+maplbch[0][3][2][31]="LB_RE+3_S11_EP32_CH0";
+maplbch[0][3][2][32]="LB_RE+3_S11_EP32_CH2";
+maplbch[0][3][3][30]="LB_RE+3_S11_EP33_CH1";
+maplbch[0][3][3][31]="LB_RE+3_S11_EP33_CH0";
+maplbch[0][3][3][32]="LB_RE+3_S11_EP33_CH2";
+maplbch[0][3][2][33]="LB_RE+3_S12_EP32_CH1";
+maplbch[0][3][2][34]="LB_RE+3_S12_EP32_CH0";
+maplbch[0][3][2][35]="LB_RE+3_S12_EP32_CH2";
+maplbch[0][3][3][33]="LB_RE+3_S12_EP33_CH1";
+maplbch[0][3][3][34]="LB_RE+3_S12_EP33_CH0";
+maplbch[0][3][3][35]="LB_RE+3_S12_EP33_CH2";
+maplbch[0][3][2][36]="LB_RE+3_S1_EP32_CH1";
+maplbch[0][3][2][1]="LB_RE+3_S1_EP32_CH0";
+maplbch[0][3][2][2]="LB_RE+3_S1_EP32_CH2";
+maplbch[0][3][3][36]="LB_RE+3_S1_EP33_CH1";
+maplbch[0][3][3][1]="LB_RE+3_S1_EP33_CH0";
+maplbch[0][3][3][2]="LB_RE+3_S1_EP33_CH2";
+maplbch[0][3][2][3]="LB_RE+3_S2_EP32_CH1";
+maplbch[0][3][2][4]="LB_RE+3_S2_EP32_CH0";
+maplbch[0][3][2][5]="LB_RE+3_S2_EP32_CH2";
+maplbch[0][3][3][3]="LB_RE+3_S2_EP33_CH1";
+maplbch[0][3][3][4]="LB_RE+3_S2_EP33_CH0";
+maplbch[0][3][3][5]="LB_RE+3_S2_EP33_CH2";
+maplbch[0][3][2][6]="LB_RE+3_S3_EP32_CH1";
+maplbch[0][3][2][7]="LB_RE+3_S3_EP32_CH0";
+maplbch[0][3][2][8]="LB_RE+3_S3_EP32_CH2";
+maplbch[0][3][3][6]="LB_RE+3_S3_EP33_CH1";
+maplbch[0][3][3][7]="LB_RE+3_S3_EP33_CH0";
+maplbch[0][3][3][8]="LB_RE+3_S3_EP33_CH2";
+maplbch[0][3][2][9]="LB_RE+3_S4_EP32_CH1";
+maplbch[0][3][2][10]="LB_RE+3_S4_EP32_CH0";
+maplbch[0][3][2][11]="LB_RE+3_S4_EP32_CH2";
+maplbch[0][3][3][9]="LB_RE+3_S4_EP33_CH1";
+maplbch[0][3][3][10]="LB_RE+3_S4_EP33_CH0";
+maplbch[0][3][3][11]="LB_RE+3_S4_EP33_CH2";
+maplbch[0][3][2][12]="LB_RE+3_S5_EP32_CH1";
+maplbch[0][3][2][13]="LB_RE+3_S5_EP32_CH0";
+maplbch[0][3][2][14]="LB_RE+3_S5_EP32_CH2";
+maplbch[0][3][3][12]="LB_RE+3_S5_EP33_CH1";
+maplbch[0][3][3][13]="LB_RE+3_S5_EP33_CH0";
+maplbch[0][3][3][14]="LB_RE+3_S5_EP33_CH2";
+maplbch[0][3][2][15]="LB_RE+3_S6_EP32_CH1";
+maplbch[0][3][2][16]="LB_RE+3_S6_EP32_CH0";
+maplbch[0][3][2][17]="LB_RE+3_S6_EP32_CH2";
+maplbch[0][3][3][15]="LB_RE+3_S6_EP33_CH1";
+maplbch[0][3][3][16]="LB_RE+3_S6_EP33_CH0";
+maplbch[0][3][3][17]="LB_RE+3_S6_EP33_CH2";
+maplbch[0][3][2][18]="LB_RE+3_S7_EP32_CH1";
+maplbch[0][3][2][19]="LB_RE+3_S7_EP32_CH0";
+maplbch[0][3][2][20]="LB_RE+3_S7_EP32_CH2";
+maplbch[0][3][3][18]="LB_RE+3_S7_EP33_CH1";
+maplbch[0][3][3][19]="LB_RE+3_S7_EP33_CH0";
+maplbch[0][3][3][20]="LB_RE+3_S7_EP33_CH2";
+maplbch[0][3][2][21]="LB_RE+3_S8_EP32_CH1";
+maplbch[0][3][2][22]="LB_RE+3_S8_EP32_CH0";
+maplbch[0][3][2][23]="LB_RE+3_S8_EP32_CH2";
+maplbch[0][3][3][21]="LB_RE+3_S8_EP33_CH1";
+maplbch[0][3][3][22]="LB_RE+3_S8_EP33_CH0";
+maplbch[0][3][3][23]="LB_RE+3_S8_EP33_CH2";
+maplbch[0][3][2][24]="LB_RE+3_S9_EP32_CH1";
+maplbch[0][3][2][25]="LB_RE+3_S9_EP32_CH0";
+maplbch[0][3][2][26]="LB_RE+3_S9_EP32_CH2";
+maplbch[0][3][3][24]="LB_RE+3_S9_EP33_CH1";
+maplbch[0][3][3][25]="LB_RE+3_S9_EP33_CH0";
+maplbch[0][3][3][26]="LB_RE+3_S9_EP33_CH2";
 
 }
 
@@ -1459,10 +2066,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      meId_all_mins.str("");meId_all_mins <<"BX_all_REm"<<station<<"_R"<<ring<<"_CH"<<chamber; 
 	      meId_sig_plus.str("");meId_sig_plus <<"BX_sig_REp"<<station<<"_R"<<ring<<"_CH"<<chamber; 
               meId_sig_mins.str("");meId_sig_mins <<"BX_sig_REm"<<station<<"_R"<<ring<<"_CH"<<chamber; 
-	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1] = new TH1F (meId_all_plus.str().c_str(),meId_all_plus.str().c_str(),11,-5.5, 5.5); 
-	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1] = new TH1F (meId_all_mins.str().c_str(),meId_all_mins.str().c_str(),11,-5.5, 5.5);  
-	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1] = new TH1F (meId_sig_plus.str().c_str(),meId_sig_plus.str().c_str(),11,-5.5, 5.5);
-	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1] = new TH1F (meId_sig_mins.str().c_str(),meId_sig_mins.str().c_str(),11,-5.5, 5.5);
+	      LinkBoardBXEndCap[0][0][station-1][ring-2][chamber-1] = new TH1F (meId_all_plus.str().c_str(),maplbch[0][station][ring][chamber].c_str(),11,-5.5, 5.5); 
+	      LinkBoardBXEndCap[0][1][station-1][ring-2][chamber-1] = new TH1F (meId_all_mins.str().c_str(),maplbch[1][station][ring][chamber].c_str(),11,-5.5, 5.5);  
+	      LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1] = new TH1F (meId_sig_plus.str().c_str(),maplbch[0][station][ring][chamber].c_str(),11,-5.5, 5.5);
+	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1] = new TH1F (meId_sig_mins.str().c_str(),maplbch[1][station][ring][chamber].c_str(),11,-5.5, 5.5);
 	  }
       }
   }
@@ -1548,7 +2155,9 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   folder = "DQMData/Muons/MuonSegEff/Residuals/Barrel/";
  
   command = "mkdir resBarrel"; system(command.c_str());
-  
+
+  command = "mkdir bx"; system(command.c_str());
+
   Ca4->Clear();
   
   if(barrel){
@@ -1947,6 +2556,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
           histoDT= (TH1F*)theFile->Get(meIdDT.c_str());
           BXDistribution = (TH1F*)theFile->Get(bxDistroId.c_str());
 	  Signal_BXDistribution = (TH1F*)theFile->Get(signal_bxDistroId.c_str());
+
           histoRealRPC = (TH1F*)theFile->Get(meIdRealRPC.c_str());
 	  
 	  histoPRO= new TH1F (meIdPRO.c_str(),meIdPRO.c_str(),nstrips,0.5,nstrips+0.5);
@@ -2092,6 +2702,21 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
 	    RollYBX<<name<<" "<<Signal_BXDistribution->GetMean()<<" "<<Signal_BXDistribution->GetRMS()<<" "<<Signal_BXDistribution->GetEntries()
 		         <<" "<<BXDistribution->GetMean()<<" "<<BXDistribution->GetRMS()<<" "<<BXDistribution->GetEntries()<<std::endl;
+	    
+	    LBYBX<<name
+		   <<" mean: "<<  Signal_BXDistribution->GetMean()
+		   <<" rms: " <<  Signal_BXDistribution->GetRMS()
+		   <<" counts: "
+		   <<" 0"
+		   <<" "<<Signal_BXDistribution->GetBinContent(bin0)
+		   <<" "<<Signal_BXDistribution->GetBinContent(bin0+1)
+		   <<" "<<Signal_BXDistribution->GetBinContent(bin0+2)
+		   <<" "<<Signal_BXDistribution->GetBinContent(bin0+3)
+		   <<" "<<Signal_BXDistribution->GetBinContent(bin0+4)
+		   <<" "<<Signal_BXDistribution->GetBinContent(bin0+5)
+		   <<" 0"
+            	   <<std::endl;
+
 
 	    float integralCLS = histoCLS->Integral()+histoCLS->GetBinContent(11);
 	    for(int bin=1;bin<=11;bin++){
@@ -2381,6 +3006,8 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      Signal_BXDistribution->Draw("histsame");
 	      labeltoSave = name + "/BXDistribution.png";
 	      Ca0->SaveAs(labeltoSave.c_str());
+	      labeltoSave = "bx/" + name + ".png";
+	      Ca0->SaveAs(labeltoSave.c_str());
 	      Ca0->Clear();
 
 	      histoCLS->GetXaxis()->SetTitle("Cluster Size");
@@ -2523,7 +3150,6 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	  	  
 	  p=histoDT->Integral();
 	  o=histoRPC->Integral();
-
 
 	  if(p==0) rollZeroPrediction<<name<<std::endl;
 	  if(o==0&&p>10) rollZeroEff<<name<<std::endl;
@@ -7566,8 +8192,10 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 
  gStyle->SetOptStat(1111111);
 
- command = "mkdir bx"; system(command.c_str());
-
+ command = "cp html/bxendcap.html bx/"; system(command.c_str());
+ command = "cp html/bxbarrel.html bx/"; system(command.c_str());
+ command = "cp html/bxindex.html bx/index.html"; system(command.c_str());
+ 
  if(debug)std::cout<<"Saving + Images Link Board Histograms"<<std::endl;
  
  for(int station=1;station<=4;station++){
@@ -7596,10 +8224,40 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
 	      LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->SetFillColor(2);
 	      meId_sig_mins.str("");meId_sig_mins<<"bx/BX_sig_RE-"<<station<<"_R"<<ring<<"_CH"<<chamber<<".png";
 	      Ca11->SaveAs(meId_sig_mins.str().c_str()); Ca11->Clear();
+	      
+	      LBYBX<<maplbch[0][station][ring][chamber]
+		   <<" mean: "<<  LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetMean()
+		   <<" rms: " <<  LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetRMS()
+		   <<" counts: "
+		   <<" 0"
+		   <<" "<<LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetBinContent(bin0)
+		   <<" "<<LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetBinContent(bin0+1)
+		   <<" "<<LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetBinContent(bin0+2)//BX=0
+		   <<" "<<LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetBinContent(bin0+3)
+		   <<" "<<LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetBinContent(bin0+4)
+		   <<" "<<LinkBoardBXEndCap[1][0][station-1][ring-2][chamber-1]->GetBinContent(bin0+5)
+		   <<" 0"
+		   <<std::endl;
+	      
+	      LBYBX<<maplbch[1][station][ring][chamber]
+		   <<" mean: "<<  LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetMean()
+		   <<" rms: " <<  LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetRMS()
+		   <<" counts: "
+		   <<" 0"
+		   <<" "<<LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetBinContent(bin0)
+		   <<" "<<LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetBinContent(bin0+1)
+		   <<" "<<LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetBinContent(bin0+2)
+		   <<" "<<LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetBinContent(bin0+3)
+		   <<" "<<LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetBinContent(bin0+4)
+		   <<" "<<LinkBoardBXEndCap[1][1][station-1][ring-2][chamber-1]->GetBinContent(bin0+5)
+		   <<" 0"
+		   <<std::endl;
+	      
 	  }
       }
-  }
- 
+ }
+
+
   Ca11->Close();
 
  
@@ -7978,6 +8636,7 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
  //
 
  RollYBX.close();
+ LBYBX.close();
 
  RollYEff.close();
  RollYEff_good.close();
