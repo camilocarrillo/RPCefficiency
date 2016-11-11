@@ -407,28 +407,40 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
       double dx=0;
       double dy=0;
       double dz=0;
-
+      double t0=0;
+      int nt0=0;
 
       std::cout<<"Starting loop on all the segments "<<std::endl;
-
       DTRecSegment4DCollection::const_iterator segment;  
-      for (segment = all4DSegments->begin();segment!=all4DSegments->end(); ++segment){
-	DTChamberId DTId = segment->chamberId();
-	int dtSector = DTId.sector(); 
-	if(dtSector==13) dtSector=4;
-	if(dtSector==14)  dtSector=10;
-	if(DTId.wheel()==rpcId.ring() && DTId.station()==rpcId.station() && dtSector==rpcId.sector()){
-	  std::cout<<DTId<<std::endl;
-	  LocalVector segmentDirection=segment->localDirection();
-	  dx=segmentDirection.x();
-	  dy=segmentDirection.y();
-	  dz=segmentDirection.z();
-	  float cosal = dx/sqrt(dx*dx+dz*dz);
-	  float angle = acos(cosal)*180/3.1415926;
-	  std::cout<<"angle from the segment="<<angle<<" z_coordinateRPCPoint="<<PointExtrapolatedRPCFrame.z()<<std::endl;
-	  continue;
-	}
+      for (segment = all4DSegments->begin();segment!=all4DSegments->end(); ++segment){  
+	  bool bothProjections = (segment->hasPhi() && segment->hasZed());
+	  if(bothProjections){
+	      std::cout << "segmentt0: " << segment->phiSegment()->t0() << std::endl;
+	      t0=t0+segment->phiSegment()->t0();
+	      nt0++;
+	  }
+	  DTChamberId DTId = segment->chamberId();
+	  int dtSector = DTId.sector(); 
+	  if(dtSector==13) dtSector=4;
+	  if(dtSector==14)  dtSector=10;
+	  if(DTId.wheel()==rpcId.ring() && DTId.station()==rpcId.station() && dtSector==rpcId.sector()){
+	      std::cout<<DTId<<std::endl;
+	      LocalVector segmentDirection=segment->localDirection();
+	      dx=segmentDirection.x();
+	      dy=segmentDirection.y();
+	      dz=segmentDirection.z();
+	      float cosal = dx/sqrt(dx*dx+dz*dz);
+	      float angle = acos(cosal)*180/3.1415926;
+	      std::cout<<"angle from the segment="<<angle<<" z_coordinateRPCPoint="<<PointExtrapolatedRPCFrame.z()<<std::endl;
+	      continue;
+	  }
       }
+
+      double Trackt0=0.;
+      if(nt0!=0) Trackt0=t0/double(nt0);
+      std::cout << "nt0: " <<nt0<< std::endl;
+      std::cout << "Trackt0: " <<Trackt0<< std::endl;
+      if(fabs(Trackt0)>7.5)continue; //Take segments just with the right timing 
 
       std::cout<<"Finishing loop on all the segments "<<std::endl;
       
@@ -755,6 +767,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	
 	if(debug) std::cout<<"CSC \t \t \t \t \t PointExtrapolatedRPCFrame.x="<<PointExtrapolatedRPCFrame.x()<<" Minimal Residual"<<minres<<std::endl;
 	if(debug) std::cout<<"CSC  \t \t \t \t \t Minimal Residual less than stripw*rangestrips? minres="<<minres<<" range="<<rangestrips<<" stripw="<<stripw<<" cluSize"<<cluSize<<" <=compare minres with"<<(rangestrips+cluSize*0.5)*stripw<<std::endl;
+
 	if(fabs(minres)<=(rangestrips+cluSize*0.5)*stripw){
 	  if(debug) std::cout<<"CSC  \t \t \t \t \t \t True!"<<std::endl;
 	  anycoincidence=true;

@@ -14,15 +14,15 @@ process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1))
 process.MessageLogger = cms.Service("MessageLogger")
 
 process.demo = cms.EDAnalyzer("RPCMonitorEfficiency",
-    fileName = cms.untracked.string('/tmp/carrillo/eff.root'),
-    fileOut = cms.untracked.string('/tmp/carrillo/sec.root'),
+    fileName = cms.untracked.string('/tmp/carrillo/eff277430.root'),
+    fileOut = cms.untracked.string('/tmp/carrillo/seceff277430.root'),
 
     BlackListFile = cms.untracked.string(''),
 
     debug = cms.untracked.bool(True),
 
-    makehtml = cms.untracked.bool(False),
-    prodimages = cms.untracked.bool(False),
+    makehtml = cms.untracked.bool(True),
+    prodimages = cms.untracked.bool(True),
 
     statistics = cms.untracked.bool(True),
 
