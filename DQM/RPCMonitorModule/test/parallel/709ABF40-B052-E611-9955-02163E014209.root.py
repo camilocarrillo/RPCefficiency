@@ -46,8 +46,6 @@ process.load("RecoTracker.CkfPattern.GroupedCkfTrajectoryBuilder_cff")
 
 
 
-
-
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1)
 )
@@ -55,13 +53,14 @@ process.source = cms.Source("PoolSource",
    fileNames = cms.untracked.vstring('/store/data/Run2016E/RPCMonitor/RAW/v2/000/277/420/00000/709ABF40-B052-E611-9955-02163E014209.root')
 )
 
+import FWCore.PythonUtilities.LumiList as LumiList
+process.source.lumisToProcess = LumiList.LumiList(filename = '/afs/cern.ch/user/c/carrillo/efficiency/CMSSW_8_0_1/src/DQM/RPCMonitorModule/test/parallel/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON_NoL1T_MuonPhys.json').getVLuminosityBlockRange()
+
 process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
                                                   cscSegments = cms.untracked.InputTag("hltCscSegments"),
                                                   dt4DSegments = cms.untracked.InputTag("hltDt4DSegments"),
                                                   tracks = cms.untracked.InputTag("standAloneMuons","")
                                                   )
-
-
 
 process.rpcPointProducer = cms.EDProducer('RPCPointProducer',
   incldt = cms.untracked.bool(True),

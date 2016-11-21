@@ -5,9 +5,9 @@ Universidad de los Andes Bogota Colombia
 camilo.carrilloATcern.ch
 ****************************************/
 
-#include "DQM/RPCMonitorModule/interface/MuonSegmentEff.h"
+#include <DQM/RPCMonitorModule/interface/MuonSegmentEff.h>
 #include <memory>
-#include "FWCore/Framework/interface/MakerMacros.h"
+#include <FWCore/Framework/interface/MakerMacros.h>
 #include <DataFormats/RPCDigi/interface/RPCDigiCollection.h>
 #include "DataFormats/RPCRecHit/interface/RPCRecHitCollection.h"
 #include <DataFormats/MuonDetId/interface/RPCDetId.h>
@@ -18,7 +18,7 @@ camilo.carrilloATcern.ch
 #include <Geometry/Records/interface/MuonGeometryRecord.h>
 #include <Geometry/CommonTopologies/interface/RectangularStripTopology.h>
 #include <Geometry/CommonTopologies/interface/TrapezoidalStripTopology.h>
-
+#include <DataFormats/CSCRecHit/interface/CSCRecHit2D.h>
 
 #include <cmath>
 #include "TFile.h"
@@ -350,7 +350,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
   
   if(allCSCSegments->size()!=0 && allCSCSegments->size()<=16){
     statistics->Fill(18);
-    statistics->Fill(allCSCSegments->size()+18);
+   statistics->Fill(allCSCSegments->size()+18);
   }
   
   if(debug) std::cout <<"\t Getting the RPC RecHits"<<std::endl;
@@ -395,9 +395,8 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
   }
   
   if(rpcDTPoints.isValid() && rpcDTPoints->begin()!=rpcDTPoints->end()){ //No Empty Predictions
-  
+
     RPCRecHitCollection::const_iterator rpcPoint;
-  
     for(rpcPoint = rpcDTPoints->begin(); rpcPoint != rpcDTPoints->end(); rpcPoint++){
       LocalPoint PointExtrapolatedRPCFrame = rpcPoint->localPosition();
       RPCDetId  rpcId = rpcPoint->rpcId();
@@ -407,18 +406,10 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
       double dx=0;
       double dy=0;
       double dz=0;
-      double t0=0;
-      int nt0=0;
 
       std::cout<<"Starting loop on all the segments "<<std::endl;
       DTRecSegment4DCollection::const_iterator segment;  
       for (segment = all4DSegments->begin();segment!=all4DSegments->end(); ++segment){  
-	  bool bothProjections = (segment->hasPhi() && segment->hasZed());
-	  if(bothProjections){
-	      std::cout << "segmentt0: " << segment->phiSegment()->t0() << std::endl;
-	      t0=t0+segment->phiSegment()->t0();
-	      nt0++;
-	  }
 	  DTChamberId DTId = segment->chamberId();
 	  int dtSector = DTId.sector(); 
 	  if(dtSector==13) dtSector=4;
@@ -435,12 +426,6 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	      continue;
 	  }
       }
-
-      double Trackt0=0.;
-      if(nt0!=0) Trackt0=t0/double(nt0);
-      std::cout << "nt0: " <<nt0<< std::endl;
-      std::cout << "Trackt0: " <<Trackt0<< std::endl;
-      if(fabs(Trackt0)>7.5)continue; //Take segments just with the right timing 
 
       std::cout<<"Finishing loop on all the segments "<<std::endl;
       
@@ -648,12 +633,11 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
   else {
     if(debug) std::cout<<"DT This Event doesn't have any DT4DDSegment"<<std::endl; //is ther more than 1 segment in this event?
   }
-  
 
   //From Now on CSC part!
 
   if(rpcCSCPoints.isValid()) if(rpcCSCPoints->begin()!=rpcCSCPoints->end()){//No Empty Predictions
-    
+
     RPCRecHitCollection::const_iterator rpcPoint;
   
     for(rpcPoint = rpcCSCPoints->begin(); rpcPoint != rpcCSCPoints->end(); rpcPoint++){
@@ -684,6 +668,8 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	  continue;
 	}
       }
+
+
       
       const RPCRoll * rollasociated = rpcGeo->roll(rpcId);
       
@@ -783,8 +769,8 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	sprintf(meIdCSC,"BXYDistribution_%s",detUnitLabel);
 	meMap[meIdCSC]->Fill(bx,distobottom);
 	
-	sprintf(meIdDT,"Signal_BXDistribution_%s",detUnitLabel);
-	meMap[meIdDT]->Fill(bx,cluSize);
+	sprintf(meIdCSC,"Signal_BXDistribution_%s",detUnitLabel);
+	meMap[meIdCSC]->Fill(bx,cluSize);
 		      
 	sprintf(meIdCSC,"CLSDistribution_%s",detUnitLabel);
 	meMap[meIdCSC]->Fill(cluSize);
