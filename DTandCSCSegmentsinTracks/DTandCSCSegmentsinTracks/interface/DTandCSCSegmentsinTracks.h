@@ -27,6 +27,12 @@
 #include "DataFormats/TrackReco/interface/Track.h"
 ///
 
+#include "DataFormats/MuonReco/interface/MuonTrackLinks.h"
+#include "DataFormats/TrackReco/interface/TrackToTrackMap.h"
+#include "DataFormats/MuonReco/interface/MuonTimeExtra.h"
+#include "DataFormats/MuonReco/interface/MuonTimeExtraMap.h"
+
+
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/Framework/interface/EDProducer.h"
 //#include<fstream>
@@ -36,9 +42,6 @@
 
 #include "FWCore/Utilities/interface/InputTag.h"
 #include "FWCore/Utilities/interface/EDGetToken.h"
-
-
-
 
 
 class DTandCSCSegmentsinTracks : public edm::EDProducer {
@@ -58,6 +61,10 @@ class DTandCSCSegmentsinTracks : public edm::EDProducer {
       edm::EDGetTokenT<DTRecSegment4DCollection> dt4DSegments;
       edm::EDGetTokenT<CSCSegmentCollection> cscSegments;
       edm::EDGetTokenT<reco::TrackCollection> tracks;
-
+      edm::EDGetTokenT<reco::MuonTimeExtraMap> staTimeToken;
+      //edm::EDGetTokenT<reco::MuonTimeExtraMap> staRpcTimeToken;
+ 
+      double timingCut;
+      double ptCut;
 };
 

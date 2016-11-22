@@ -2,6 +2,7 @@
 
 import FWCore.ParameterSet.Config as cms
 process = cms.Process("OwnParticles")
+#process = cms.Process("RECO")
 
 process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
 process.load("Configuration.StandardSequences.GeometryDB_cff")
@@ -52,7 +53,19 @@ process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1)
 )
 process.source = cms.Source("PoolSource",
-   fileNames = cms.untracked.vstring('/store/data/Run2016C/RPCMonitor/RAW/v2/000/275/963/00000/F44E5858-683E-E611-AE8A-02163E01183A.root')
+   fileNames = cms.untracked.vstring(#'/store/data/Run2016E/RPCMonitor/RAW/v2/000/277/420/00000/04EEBC38-B052-E611-972D-02163E013587.root')
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/10BEC880-5F32-E611-872C-02163E0142BA.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/1CA7B675-5F32-E611-A757-02163E013754.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/26CCB6A5-5F32-E611-9D5D-02163E01411D.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/320E2670-5F32-E611-A3D1-02163E01368B.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/48195061-5F32-E611-AC8E-02163E01399A.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/5E7C9769-5F32-E611-8F64-02163E0123FA.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/98B32665-5932-E611-95DA-02163E011E30.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/A0AC405D-5F32-E611-BAB5-02163E011B04.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/B02EB961-5F32-E611-9A41-02163E0123D6.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/BAE8B262-5F32-E611-A498-02163E01388F.root',
+        '/store/data/Run2016B/RPCMonitor/RAW/v2/000/275/059/00000/FEF3866C-5F32-E611-9E3E-02163E012B20.root')
+
 )
 
 process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
@@ -61,7 +74,7 @@ process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
                                                   tracks = cms.untracked.InputTag("standAloneMuons",""),
                                                   MuonTimeMapLabel = cms.InputTag("staRegular", "combined"),
                                                   ptCutValue = cms.untracked.double(5),
-                                                  timingCutValue = cms.untracked.double(10)
+                                                  timingCutValue = cms.untracked.double(10),
                                                   )
 
 
@@ -71,7 +84,7 @@ process.rpcPointProducer = cms.EDProducer('RPCPointProducer',
   inclcsc = cms.untracked.bool(True),
   incltrack =  cms.untracked.bool(False),
 
-  debug = cms.untracked.bool(True),
+  debug = cms.untracked.bool(False),
 
   rangestrips = cms.untracked.double(4.),
   rangestripsRB4 = cms.untracked.double(4.),
@@ -112,22 +125,22 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
 
     manualalignment = cms.untracked.bool(False),
     AliFileName = cms.untracked.string('/afs/cern.ch/user/c/carrillo/endcap/CMSSW_3_0_0_pre10/src/DQM/RPCMonitorModule/data/Alignment69912.dat'),
-	
-    rangestrips = cms.untracked.double(4.),
 
-    selectedcscSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedCscSegments','OwnParticles'),
-    selecteddt4DSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedDtSegments','OwnParticles'),
+    rangestrips = cms.untracked.double(4.),
 
     cscSegments = cms.untracked.InputTag('hltCscSegments'),
     dt4DSegments = cms.untracked.InputTag('hltDt4DSegments'),
     rpcRecHits = cms.untracked.InputTag("hltRpcRecHits"),
 
+
+
     rpcDTPoints = cms.untracked.InputTag("rpcPointProducer","RPCDTExtrapolatedPoints"),
     rpcCSCPoints = cms.untracked.InputTag("rpcPointProducer","RPCCSCExtrapolatedPoints"),
 
     EffSaveRootFile = cms.untracked.bool(True),
-    #EffRootFileName = cms.untracked.string('-output-'),
-    EffRootFileName = cms.untracked.string('/tmp/carrillo/testori.root'),
+    EffRootFileName = cms.untracked.string('output.root'),
+    #EffRootFileName = cms.untracked.string('/tmp/federica/eff04EEBC38-B052-E611-972D-02163E013587.root'),
+    #EffRootFileName = cms.untracked.string('/tmp/federica/Filtered_effRun2016B_275059.root'),
     EffSaveRootFileEventsInterval = cms.untracked.int32(100)
 )
 
@@ -147,7 +160,16 @@ process.triggerFilter = cms.EDFilter('TriggerFilter',
 
 #process.p = cms.Path(process.normfilter*process.triggerFilter*process.muonstandalonereco*process.dTandCSCSegmentsinTracks*process.rpcPointProducer*process.museg)#Trigger Filter needs to be updated!!!!!!!!!
 
-#process.p = cms.Path(process.normfilter*process.muonstandalonereco*process.dTandCSCSegmentsinTracks*process.rpcPointProducer*process.museg)
+#federica
+#process.out = cms.OutputModule("PoolOutputModule",
+ #                              fileName = cms.untracked.string("FedeTest.root"))
+
 
 process.p = cms.Path(process.normfilter*process.muonstandalonereco*process.standAloneTiming*process.dTandCSCSegmentsinTracks*process.rpcPointProducer*process.museg)
+#process.e = cms.EndPath(process.out)
 
+
+
+f = file('outfile', 'w')
+f.write(process.dumpPython())
+f.close()
