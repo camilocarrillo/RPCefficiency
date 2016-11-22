@@ -30,7 +30,12 @@
 #include <DataFormats/DTRecHit/interface/DTRecSegment4DCollection.h>
 #include <DataFormats/CSCRecHit/interface/CSCSegmentCollection.h>
 
-
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/TrackReco/interface/TrackFwd.h"
+#include "DataFormats/MuonReco/interface/MuonTrackLinks.h"
+#include "DataFormats/TrackReco/interface/TrackToTrackMap.h"
+#include "DataFormats/MuonReco/interface/MuonTimeExtra.h"
+#include "DataFormats/MuonReco/interface/MuonTimeExtraMap.h"
 
 #include<string>
 #include<map>
@@ -43,6 +48,7 @@ class TFile;
 class TCanvas;
 class TH2F;
 class TString;
+
 
 class MuonSegmentEff : public edm::EDAnalyzer {
    public:
@@ -174,6 +180,20 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       MonitorElement * hGlobalResClu3R2A;
 
  private:
+      //timing 
+      edm::InputTag theSTACollectionLabel;
+      edm::EDGetTokenT<reco::TrackCollection> staMuonsToken;
+      edm::EDGetTokenT<reco::MuonTimeExtraMap> staTimeToken;
+      edm::EDGetTokenT<reco::MuonTimeExtraMap> staRpcTimeToken;
+ 
+      MonitorElement *hTimeCombined;
+      MonitorElement *hTimeRPC;
+      MonitorElement *hInTimeMuons;
+      MonitorElement *hOutOfTimeMuons;
+      MonitorElement *hOutOfTimeMuons_eta;
+      MonitorElement *hOutOfTimeMuons_pt;
+      double timingCut;
+      
       std::vector<std::map<RPCDetId, int> > counter;
       std::vector<int> totalcounter;
       std::ofstream ofrej;

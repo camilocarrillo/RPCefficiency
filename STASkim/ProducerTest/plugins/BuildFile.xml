@@ -1,0 +1,15 @@
+<library   name="STASkimProducerTestPlugins" file="*.cc">
+<use name="FWCore/Framework"/>
+<use name="FWCore/PluginManager"/>
+<use name="FWCore/ParameterSet"/>
+<use name="DataFormats/MuonReco"/>
+<use name="RecoMuon/MuonIdentification"/>
+<use name="DataFormats/TrackReco"/>
+
+<use name="DataFormats/DTRecHit"/>
+<use name="DataFormats/CSCRecHit"/>
+
+<flags EDM_PLUGIN="1"/>
+</library>
+
+

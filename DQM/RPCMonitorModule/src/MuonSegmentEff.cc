@@ -79,6 +79,12 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   rpcDTPointsLabel = consumes<RPCRecHitCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("rpcDTPoints"));
   rpcCSCPointsLabel = consumes<RPCRecHitCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("rpcCSCPoints"));
 
+  // STA Muon Collection and Timing infos
+  theSTACollectionLabel = iConfig.getParameter<edm::InputTag>("MuonCollectionLabel");
+  staMuonsToken=consumes<reco::TrackCollection>(iConfig.getParameter<edm::InputTag>("MuonCollectionLabel"));
+  staTimeToken=consumes<reco::MuonTimeExtraMap>(iConfig.getParameter<edm::InputTag>("MuonTimeMapLabel"));
+  staRpcTimeToken=consumes<reco::MuonTimeExtraMap>(iConfig.getParameter<edm::InputTag>("MuonRpcTimeMapLabel"));
+  timingCut = iConfig.getUntrackedParameter<double>("timingCutValue");
   
   nameInLog = iConfig.getUntrackedParameter<std::string>("moduleLogName", "RPC_Eff");
   EffSaveRootFile  = iConfig.getUntrackedParameter<bool>("EffSaveRootFile", false); 
@@ -252,6 +258,16 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   hGlobalResClu3R2B = dbe->book1D("GlobalResidualsClu3R2B","RPC Residuals Ring 2 Roll B Cluster Size 3",101,-10.,10.);
   hGlobalResClu3R2A = dbe->book1D("GlobalResidualsClu3R2A","RPC Residuals Ring 2 Roll A Cluster Size 3",101,-10.,10.);
 
+  //timing infos 
+  folder = "Muons/Time";
+  dbe->setCurrentFolder(folder);
+
+  hTimeCombined = dbe->book1D("hTimeCombined","standAlone CMB time ",250,-250.,250.);
+  hTimeRPC = dbe->book1D("hTimeRPC","standAlone RPC time ",250,-250.,250.);
+  hInTimeMuons = dbe->book1D("hInTimeMuons","standAlone muons with CMB time < 10 ",2,0.,2.);
+  hOutOfTimeMuons = dbe->book1D("hOutOfTimeMuons","standAlone muons with CMB time > 10 ",2,0.,2.);
+  hOutOfTimeMuons_eta = dbe->book1D("hOutOfTimeMuons_eta","standAlone muons with CMB time > 10: #eta ",50,-2.5,2.5);  
+  hOutOfTimeMuons_pt = dbe->book1D("hOutOfTimeMuons_pt","standAlone muons with CMB time > 10: p_{T} ",200,0.,200.);  
   
   if(debug) ofrej.open("rejected.txt");
 
@@ -327,6 +343,38 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
   char meIdRPCbx [128];
   char meIdDT [128];
   char meIdCSC [128];
+
+  // Plot the STA muons and their timing infos
+  Handle<reco::TrackCollection> staMuons;
+  iEvent.getByToken(staMuonsToken,staMuons);
+
+  Handle<reco::MuonTimeExtraMap> timeMapCMB;
+  iEvent.getByToken(staTimeToken,timeMapCMB); 
+
+  Handle<reco::MuonTimeExtraMap> timeMapRPC;
+  iEvent.getByToken(staRpcTimeToken,timeMapRPC);
+  
+  for ( unsigned int position = 0; position != staMuons->size(); ++position ) {
+    reco::TrackRef staTrackRef(staMuons,position); 
+    reco::MuonTimeExtra timec = timeMapCMB->get(staTrackRef.key());
+    reco::MuonTimeExtra timerpc = timeMapRPC->get(staTrackRef.key());
+    
+    const reco::Track Track = staMuons->at(position); 
+
+    hTimeCombined->Fill(timec.timeAtIpInOut());
+    hTimeRPC->Fill(timerpc.timeAtIpInOut());    
+
+    if(fabs(timec.timeAtIpInOut()) <= timingCut)   
+      hInTimeMuons->Fill(1.);
+    else{
+      hOutOfTimeMuons->Fill(1.);
+      hOutOfTimeMuons_eta->Fill(Track.eta());  
+      hOutOfTimeMuons_pt->Fill(Track.pt());  
+    }
+    // std::cout << "Time CMB = " << fabs(timec.timeAtIpInOut()) << " err = " << timec.timeAtIpInOutErr() << std::endl;
+    // std::cout << "Time RPC = " << fabs(timerpc.timeAtIpInOut()) << " err = " << timerpc.timeAtIpInOutErr() << std::endl;
+    
+  }
 
   //-------------Filling Other Histograms for correlations -----------
 
