@@ -14,17 +14,17 @@ process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1))
 process.MessageLogger = cms.Service("MessageLogger")
 
 process.demo = cms.EDAnalyzer("RPCMonitorEfficiency",
-    fileName = cms.untracked.string('/tmp/carrillo/eff277430.root'),
-    fileOut = cms.untracked.string('/tmp/carrillo/seceff277430.root'),
+    fileName = cms.untracked.string('/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v1_RAW/275059/eff275059.root'),
+    fileOut = cms.untracked.string('/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v1_RAW/275059/sec275059.root'),
 
     BlackListFile = cms.untracked.string(''),
 
-    debug = cms.untracked.bool(True),
+    debug = cms.untracked.bool(False),
 
-    makehtml = cms.untracked.bool(True),
-    prodimages = cms.untracked.bool(True),
+    makehtml = cms.untracked.bool(False),
+    prodimages = cms.untracked.bool(False),
 
-    statistics = cms.untracked.bool(True),
+    statistics = cms.untracked.bool(False),
 
     threshold = cms.untracked.double(50.0),
 

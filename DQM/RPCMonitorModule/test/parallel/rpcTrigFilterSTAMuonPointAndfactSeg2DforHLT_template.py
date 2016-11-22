@@ -50,7 +50,7 @@ process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1)
 )
 process.source = cms.Source("PoolSource",
-   fileNames = cms.untracked.vstring('/store/data/Run2016E/RPCMonitor/RAW/v2/000/277/420/00000/-file-')
+   fileNames = cms.untracked.vstring('-input-')
 )
 
 import FWCore.PythonUtilities.LumiList as LumiList
@@ -110,14 +110,14 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
     dt4DSegments = cms.untracked.InputTag('hltDt4DSegments'),
     rpcRecHits = cms.untracked.InputTag("hltRpcRecHits"),
 
-
+    selectedcscSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedCscSegments','OwnParticles'),
+    selecteddt4DSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedDtSegments','OwnParticles'),
 
     rpcDTPoints = cms.untracked.InputTag("rpcPointProducer","RPCDTExtrapolatedPoints"),
     rpcCSCPoints = cms.untracked.InputTag("rpcPointProducer","RPCCSCExtrapolatedPoints"),
 
     EffSaveRootFile = cms.untracked.bool(True),
-    #EffRootFileName = cms.untracked.string('-output-'),
-    EffRootFileName = cms.untracked.string('/tmp/carrillo/eff-file-'),
+    EffRootFileName = cms.untracked.string('-output-'),
     EffSaveRootFileEventsInterval = cms.untracked.int32(100)
 )
 

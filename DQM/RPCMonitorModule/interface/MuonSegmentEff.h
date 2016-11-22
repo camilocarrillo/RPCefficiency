@@ -62,6 +62,7 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       edm::ESHandle<CSCGeometry> cscGeo;
 
       MonitorElement * statistics;
+      MonitorElement * selectedstatistics;
       MonitorElement * CosAngMB3MB4Whm2;
       MonitorElement * CosAngMB3MB4Whm1;
       MonitorElement * CosAngMB3MB4Wh0;
@@ -186,6 +187,8 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       
       edm::EDGetTokenT<DTRecSegment4DCollection> dt4DSegments;
       edm::EDGetTokenT<CSCSegmentCollection> cscSegments;
+      edm::EDGetTokenT<DTRecSegment4DCollection> selecteddt4DSegments;
+      edm::EDGetTokenT<CSCSegmentCollection> selectedcscSegments;
       edm::EDGetTokenT<RPCRecHitCollection> rpcRecHitsLabel;
       edm::EDGetTokenT<RPCRecHitCollection> rpcDTPointsLabel;
       edm::EDGetTokenT<RPCRecHitCollection> rpcCSCPointsLabel;

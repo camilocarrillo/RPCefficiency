@@ -75,6 +75,9 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   cscSegments = consumes<CSCSegmentCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("cscSegments"));
   dt4DSegments = consumes<DTRecSegment4DCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("dt4DSegments"));
 
+  selectedcscSegments = consumes<CSCSegmentCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("selectedcscSegments"));
+  selecteddt4DSegments = consumes<DTRecSegment4DCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("selecteddt4DSegments"));
+
   rpcRecHitsLabel = consumes<RPCRecHitCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("rpcRecHits"));
   rpcDTPointsLabel = consumes<RPCRecHitCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("rpcDTPoints"));
   rpcCSCPointsLabel = consumes<RPCRecHitCollection>(iConfig.getUntrackedParameter < edm::InputTag > ("rpcCSCPoints"));
@@ -99,6 +102,7 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   CosAngMB3MB4Wh2 = dbe->book1D("CosAngMB3MB4Wh2","Cosine Angle MB3 MB4 to do the cut for Wheel 2",100,0.5,1.);
   
   statistics = dbe->book1D("Statistics","All Statistics",33,0.5,33.5);
+  selectedstatistics = dbe->book1D("SelectedStatistics","Selected Statistics",33,0.5,33.5);
 
   if(debug) std::cout<<"booking Global histograms"<<std::endl;
   
@@ -339,18 +343,38 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
   edm::Handle<CSCSegmentCollection> allCSCSegments;
   iEvent.getByToken(cscSegments, allCSCSegments);
   if(debug) std::cout<<"I got the segments"<<std::endl;
+
+  if(debug) std::cout<<"\t Getting the selected DT Segments"<<std::endl;
+  edm::Handle<DTRecSegment4DCollection> selected4DSegments;
+  iEvent.getByToken(selecteddt4DSegments, selected4DSegments);
+  if(debug) std::cout<<"I got the selected DT segments"<<std::endl;
+  
+  if(debug) std::cout <<"\t Getting the selected CSC Segments"<<std::endl;
+  edm::Handle<CSCSegmentCollection> selectedCSCSegments;
+  iEvent.getByToken(selectedcscSegments, selectedCSCSegments);
+  if(debug) std::cout<<"I got the selected CSC segments"<<std::endl;
   
   if(all4DSegments->size()==0 && allCSCSegments->size()==0) 
-    std::cout<<"event without segments"<<iEvent.id()<<std::endl;
+    std::cout<<"warning event without segments"<<iEvent.id()<<std::endl;
 
   if(all4DSegments->size()!=0 && all4DSegments->size()<=16){
     statistics->Fill(2);
     statistics->Fill(all4DSegments->size()+2);
-  }
+  } 
   
   if(allCSCSegments->size()!=0 && allCSCSegments->size()<=16){
     statistics->Fill(18);
    statistics->Fill(allCSCSegments->size()+18);
+  }
+
+  if(selected4DSegments->size()!=0 && selected4DSegments->size()<=16){
+    selectedstatistics->Fill(2);
+    selectedstatistics->Fill(selected4DSegments->size()+2);
+  } 
+  
+  if(allCSCSegments->size()!=0 && allCSCSegments->size()<=16){
+    selectedstatistics->Fill(18);
+    selectedstatistics->Fill(selectedCSCSegments->size()+18);
   }
   
   if(debug) std::cout <<"\t Getting the RPC RecHits"<<std::endl;

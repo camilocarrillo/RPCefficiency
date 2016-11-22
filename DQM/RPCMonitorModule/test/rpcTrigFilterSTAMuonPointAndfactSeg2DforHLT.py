@@ -108,11 +108,12 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
 	
     rangestrips = cms.untracked.double(4.),
 
+    selectedcscSegments = cms.InputTag('dTandCSCSegmentsinTracks','SelectedCscSegments','OwnParticles'),
+    selecteddt4DSegments = cms.InputTag('dTandCSCSegmentsinTracks','SelectedDtSegments','OwnParticles'),
+
     cscSegments = cms.untracked.InputTag('hltCscSegments'),
     dt4DSegments = cms.untracked.InputTag('hltDt4DSegments'),
     rpcRecHits = cms.untracked.InputTag("hltRpcRecHits"),
-
-
 
     rpcDTPoints = cms.untracked.InputTag("rpcPointProducer","RPCDTExtrapolatedPoints"),
     rpcCSCPoints = cms.untracked.InputTag("rpcPointProducer","RPCCSCExtrapolatedPoints"),

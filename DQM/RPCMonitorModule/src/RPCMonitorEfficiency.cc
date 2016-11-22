@@ -49,6 +49,7 @@ public:
   TFile * theFileOut;
   
   TH1F * statistics;
+  TH1F * selectedstatistics;
 
   TH1F * CosAngMB3MB4;
   
@@ -2082,16 +2083,20 @@ void RPCMonitorEfficiency::analyze(const edm::Event& iEvent, const edm::EventSet
   std::string meIdRES,folder,labeltoSave,command;
   
   folder = "DQMData/Muons/MuonSegEff/";
-  
-  meIdRES = folder + "Statistics";
-
+ 
   Ca3->Clear();
-  
+
+  meIdRES = folder + "Statistics";
   statistics = (TH1F*)theFile->Get(meIdRES.c_str());
+
+  meIdRES = folder + "SelectedStatistics";
+  selectedstatistics = (TH1F*)theFile->Get(meIdRES.c_str());
+
   statistics->GetXaxis()->LabelsOption("v");
   statistics->GetXaxis()->SetLabelSize(0.035);
   statistics->Draw();
-  
+  selectedstatistics->Draw("same");
+ 
   labeltoSave = "Statistics.png";
   Ca3->SetBottomMargin(0.35);
   Ca3->SaveAs(labeltoSave.c_str()); 
