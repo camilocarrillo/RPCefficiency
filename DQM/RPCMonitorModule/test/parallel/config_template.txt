@@ -1,0 +1,12 @@
+/afs/cern.ch/user/c/carrillo/scratch0/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/-run-/
+/afs/cern.ch/work/c/carrillo/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/-run-/
+0
+0
+cmscaf1nd
+2000
+-1
+/afs/cern.ch/user/c/carrillo/efficiency/timing/CMSSW_8_0_1/
+/afs/cern.ch/user/c/carrillo/efficiency/timing/CMSSW_8_0_1/src/DQM/RPCMonitorModule/test/parallel/rpcTrigFilterSTAMuonPointAndfactSeg2DforHLTnoptt_template.py
+efficiency--run-
+/
+0

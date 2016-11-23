@@ -43,8 +43,8 @@ process.load("MuonTools.Configuration.StandAloneNoRpc_cff")
 # process.load("RecoTracker.CkfPattern.GroupedCkfTrajectoryBuilder_cfi")
 # import RecoTracker.CkfPattern.GroupedCkfTrajectoryBuilder_cfi         
 process.load("RecoTracker.CkfPattern.GroupedCkfTrajectoryBuilder_cff")
-
-
+#timing producer
+process.load("STASkim.ProducerTest.standAloneTiming_cff")
 
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1)
@@ -56,11 +56,18 @@ process.source = cms.Source("PoolSource",
 import FWCore.PythonUtilities.LumiList as LumiList
 process.source.lumisToProcess = LumiList.LumiList(filename = '/afs/cern.ch/user/c/carrillo/efficiency/CMSSW_8_0_1/src/DQM/RPCMonitorModule/test/parallel/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON_NoL1T_MuonPhys.json').getVLuminosityBlockRange()
 
+
 process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
                                                   cscSegments = cms.untracked.InputTag("hltCscSegments"),
                                                   dt4DSegments = cms.untracked.InputTag("hltDt4DSegments"),
-                                                  tracks = cms.untracked.InputTag("standAloneMuons","")
+                                                  tracks = cms.untracked.InputTag("standAloneMuons",""),
+
+                                                  MuonTimeMapLabel = cms.InputTag("staRegular", "combined"),
+                                                  ptCutValue = cms.untracked.double(5),
+                                                  timingCutValue = cms.untracked.double(10)
                                                   )
+
+
 
 process.rpcPointProducer = cms.EDProducer('RPCPointProducer',
   incldt = cms.untracked.bool(True),
@@ -92,6 +99,11 @@ process.rpcPointProducer = cms.EDProducer('RPCPointProducer',
 
 process.museg = cms.EDAnalyzer("MuonSegmentEff",
 
+    MuonCollectionLabel = cms.InputTag("standAloneMuons"),
+    MuonTimeMapLabel = cms.InputTag("staRegular", "combined"),
+    MuonRpcTimeMapLabel = cms.InputTag("staRegular", "rpc"),
+    timingCutValue = cms.untracked.double(10.),
+
     incldt = cms.untracked.bool(True),
     incldtMB4 = cms.untracked.bool(True),
     inclcsc = cms.untracked.bool(True),
@@ -106,12 +118,12 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
 	
     rangestrips = cms.untracked.double(4.),
 
+    selectedcscSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedCscSegments','OwnParticles'),
+    selecteddt4DSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedDtSegments','OwnParticles'),
+
     cscSegments = cms.untracked.InputTag('hltCscSegments'),
     dt4DSegments = cms.untracked.InputTag('hltDt4DSegments'),
     rpcRecHits = cms.untracked.InputTag("hltRpcRecHits"),
-
-    selectedcscSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedCscSegments','OwnParticles'),
-    selecteddt4DSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedDtSegments','OwnParticles'),
 
     rpcDTPoints = cms.untracked.InputTag("rpcPointProducer","RPCDTExtrapolatedPoints"),
     rpcCSCPoints = cms.untracked.InputTag("rpcPointProducer","RPCCSCExtrapolatedPoints"),
@@ -135,8 +147,5 @@ process.triggerFilter = cms.EDFilter('TriggerFilter',
 )
 
 
-#process.p = cms.Path(process.normfilter*process.triggerFilter*process.muonstandalonereco*process.dTandCSCSegmentsinTracks*process.rpcPointProducer*process.museg)#Trigger Filter needs to be updated!!!!!!!!!
-
-process.p = cms.Path(process.normfilter*process.muonstandalonereco*process.dTandCSCSegmentsinTracks*process.rpcPointProducer*process.museg)
-
+process.p = cms.Path(process.normfilter*process.muonstandalonereco*process.standAloneTiming*process.dTandCSCSegmentsinTracks*process.rpcPointProducer*process.museg)
 

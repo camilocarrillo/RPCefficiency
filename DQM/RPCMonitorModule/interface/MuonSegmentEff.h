@@ -186,9 +186,13 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       edm::EDGetTokenT<reco::TrackCollection> staMuonsToken;
       edm::EDGetTokenT<reco::MuonTimeExtraMap> staTimeToken;
       edm::EDGetTokenT<reco::MuonTimeExtraMap> staRpcTimeToken;
+      edm::EDGetTokenT<reco::MuonTimeExtraMap> staDtTimeToken;
+      edm::EDGetTokenT<reco::MuonTimeExtraMap> staCscTimeToken;
  
       MonitorElement *hTimeCombined;
       MonitorElement *hTimeRPC;
+      MonitorElement *hTimeDT;
+      MonitorElement *hTimeCSC;
       MonitorElement *hInTimeMuons;
       MonitorElement *hOutOfTimeMuons;
       MonitorElement *hOutOfTimeMuons_eta;
@@ -207,8 +211,10 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       
       edm::EDGetTokenT<DTRecSegment4DCollection> dt4DSegments;
       edm::EDGetTokenT<CSCSegmentCollection> cscSegments;
+
       edm::EDGetTokenT<DTRecSegment4DCollection> selecteddt4DSegments;
       edm::EDGetTokenT<CSCSegmentCollection> selectedcscSegments;
+
       edm::EDGetTokenT<RPCRecHitCollection> rpcRecHitsLabel;
       edm::EDGetTokenT<RPCRecHitCollection> rpcDTPointsLabel;
       edm::EDGetTokenT<RPCRecHitCollection> rpcCSCPointsLabel;

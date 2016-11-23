@@ -87,6 +87,8 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   staMuonsToken=consumes<reco::TrackCollection>(iConfig.getParameter<edm::InputTag>("MuonCollectionLabel"));
   staTimeToken=consumes<reco::MuonTimeExtraMap>(iConfig.getParameter<edm::InputTag>("MuonTimeMapLabel"));
   staRpcTimeToken=consumes<reco::MuonTimeExtraMap>(iConfig.getParameter<edm::InputTag>("MuonRpcTimeMapLabel"));
+  staDtTimeToken=consumes<reco::MuonTimeExtraMap>(iConfig.getParameter<edm::InputTag>("MuonDtTimeMapLabel"));
+  staCscTimeToken=consumes<reco::MuonTimeExtraMap>(iConfig.getParameter<edm::InputTag>("MuonCscTimeMapLabel"));
   timingCut = iConfig.getUntrackedParameter<double>("timingCutValue");
   
   nameInLog = iConfig.getUntrackedParameter<std::string>("moduleLogName", "RPC_Eff");
@@ -268,6 +270,8 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
 
   hTimeCombined = dbe->book1D("hTimeCombined","standAlone CMB time ",250,-250.,250.);
   hTimeRPC = dbe->book1D("hTimeRPC","standAlone RPC time ",250,-250.,250.);
+  hTimeDT = dbe->book1D("hTimeDT","standAlone DT time ",250,-250.,250.);
+  hTimeCSC = dbe->book1D("hTimeCSC","standAlone CSC time ",250,-250.,250.);
   hInTimeMuons = dbe->book1D("hInTimeMuons","standAlone muons with CMB time < 10 ",2,0.,2.);
   hOutOfTimeMuons = dbe->book1D("hOutOfTimeMuons","standAlone muons with CMB time > 10 ",2,0.,2.);
   hOutOfTimeMuons_eta = dbe->book1D("hOutOfTimeMuons_eta","standAlone muons with CMB time > 10: #eta ",50,-2.5,2.5);  
@@ -357,16 +361,27 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 
   Handle<reco::MuonTimeExtraMap> timeMapRPC;
   iEvent.getByToken(staRpcTimeToken,timeMapRPC);
+
+  Handle<reco::MuonTimeExtraMap> timeMapDT;
+  iEvent.getByToken(staDtTimeToken,timeMapDT);
+
+  Handle<reco::MuonTimeExtraMap> timeMapCSC;
+  iEvent.getByToken(staCscTimeToken,timeMapCSC);
   
   for ( unsigned int position = 0; position != staMuons->size(); ++position ) {
     reco::TrackRef staTrackRef(staMuons,position); 
     reco::MuonTimeExtra timec = timeMapCMB->get(staTrackRef.key());
     reco::MuonTimeExtra timerpc = timeMapRPC->get(staTrackRef.key());
-    
+    reco::MuonTimeExtra timedt = timeMapDT->get(staTrackRef.key());    
+    reco::MuonTimeExtra timecsc = timeMapCSC->get(staTrackRef.key());    
+
+
     const reco::Track Track = staMuons->at(position); 
 
     hTimeCombined->Fill(timec.timeAtIpInOut());
     hTimeRPC->Fill(timerpc.timeAtIpInOut());    
+    hTimeDT->Fill(timedt.timeAtIpInOut());    
+    hTimeCSC->Fill(timecsc.timeAtIpInOut());    
 
     if(fabs(timec.timeAtIpInOut()) <= timingCut)   
       hInTimeMuons->Fill(1.);

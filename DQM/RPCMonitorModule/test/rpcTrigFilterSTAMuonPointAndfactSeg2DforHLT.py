@@ -65,7 +65,6 @@ process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
                                                   )
 
 
-
 process.rpcPointProducer = cms.EDProducer('RPCPointProducer',
   incldt = cms.untracked.bool(True),
   inclcsc = cms.untracked.bool(True),
@@ -99,6 +98,9 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
     MuonCollectionLabel = cms.InputTag("standAloneMuons"),
     MuonTimeMapLabel = cms.InputTag("staRegular", "combined"),
     MuonRpcTimeMapLabel = cms.InputTag("staRegular", "rpc"),
+    MuonDtTimeMapLabel = cms.InputTag("staRegular", "dt"),
+    MuonCscTimeMapLabel = cms.InputTag("staRegular", "csc"),
+
     timingCutValue = cms.untracked.double(10.),
 
     incldt = cms.untracked.bool(True),
