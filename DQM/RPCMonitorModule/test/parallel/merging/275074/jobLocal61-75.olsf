@@ -1,0 +1,520 @@
+Sender: LSF System <lsfadmin@b6f964e738.cern.ch>
+Subject: Job 811362245: <jobLocal61-75> in cluster <batch> Done
+
+Job <jobLocal61-75> was submitted from host <lxplus0034.cern.ch> by user <carrillo> in cluster <batch>.
+Job was executed on host(s) <b6f964e738.cern.ch>, in queue <cmscaf1nh>, as user <carrillo> in cluster <batch>.
+</afs/cern.ch/user/c/carrillo> was used as the home directory.
+</afs/cern.ch/user/c/carrillo/efficiency/timing/CMSSW_8_0_1/src/DQM/RPCMonitorModule/test/merging/275074> was used as the working directory.
+Started at Thu Nov 24 14:43:04 2016
+Results reported on Thu Nov 24 14:53:32 2016
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+jobLocal61-75.lsf
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   135.02 sec.
+    Max Memory :                                 392.01 MB
+    Average Memory :                             98.42 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   1225 MB
+    Max Processes :                              8
+    Max Threads :                                9
+    Run time :                                   626 sec.
+    Turnaround time :                            638 sec.
+
+The output (if any) follows:
+
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/carrillo/811362245> on <b6f964e738.cern.ch>
+
+
+efficiency-275074.D4C6AFFA-4E33-E611-B9E3-02163E011FBB.root
+efficiency-275074.DAC74A10-4C33-E611-BF2C-02163E0123D9.root
+efficiency-275074.DE0385DB-4C33-E611-A001-02163E014365.root
+efficiency-275074.DE8AD7D0-4B33-E611-8453-02163E01351E.root
+efficiency-275074.E42C691E-4C33-E611-8F84-02163E011D5E.root
+efficiency-275074.E4C370CB-4B33-E611-AC5C-02163E01260D.root
+efficiency-275074.E82A224E-4D33-E611-873A-02163E013992.root
+efficiency-275074.EA152B68-4C33-E611-BD68-02163E012BD1.root
+efficiency-275074.EC1611E9-4B33-E611-AB9E-02163E011A4E.root
+efficiency-275074.EE6D3EEA-4B33-E611-95C5-02163E011D08.root
+efficiency-275074.EEA9BDFA-4833-E611-9782-02163E01443C.root
+efficiency-275074.F0461FB1-4B33-E611-A659-02163E011CAD.root
+efficiency-275074.F665C1BC-4B33-E611-9498-02163E0121FE.root
+efficiency-275074.F8D8969E-4C33-E611-8260-02163E011940.root
+efficiency-275074.FECC25F6-4833-E611-B098-02163E011A90.root
+/pool/lsf/carrillo/811362245
+hadd Target file: Local61-75.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: efficiency-275074.D4C6AFFA-4E33-E611-B9E3-02163E011FBB.root
+hadd Source file 2: efficiency-275074.DAC74A10-4C33-E611-BF2C-02163E0123D9.root
+hadd Source file 3: efficiency-275074.DE0385DB-4C33-E611-A001-02163E014365.root
+hadd Source file 4: efficiency-275074.DE8AD7D0-4B33-E611-8453-02163E01351E.root
+hadd Source file 5: efficiency-275074.E42C691E-4C33-E611-8F84-02163E011D5E.root
+hadd Source file 6: efficiency-275074.E4C370CB-4B33-E611-AC5C-02163E01260D.root
+hadd Source file 7: efficiency-275074.E82A224E-4D33-E611-873A-02163E013992.root
+hadd Source file 8: efficiency-275074.EA152B68-4C33-E611-BD68-02163E012BD1.root
+hadd Source file 9: efficiency-275074.EC1611E9-4B33-E611-AB9E-02163E011A4E.root
+hadd Source file 10: efficiency-275074.EE6D3EEA-4B33-E611-95C5-02163E011D08.root
+hadd Source file 11: efficiency-275074.EEA9BDFA-4833-E611-9782-02163E01443C.root
+hadd Source file 12: efficiency-275074.F0461FB1-4B33-E611-A659-02163E011CAD.root
+hadd Source file 13: efficiency-275074.F665C1BC-4B33-E611-9498-02163E0121FE.root
+hadd Source file 14: efficiency-275074.F8D8969E-4C33-E611-8260-02163E011940.root
+hadd Source file 15: efficiency-275074.FECC25F6-4833-E611-B098-02163E011A90.root
+hadd Target path: Local61-75.root:/
+hadd Target path: Local61-75.root:/DQMData
+hadd Target path: Local61-75.root:/DQMData/Muons
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_1/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_1/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_1/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_1/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_10
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_10/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_10/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_10/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_10/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_11
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_11/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_11/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_11/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_11/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_12
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_12/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_12/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_12/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_12/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_2/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_2/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_2/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_2/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_3/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_3/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_3/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_3/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_4/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_4/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_4/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_4/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_5/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_5/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_5/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_5/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_6/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_6/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_6/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_6/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_7
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_7/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_7/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_7/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_7/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_8
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_8/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_8/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_8/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_8/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_9
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_9/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_9/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_9/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-1/sector_9/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_1/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_1/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_1/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_1/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_10
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_10/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_10/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_10/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_10/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_11
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_11/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_11/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_11/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_11/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_12
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_12/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_12/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_12/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_12/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_2/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_2/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_2/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_2/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_3/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_3/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_3/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_3/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_4/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_4/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_4/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_4/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_5/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_5/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_5/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_5/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_6/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_6/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_6/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_6/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_7
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_7/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_7/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_7/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_7/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_8
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_8/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_8/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_8/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_8/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_9
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_9/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_9/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_9/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_-2/sector_9/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_1/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_1/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_1/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_1/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_10
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_10/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_10/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_10/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_10/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_11
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_11/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_11/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_11/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_11/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_12
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_12/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_12/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_12/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_12/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_2/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_2/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_2/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_2/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_3/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_3/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_3/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_3/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_4/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_4/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_4/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_4/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_5/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_5/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_5/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_5/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_6/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_6/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_6/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_6/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_7
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_7/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_7/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_7/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_7/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_8
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_8/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_8/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_8/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_8/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_9
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_9/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_9/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_9/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_0/sector_9/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_1/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_1/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_1/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_1/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_10
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_10/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_10/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_10/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_10/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_11
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_11/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_11/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_11/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_11/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_12
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_12/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_12/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_12/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_12/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_2/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_2/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_2/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_2/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_3/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_3/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_3/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_3/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_4/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_4/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_4/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_4/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_5/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_5/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_5/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_5/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_6/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_6/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_6/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_6/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_7
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_7/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_7/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_7/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_7/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_8
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_8/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_8/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_8/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_8/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_9
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_9/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_9/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_9/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_1/sector_9/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_1/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_1/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_1/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_1/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_10
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_10/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_10/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_10/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_10/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_11
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_11/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_11/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_11/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_11/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_12
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_12/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_12/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_12/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_12/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_2/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_2/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_2/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_2/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_3/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_3/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_3/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_3/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_4/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_4/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_4/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_4/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_5/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_5/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_5/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_5/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_6/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_6/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_6/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_6/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_7
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_7/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_7/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_7/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_7/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_8
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_8/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_8/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_8/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_8/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_9
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_9/station_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_9/station_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_9/station_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Barrel/Wheel_2/sector_9/station_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_3/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_3/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_3/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_3/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_3/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_1/ring_3/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_3/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_3/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_3/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_3/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_3/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_2/ring_3/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_3/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_3/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_3/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_3/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_3/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_3/ring_3/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_3/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_3/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_3/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_3/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_3/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap+/Disk_4/ring_3/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_3/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_3/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_3/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_3/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_3/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-1/ring_3/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_3/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_3/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_3/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_3/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_3/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-2/ring_3/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_3/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_3/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_3/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_3/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_3/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-3/ring_3/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_2/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_2/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_2/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_2/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_2/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_2/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_3/sector_1
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_3/sector_2
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_3/sector_3
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_3/sector_4
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_3/sector_5
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Endcap-/Disk_-4/ring_3/sector_6
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Residuals
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Residuals/Barrel
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Residuals/EndCap
+hadd Target path: Local61-75.root:/DQMData/Muons/MuonSegEff/Residuals/Investigation
+hadd Target path: Local61-75.root:/DQMData/Muons/Time
+
+Job finished at jeu. nov. 24 14:52:31 CET 2016 on node 
+ under linux version Scientific Linux CERN SLC release 6.8 (Carbon)
+
+CERN statistics: This process used approximately : 0:05:46 KSI2K hours (346 KSI2K seconds)
+                 This process corresponds to     : 0:22:31 HS06  hours (1351 HS06  seconds)
+
+
+PS:
+
+Read file <jobLocal61-75.err> for stderr output of this job.
+

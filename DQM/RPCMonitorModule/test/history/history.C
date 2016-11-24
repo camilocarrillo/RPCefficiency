@@ -4,8 +4,8 @@
 #include <vector>
 #include <string>
 
-#define max_range 98
-#define min_range 91
+#define max_range 100
+#define min_range 90
 
 float GetMean_0(TH1F * histo){
   float mean=0;
@@ -26,16 +26,79 @@ float GetMean_0(TH1F * histo){
 float Denominator(float eff,float err){
   if(err!=0) return eff*(1-eff)/(err*err);
   else cout<<"crash in Numerator err = 0"<<endl;
+  return 0;
 }
 
 float Numerator(float eff, float err){
   if(err!=0) return eff*Denominator(eff,err);
-  else cout<<"crash in Numerator err = 0"<<endl;
+  else cout<<"crash in Denumerator err = 0"<<endl;
+  return 0;
 }
 
 float WheelError(TFile * file,int wheel){
-  return 0;
+  TH1F * efficiency;
+  if(wheel==-2) efficiency = (TH1F*) (file->Get("AzimutalDistroWm2"));
+  if(wheel==-1) efficiency = (TH1F*) (file->Get("AzimutalDistroWm1"));
+  if(wheel==0) efficiency = (TH1F*) (file->Get("AzimutalDistroW0"));
+  if(wheel==1) efficiency = (TH1F*) (file->Get("AzimutalDistroW1"));
+  if(wheel==2) efficiency = (TH1F*) (file->Get("AzimutalDistroW2"));
+  
+  float numerator=0;
+  float denominator=0;
+  float eff,err;
+
+  for(int k=1;k<=12;k++){
+    eff = efficiency->GetBinContent(k); 
+    err = efficiency->GetBinError(k);
+    if(err!=0){
+      numerator=numerator+Numerator(eff,err);
+      denominator=denominator+Denominator(eff,err);
+    }
+  }
+  
+  if(denominator!=0){
+    //cout<<"returning "<<numerator/denominator<<endl;
+      float effi=numerator/denominator;
+      float erro=sqrt(effi*(1.-effi)/denominator);
+      return erro;
+  }else{
+    //cout<<"returning -1"<<endl;
+    return -0.01;
+  }
 }
+
+float BarrelEfficiency(TFile * file){
+    TH1F * efficiency[5];
+    efficiency[0] = (TH1F*) (file->Get("AzimutalDistroWm2"));
+    efficiency[1] = (TH1F*) (file->Get("AzimutalDistroWm1"));
+    efficiency[2] = (TH1F*) (file->Get("AzimutalDistroW0"));
+    efficiency[3] = (TH1F*) (file->Get("AzimutalDistroW1"));
+    efficiency[4] = (TH1F*) (file->Get("AzimutalDistroW2"));
+    
+    float numerator=0;
+    float denominator=0;
+    float eff,err;
+    
+    for(int wheel=0;wheel<=4;wheel++){
+	for(int k=1;k<=12;k++){
+	    eff = efficiency[wheel]->GetBinContent(k); 
+	    err = efficiency[wheel]->GetBinError(k);
+	    if(err!=0){
+		numerator=numerator+Numerator(eff,err);
+		denominator=denominator+Denominator(eff,err);
+	    }
+	}
+    }
+    
+    if(denominator!=0){
+	//cout<<"returning "<<numerator/denominator<<endl;
+	return numerator/denominator;
+    }else{
+	//cout<<"returning -1"<<endl;
+	return -0.01;
+    }
+}
+
 
 
 float WheelEfficiency(TFile * file,int wheel){
@@ -69,7 +132,65 @@ float WheelEfficiency(TFile * file,int wheel){
 
 }
 
-float EndCapEfficiency(TFile * file,int disk){
+float EndCapEfficiency(TFile * file){
+
+  TH1F * efficiencyR2[8];
+  TH1F * efficiencyR3[8];
+  
+
+  efficiencyR2[0] = (TH1F*) (file->Get("GregDistroD1R2"));
+  efficiencyR3[0] = (TH1F*) (file->Get("GregDistroD1R3"));
+  
+  efficiencyR2[1] = (TH1F*) (file->Get("GregDistroD2R2"));
+  efficiencyR3[1] = (TH1F*) (file->Get("GregDistroD2R3"));
+  
+  efficiencyR2[2] = (TH1F*) (file->Get("GregDistroD3R2"));
+  efficiencyR3[2] = (TH1F*) (file->Get("GregDistroD3R3"));
+  
+  efficiencyR2[3] = (TH1F*) (file->Get("GregDistroD4R2"));
+  efficiencyR3[3] = (TH1F*) (file->Get("GregDistroD4R3"));
+  
+  efficiencyR2[4] = (TH1F*) (file->Get("GregDistroDm1R2"));
+  efficiencyR3[4] = (TH1F*) (file->Get("GregDistroDm1R3"));
+  
+  efficiencyR2[5] = (TH1F*) (file->Get("GregDistroDm2R2"));
+  efficiencyR3[5] = (TH1F*) (file->Get("GregDistroDm2R3"));
+  
+  efficiencyR2[6] = (TH1F*) (file->Get("GregDistroDm3R2"));
+  efficiencyR3[6] = (TH1F*) (file->Get("GregDistroDm3R3"));
+  
+  efficiencyR2[7] = (TH1F*) (file->Get("GregDistroDm4R2"));
+  efficiencyR3[7] = (TH1F*) (file->Get("GregDistroDm4R3"));
+
+
+  float numerator=0;
+  float denominator=0;
+  float eff1,err1,eff2,err2;
+
+  for(int index=0;index<8;index++){
+      for(int k=1;k<=36;k++){
+	  eff1 = efficiencyR2[index]->GetBinContent(k);
+	  err1 = efficiencyR2[index]->GetBinError(k);
+	  
+	  eff2 = efficiencyR3[index]->GetBinContent(k);
+	  err2 = efficiencyR3[index]->GetBinError(k);
+	  
+	  if(err1!=0 && err2!=0){
+	      numerator=numerator+Numerator(eff1,err1)+Numerator(eff2,err2);
+	      denominator=denominator+Denominator(eff1,err1)+Denominator(eff2,err2);
+	  } 
+      }
+  }
+      
+  if(denominator!=0){
+      cout<<"returning "<<numerator/denominator<<endl;
+      return numerator/denominator;
+  }else{
+      return -0.01;
+  }
+}
+
+float DiskEfficiency(TFile * file,int disk){
 
   cout<<"computing efficiency for disk "<<disk<<endl;
   
@@ -139,6 +260,78 @@ float EndCapEfficiency(TFile * file,int disk){
   }
 }
 
+float DiskError(TFile * file,int disk){
+
+  cout<<"computing efficiency for disk "<<disk<<endl;
+  
+  TH1F * efficiencyR2;
+  TH1F * efficiencyR3;
+
+  if(disk==1){                  
+    efficiencyR2 = (TH1F*) (file->Get("GregDistroD1R2"));
+    efficiencyR3 = (TH1F*) (file->Get("GregDistroD1R3"));
+  }
+
+  if(disk==2){
+    efficiencyR2 = (TH1F*) (file->Get("GregDistroD2R2"));
+    efficiencyR3 = (TH1F*) (file->Get("GregDistroD2R3"));
+  }
+  if(disk==3){
+    efficiencyR2 = (TH1F*) (file->Get("GregDistroD3R2"));
+    efficiencyR3 = (TH1F*) (file->Get("GregDistroD3R3"));
+  }
+  if(disk==4){
+    efficiencyR2 = (TH1F*) (file->Get("GregDistroD4R2"));
+    efficiencyR3 = (TH1F*) (file->Get("GregDistroD4R3"));
+  }
+  if(disk==-1){
+    efficiencyR2 = (TH1F*) (file->Get("GregDistroDm1R2"));
+    efficiencyR3 = (TH1F*) (file->Get("GregDistroDm1R3"));
+  }
+  if(disk==-2){
+    efficiencyR2 = (TH1F*) (file->Get("GregDistroDm2R2"));
+    efficiencyR3 = (TH1F*) (file->Get("GregDistroDm2R3"));
+  }
+  if(disk==-3){
+    efficiencyR2 = (TH1F*) (file->Get("GregDistroDm3R2"));
+    efficiencyR3 = (TH1F*) (file->Get("GregDistroDm3R3"));
+  }
+  if(disk==-4){
+    efficiencyR2 = (TH1F*) (file->Get("GregDistroDm4R2"));
+    efficiencyR3 = (TH1F*) (file->Get("GregDistroDm4R3"));
+  }
+
+  float numerator=0;
+  float denominator=0;
+  float eff1,err1,eff2,err2;
+
+  for(int k=1;k<=36;k++){
+
+    //cout<<"reading "<<eff1<<" +/-"<<err1<<" "<<eff2<<" +/- "<<err2<<endl;
+    
+    eff1 = efficiencyR2->GetBinContent(k);
+    err1 = efficiencyR2->GetBinError(k);
+
+    eff2 = efficiencyR3->GetBinContent(k);
+    err2 = efficiencyR3->GetBinError(k);
+    
+    if(err1!=0 && err2!=0){
+      numerator=numerator+Numerator(eff1,err1)+Numerator(eff2,err2);
+      denominator=denominator+Denominator(eff1,err1)+Denominator(eff2,err2);
+    } 
+    //cout<<"\t for k = "<<k<<" numerator = "<<numerator<<" denominator = "<<denominator<<endl;
+  }
+
+  if(denominator!=0){
+    cout<<"returning "<<numerator/denominator<<endl;
+    float effi=numerator/denominator;
+    float erro=sqrt(effi*(1.-effi)/denominator);
+    return erro;
+  }else{
+    return -0.01;
+  }
+}
+
 void setHistoCorrelation(TH2F * histo,string titleY){
   histo->GetXaxis()->SetTitle("pressure(mbar)");
   histo->GetYaxis()->SetTitle(titleY.c_str());
@@ -197,12 +390,12 @@ float CLSEndCap(TFile * file){
   allCLS[0]= (TH1F*) (file->Get("CLSStation1Ring2_A"));
   allCLS[1]= (TH1F*) (file->Get("CLSStation1Ring2_B"));
   allCLS[2]= (TH1F*) (file->Get("CLSStation1Ring2_C"));
-  allCLS[3]= (TH1F*) (file->Get("CLSStation23Ring2_A"));
-  allCLS[4]= (TH1F*) (file->Get("CLSStation23Ring2_B"));
-  allCLS[5]= (TH1F*) (file->Get("CLSStation23Ring2_C"));
-  allCLS[6]= (TH1F*) (file->Get("CLSStation123Ring3_A"));
-  allCLS[7]= (TH1F*) (file->Get("CLSStation123Ring3_B"));
-  allCLS[8]= (TH1F*) (file->Get("CLSStation123Ring3_C"));
+  allCLS[3]= (TH1F*) (file->Get("CLSStation234Ring2_A"));
+  allCLS[4]= (TH1F*) (file->Get("CLSStation234Ring2_B"));
+  allCLS[5]= (TH1F*) (file->Get("CLSStation234Ring2_C"));
+  allCLS[6]= (TH1F*) (file->Get("CLSStation1234Ring3_A"));
+  allCLS[7]= (TH1F*) (file->Get("CLSStation1234Ring3_B"));
+  allCLS[8]= (TH1F*) (file->Get("CLSStation1234Ring3_C"));
   
   TH1F * CLSE = new TH1F ("CLSE","Cluster Size for all the endcap",10,0.5,10.5);
   for(int k=0;k<9;k++) CLSE->Add(allCLS[k]);
@@ -216,12 +409,12 @@ float RMSCLSEndCap(TFile * file){
   allCLS[0]= (TH1F*) (file->Get("CLSStation1Ring2_A"));
   allCLS[1]= (TH1F*) (file->Get("CLSStation1Ring2_B"));
   allCLS[2]= (TH1F*) (file->Get("CLSStation1Ring2_C"));
-  allCLS[3]= (TH1F*) (file->Get("CLSStation23Ring2_A"));
-  allCLS[4]= (TH1F*) (file->Get("CLSStation23Ring2_B"));
-  allCLS[5]= (TH1F*) (file->Get("CLSStation23Ring2_C"));
-  allCLS[6]= (TH1F*) (file->Get("CLSStation123Ring3_A"));
-  allCLS[7]= (TH1F*) (file->Get("CLSStation123Ring3_B"));
-  allCLS[8]= (TH1F*) (file->Get("CLSStation123Ring3_C"));
+  allCLS[3]= (TH1F*) (file->Get("CLSStation234Ring2_A"));
+  allCLS[4]= (TH1F*) (file->Get("CLSStation234Ring2_B"));
+  allCLS[5]= (TH1F*) (file->Get("CLSStation234Ring2_C"));
+  allCLS[6]= (TH1F*) (file->Get("CLSStation1234Ring3_A"));
+  allCLS[7]= (TH1F*) (file->Get("CLSStation1234Ring3_B"));
+  allCLS[8]= (TH1F*) (file->Get("CLSStation1234Ring3_C"));
   
   TH1F * CLSE = new TH1F ("CLS","Cluster Size for all the endcap",10,0.5,10.5);
   for(int k=0;k<9;k++) CLSE->Add(allCLS[k]);
@@ -387,7 +580,6 @@ void history(){
 
   ifstream cutp;
 
-  string Run;
   float cu=0;
   float tp=0;
 
@@ -422,6 +614,7 @@ void history(){
   TH1F * EfficiencyPerLayer5H = new TH1F("EfficiencyPerLayer5H","EfficiencyPerLayer5H" ,N,0,N);
   TH1F * EfficiencyPerLayer6H = new TH1F("EfficiencyPerLayer6H","EfficiencyPerLayer6H" ,N,0,N);
 
+  TH1F * CentralEffBarrelInt = new TH1F("CentralEffBarrel Int","Central Efficiency" ,N,0,N);
   TH1F * CentralEffBarrelWm2H = new TH1F("CentralEffBarrelWm2H","Central Efficiency per Wheel" ,N,0,N);
   TH1F * CentralEffBarrelWm1H = new TH1F("CentralEffBarrelWm1H","Central Efficiency Wheel -1" ,N,0,N);
   TH1F * CentralEffBarrelW0H = new TH1F("CentralEffBarrelW0H","Central Efficiency Wheel 0" ,N,0,N);
@@ -432,6 +625,7 @@ void history(){
   TH1F * CentralEffEndCapH_black_masked = new TH1F("CentralEffEndCapH_black_masked","Efficiency EndCap",N,0,N);
   TH1F * EndCap_masked = new TH1F("EndCap_masked","% rolls not excluded",N,0,N);
 
+  TH1F * CentralEffEndCapInt = new TH1F("CentralEffEndCapInt","Central Efficiency EndCap",N,0,N);
   TH1F * CentralEffEndCapDm4H = new TH1F("CentralEffEndCapDm4H","Central Efficiency EndCap",N,0,N);
   TH1F * CentralEffEndCapDm3H = new TH1F("CentralEffEndCapDm3H","Central Efficiency EndCap",N,0,N);
   TH1F * CentralEffEndCapDm2H = new TH1F("CentralEffEndCapDm2H","Central Efficiency EndCap",N,0,N);
@@ -504,6 +698,9 @@ void history(){
     getline(fileruns,run);
     std::cout<<" In run = "<<run<<std::endl;
     if(run.size()==0) continue;
+    //TFile * theFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/"+run+"/efficiency-"+run+".root").c_str());
+    //TFile * secFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/"+run+"/secefficiency-"+run+".root").c_str());
+    
     TFile * theFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v2_RAW/"+run+"/efficiency-"+run+".root").c_str());
     TFile * secFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v2_RAW/"+run+"/secefficiency-"+run+".root").c_str());
 
@@ -530,6 +727,7 @@ void history(){
       CentralEffBarrelH_black_masked->GetXaxis()->SetBinLabel(index,run.c_str());
       Barrel_masked->GetXaxis()->SetBinLabel(index,run.c_str());
 
+      CentralEffBarrelInt->GetXaxis()->SetBinLabel(index,run.c_str());
       CentralEffBarrelWm2H->GetXaxis()->SetBinLabel(index,run.c_str());
       CentralEffBarrelWm1H->GetXaxis()->SetBinLabel(index,run.c_str());
       CentralEffBarrelW0H->GetXaxis()->SetBinLabel(index,run.c_str());
@@ -543,6 +741,8 @@ void history(){
       CentralEffEndCapDm2H->GetXaxis()->SetBinLabel(index,run.c_str());
       CentralEffEndCapDm3H->GetXaxis()->SetBinLabel(index,run.c_str());
       CentralEffEndCapDm4H->GetXaxis()->SetBinLabel(index,run.c_str());
+
+      CentralEffEndCapInt->GetXaxis()->SetBinLabel(index,run.c_str());
       
       CentralEffEndCapD1H->GetXaxis()->SetBinLabel(index,run.c_str());
       CentralEffEndCapD2H->GetXaxis()->SetBinLabel(index,run.c_str());
@@ -623,11 +823,18 @@ void history(){
     */
 
 
+    CentralEffBarrelInt->SetBinContent(index,BarrelEfficiency(secFile));
     CentralEffBarrelWm2H->SetBinContent(index,WheelEfficiency(secFile,-2));
     CentralEffBarrelWm1H->SetBinContent(index,WheelEfficiency(secFile,-1));
     CentralEffBarrelW0H->SetBinContent(index,WheelEfficiency(secFile,0));
     CentralEffBarrelW1H->SetBinContent(index,WheelEfficiency(secFile,1));
     CentralEffBarrelW2H->SetBinContent(index,WheelEfficiency(secFile,2));
+
+    CentralEffBarrelWm2H->SetBinError(index,WheelError(secFile,-2));
+    CentralEffBarrelWm1H->SetBinError(index,WheelError(secFile,-1));
+    CentralEffBarrelW0H->SetBinError(index,WheelError(secFile,0));
+    CentralEffBarrelW1H->SetBinError(index,WheelError(secFile,1));
+    CentralEffBarrelW2H->SetBinError(index,WheelError(secFile,2));
 
     TH1F * CentralEffEndCap = (TH1F*) (secFile->Get("CentralEffEndCap"));
     CentralEffEndCapH->SetBinContent(index,CentralEffEndCap->GetMean());
@@ -651,15 +858,25 @@ void history(){
     */
 
 
-    CentralEffEndCapDm4H->SetBinContent(index,EndCapEfficiency(secFile,-4));
-    CentralEffEndCapDm3H->SetBinContent(index,EndCapEfficiency(secFile,-3));
-    CentralEffEndCapDm2H->SetBinContent(index,EndCapEfficiency(secFile,-2));
-    CentralEffEndCapDm1H->SetBinContent(index,EndCapEfficiency(secFile,-1));
-    CentralEffEndCapD1H->SetBinContent(index,EndCapEfficiency(secFile,1));
-    CentralEffEndCapD2H->SetBinContent(index,EndCapEfficiency(secFile,2));
-    CentralEffEndCapD3H->SetBinContent(index,EndCapEfficiency(secFile,3));
-    CentralEffEndCapD4H->SetBinContent(index,EndCapEfficiency(secFile,4));
-    
+    CentralEffEndCapInt->SetBinContent(index,EndCapEfficiency(secFile));
+    CentralEffEndCapDm4H->SetBinContent(index,DiskEfficiency(secFile,-4));
+    CentralEffEndCapDm3H->SetBinContent(index,DiskEfficiency(secFile,-3));
+    CentralEffEndCapDm2H->SetBinContent(index,DiskEfficiency(secFile,-2));
+    CentralEffEndCapDm1H->SetBinContent(index,DiskEfficiency(secFile,-1));
+    CentralEffEndCapD1H->SetBinContent(index,DiskEfficiency(secFile,1));
+    CentralEffEndCapD2H->SetBinContent(index,DiskEfficiency(secFile,2));
+    CentralEffEndCapD3H->SetBinContent(index,DiskEfficiency(secFile,3));
+    CentralEffEndCapD4H->SetBinContent(index,DiskEfficiency(secFile,4));
+
+    CentralEffEndCapDm4H->SetBinError(index,DiskError(secFile,-4));
+    CentralEffEndCapDm3H->SetBinError(index,DiskError(secFile,-3));
+    CentralEffEndCapDm2H->SetBinError(index,DiskError(secFile,-2));
+    CentralEffEndCapDm1H->SetBinError(index,DiskError(secFile,-1));
+    CentralEffEndCapD1H->SetBinError(index,DiskError(secFile,1));
+    CentralEffEndCapD2H->SetBinError(index,DiskError(secFile,2));
+    CentralEffEndCapD3H->SetBinError(index,DiskError(secFile,3));
+    CentralEffEndCapD4H->SetBinError(index,DiskError(secFile,4));
+
     TH1F * DoubleGapBarrel = (TH1F*) (secFile->Get("DoubleGapBarrel"));
     DoubleGapBarrelH->SetBinContent(index,DoubleGapBarrel->GetMean());
     DoubleGapBarrelH_0->SetBinContent(index,GetMean_0(DoubleGapBarrel));
@@ -758,8 +975,8 @@ void history(){
     correlation_Pressure_ClusterSize->Fill(thepressure,CLS->GetMean()); 
     correlation_Pressure_ClusterSize->Fill(thepressure,CLSEndCap(secFile)); 
 
-    correlation_Efficiency_ClusterSize_Barrel->(CentralEffBarrel->GetMean(),CLS->GetMean());
-    correlation_Efficiency_ClusterSize_EndCap->(CentralEffEndCap->GetMean(),CLSEndCap(secFile));
+    correlation_Efficiency_ClusterSize_Barrel->Fill(CentralEffBarrel->GetMean(),CLS->GetMean());
+    correlation_Efficiency_ClusterSize_EndCap->Fill(CentralEffEndCap->GetMean(),CLSEndCap(secFile));
     
     allinfo<<run<<" "<<pressureinfo[run]<<" "<<CentralEffBarrel->GetMean()<<" "<<CentralEffEndCap->GetMean()<<" "<<CLS->GetMean()<<" "<<" "<<CLSEndCap(secFile)<<" "<<masked(secFile)<<" "<<maskedendcap(secFile)<<endl;
     
@@ -853,7 +1070,7 @@ void history(){
   Ca0->SaveAs("durationH.png");
   Ca0->Clear();
 
-  CentralEffBarrelH->GetYaxis()->SetTitle("Eff #pm RMS (%), all rolls");
+  CentralEffBarrelH->GetYaxis()->SetTitle("Eff #pm RMS / sqrt N (%), all rolls");
   setHisto(CentralEffBarrelH);
   CentralEffBarrelH->SetMinimum(min_range);
   CentralEffBarrelH->SetMaximum(max_range);
@@ -861,7 +1078,7 @@ void history(){
   Ca0->SaveAs("CentralEffBarrelH.png");
   Ca0->Clear();
 
-  CentralEffBarrelH_black_masked->GetYaxis()->SetTitle("Eff #pm RMS (%), good rolls");
+  CentralEffBarrelH_black_masked->GetYaxis()->SetTitle("Eff #pm RMS / sqrt N (%), good rolls");
   CentralEffBarrelH_black_masked->GetYaxis()->SetTitleSize(0.04);
   setHisto(CentralEffBarrelH_black_masked);
   CentralEffBarrelH_black_masked->SetMinimum(min_range);
@@ -893,38 +1110,42 @@ void history(){
   setHistoSameV(EfficiencyPerLayer5H,8);
   setHistoSameV(EfficiencyPerLayer6H,10);
   
-  TLegend *leg = new TLegend(0.6,0.45,0.9,0.3);
-  leg->AddEntry(EfficiencyPerLayer1H,"Layer1","p");
-  leg->AddEntry(EfficiencyPerLayer2H,"Layer2","p");
-  leg->AddEntry(EfficiencyPerLayer3H,"Layer3","p");
-  leg->AddEntry(EfficiencyPerLayer4H,"Layer4","p");
-  leg->AddEntry(EfficiencyPerLayer5H,"Layer5","p");
-  leg->AddEntry(EfficiencyPerLayer6H,"Layer6","p");
-  leg->Draw("same");
+  TLegend *leg2 = new TLegend(0.6,0.9,0.8,0.6);
+  leg2->AddEntry(EfficiencyPerLayer1H,"Layer 1","p");
+  leg2->AddEntry(EfficiencyPerLayer2H,"Layer 2","p");
+  leg2->AddEntry(EfficiencyPerLayer3H,"Layer 3","p");
+  leg2->AddEntry(EfficiencyPerLayer4H,"Layer 4","p");
+  leg2->AddEntry(EfficiencyPerLayer5H,"Layer 5","p");
+  leg2->AddEntry(EfficiencyPerLayer6H,"Layer 6","p");
+  leg2->Draw("same");
   Ca0->SetGrid();
   Ca0->SaveAs("EfficiencyPerLayerH.png");
   Ca0->Clear();
+  leg2->Delete();
   
-  CentralEffBarrelWm2H->GetYaxis()->SetTitle("Mean Efficiency %");
+  CentralEffBarrelInt->GetYaxis()->SetTitle("Mean Efficiency %");
   
-  setHistoV(CentralEffBarrelWm2H); 
+  setHistoV(CentralEffBarrelInt); CentralEffBarrelInt->SetMarkerStyle(19); CentralEffBarrelInt->SetMarkerSize(4);
+  setHistoSameV(CentralEffBarrelWm2H,4);
   setHistoSameV(CentralEffBarrelWm1H,5);
   setHistoSameV(CentralEffBarrelW0H,6);
   setHistoSameV(CentralEffBarrelW1H,7);
   setHistoSameV(CentralEffBarrelW2H,8);
   
-  TLegend *leg = new TLegend(0.6,0.3,0.9,0.15);
-  leg->AddEntry(CentralEffBarrelWm2H,"wheel -2","p");
-  leg->AddEntry(CentralEffBarrelWm1H,"wheel -1","p");
-  leg->AddEntry(CentralEffBarrelW0H,"wheel 0","p");
-  leg->AddEntry(CentralEffBarrelW1H,"wheel +1","p");
-  leg->AddEntry(CentralEffBarrelW2H,"wheel +2","p");
-  leg->Draw("same");
+  TLegend *leg3 = new TLegend(0.6,0.9,0.8,0.5);
+  leg3->AddEntry(CentralEffBarrelWm2H,"wheel -2","p");
+  leg3->AddEntry(CentralEffBarrelWm1H,"wheel -1","p");
+  leg3->AddEntry(CentralEffBarrelW0H,"wheel 0","p");
+  leg3->AddEntry(CentralEffBarrelW1H,"wheel +1","p");
+  leg3->AddEntry(CentralEffBarrelW2H,"wheel +2","p");
+  leg3->AddEntry(CentralEffBarrelInt,"Barrel","p");
+  leg3->Draw("same");
   Ca0->SetGrid();
   Ca0->SaveAs("CentralEffBarrelWH.png");
   Ca0->Clear();
+  leg3->Delete();
   
-  CentralEffEndCapH->GetYaxis()->SetTitle("Eff #pm RMS (%), all rolls");
+  CentralEffEndCapH->GetYaxis()->SetTitle("Eff #pm RMS / sqrt N (%), all rolls");
   setHisto(CentralEffEndCapH);
   CentralEffEndCapH->SetMinimum(min_range);
   CentralEffEndCapH->SetMaximum(max_range);
@@ -932,7 +1153,7 @@ void history(){
   Ca0->SaveAs("CentralEffEndCapH.png");
   Ca0->Clear();
 
-  CentralEffEndCapH_black_masked->GetYaxis()->SetTitle("Eff #pm RMS (%), good rolls");
+  CentralEffEndCapH_black_masked->GetYaxis()->SetTitle("Eff #pm RMS / sqrt N (%), good rolls");
   CentralEffEndCapH_black_masked->GetYaxis()->SetTitleSize(0.04);
   setHisto(CentralEffEndCapH_black_masked);
   CentralEffEndCapH_black_masked->SetMinimum(min_range);
@@ -954,7 +1175,8 @@ void history(){
   Ca0->SaveAs("EndCap_masked.png");
   Ca0->Clear();
 
-  setHistoV(CentralEffEndCapDm4H);
+  setHistoV(CentralEffEndCapInt); CentralEffEndCapInt->SetMarkerStyle(19); CentralEffEndCapInt->SetMarkerSize(4);
+  setHistoSameV(CentralEffEndCapDm4H,3);
   setHistoSameV(CentralEffEndCapDm3H,4);
   setHistoSameV(CentralEffEndCapDm2H,5);
   setHistoSameV(CentralEffEndCapDm1H,6);
@@ -963,20 +1185,22 @@ void history(){
   setHistoSameV(CentralEffEndCapD3H,9);
   setHistoSameV(CentralEffEndCapD4H,10);
   
-  TLegend *leg = new TLegend(0.6,0.3,0.9,0.15);
-  leg->AddEntry(CentralEffEndCapDm4H,"disk -4","p");
-  leg->AddEntry(CentralEffEndCapDm3H,"disk -3","p");
-  leg->AddEntry(CentralEffEndCapDm2H,"disk -2","p");
-  leg->AddEntry(CentralEffEndCapDm1H,"disk -1","p");
-  leg->AddEntry(CentralEffEndCapD1H,"disk 1","p");
-  leg->AddEntry(CentralEffEndCapD2H,"disk 2","p");
-  leg->AddEntry(CentralEffEndCapD3H,"disk 3","p");
-  leg->AddEntry(CentralEffEndCapD4H,"disk 4","p");
-  leg->Draw("same");
+  TLegend *leg4 = new TLegend(0.8,0.41,0.93,0.11);
+  leg4->AddEntry(CentralEffEndCapDm4H,"disk -4","p");
+  leg4->AddEntry(CentralEffEndCapDm3H,"disk -3","p");
+  leg4->AddEntry(CentralEffEndCapDm2H,"disk -2","p");
+  leg4->AddEntry(CentralEffEndCapDm1H,"disk -1","p");
+  leg4->AddEntry(CentralEffEndCapD1H,"disk 1","p");
+  leg4->AddEntry(CentralEffEndCapD2H,"disk 2","p");
+  leg4->AddEntry(CentralEffEndCapD3H,"disk 3","p");
+  leg4->AddEntry(CentralEffEndCapD4H,"disk 4","p");
+  leg4->AddEntry(CentralEffEndCapInt,"EndCap","p");
+  
+  leg4->Draw("same");
   Ca0->SetGrid();
   Ca0->SaveAs("CentralEffEndCapDH.png");
   Ca0->Clear();
-
+  leg4->Delete();
   
   DoubleGapBarrelH->GetYaxis()->SetTitle("Mean Efficiency %");
   setHisto(DoubleGapBarrelH);
@@ -1156,12 +1380,13 @@ void history(){
   //setHistosame(hvbarrelH,23);
   //setHistosame(thbarrelH,24);
 
-  TLegend *leg = new TLegend(0.1295987,0.1437824,0.4297659,0.2448187,NULL,"brNDC");
-  leg->AddEntry(DoubleGapBarrelH,"Efficiency","plc");
-  leg->AddEntry(CLSH,"Cluster Size","plc");
-  //leg->AddEntry(hvbarrelH,"High Voltage","plc");
-  //leg->AddEntry(thbarrelH,"Threshold","plc");
-  leg->Draw("same");
+  TLegend *leg5 = new TLegend(0.1295987,0.1437824,0.4297659,0.2448187,NULL,"brNDC");
+  leg5->AddEntry(DoubleGapBarrelH,"Efficiency","plc");
+  leg5->AddEntry(CLSH,"Cluster Size","plc");
+  //leg5->AddEntry(hvbarrelH,"High Voltage","plc");
+  //leg5->AddEntry(thbarrelH,"Threshold","plc");
+  leg5->Draw("same");
+  leg5->Delete();
 
   Ca0->SaveAs("all.png");
 
@@ -1172,6 +1397,7 @@ void history(){
   CentralEffBarrelH->Write();
   CentralEffBarrelH_black_masked->Write();
   
+  CentralEffBarrelInt->Write();
   CentralEffBarrelWm2H->Write();
   CentralEffBarrelWm1H->Write();
   CentralEffBarrelW0H->Write();
@@ -1180,6 +1406,8 @@ void history(){
 
   CentralEffEndCapH->Write();
   CentralEffEndCapH_black_masked->Write();
+
+  CentralEffEndCapInt->Write();
   CentralEffEndCapDm4H->Write();
   CentralEffEndCapDm3H->Write();
   CentralEffEndCapDm2H->Write();

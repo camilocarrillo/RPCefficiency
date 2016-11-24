@@ -110,6 +110,8 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
     debug = cms.untracked.bool(False),
     inves = cms.untracked.bool(True),
     
+    clsCutValue = cms.untracked.int32(3),
+
     DuplicationCorrection = cms.untracked.int32(1),
 
     manualalignment = cms.untracked.bool(False),

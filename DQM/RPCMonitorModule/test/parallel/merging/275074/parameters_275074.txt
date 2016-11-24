@@ -1,0 +1,5 @@
+/afs/cern.ch/work/c/carrillo/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/275074/
+~/efficiency/timing/CMSSW_8_0_1/src/
+15
+cmscaf1nh
+efficiency-275074

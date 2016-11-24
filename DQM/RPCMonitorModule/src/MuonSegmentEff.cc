@@ -90,6 +90,7 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   staDtTimeToken=consumes<reco::MuonTimeExtraMap>(iConfig.getParameter<edm::InputTag>("MuonDtTimeMapLabel"));
   staCscTimeToken=consumes<reco::MuonTimeExtraMap>(iConfig.getParameter<edm::InputTag>("MuonCscTimeMapLabel"));
   timingCut = iConfig.getUntrackedParameter<double>("timingCutValue");
+  clsCut = iConfig.getUntrackedParameter<int>("clsCutValue");
   
   nameInLog = iConfig.getUntrackedParameter<std::string>("moduleLogName", "RPC_Eff");
   EffSaveRootFile  = iConfig.getUntrackedParameter<bool>("EffSaveRootFile", false); 
@@ -600,7 +601,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	if(debug) std::cout<<"DT  \t \t \t \t \t PointExtrapolatedRPCFrame.x="<<PointExtrapolatedRPCFrame.x()<<" Minimal Residual="<<minres<<std::endl;
 	if(debug) std::cout<<"DT  \t \t \t \t \t Minimal Residual less than stripw*rangestrips? minres="<<minres<<" range="<<rangestrips<<" stripw="<<stripw<<" cluSize"<<cluSize<<" <=compare minres with"<<(rangestrips+cluSize*0.5)*stripw<<std::endl;
 	
-	if(fabs(minres)<=(rangestrips+cluSize*0.5)*stripw){
+	if(fabs(minres)<=(rangestrips+cluSize*0.5)*stripw && cluSize<=clsCut){
 	  if(debug) std::cout<<"DT  \t \t \t \t \t \t True!"<<std::endl;
 	  anycoincidence=true;
 	}
@@ -841,7 +842,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	if(debug) std::cout<<"CSC \t \t \t \t \t PointExtrapolatedRPCFrame.x="<<PointExtrapolatedRPCFrame.x()<<" Minimal Residual"<<minres<<std::endl;
 	if(debug) std::cout<<"CSC  \t \t \t \t \t Minimal Residual less than stripw*rangestrips? minres="<<minres<<" range="<<rangestrips<<" stripw="<<stripw<<" cluSize"<<cluSize<<" <=compare minres with"<<(rangestrips+cluSize*0.5)*stripw<<std::endl;
 
-	if(fabs(minres)<=(rangestrips+cluSize*0.5)*stripw){
+	if(fabs(minres)<=(rangestrips+cluSize*0.5)*stripw && cluSize<=clsCut){
 	  if(debug) std::cout<<"CSC  \t \t \t \t \t \t True!"<<std::endl;
 	  anycoincidence=true;
 	}

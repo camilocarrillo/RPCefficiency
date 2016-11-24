@@ -198,6 +198,7 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       MonitorElement *hOutOfTimeMuons_eta;
       MonitorElement *hOutOfTimeMuons_pt;
       double timingCut;
+      int clsCut;
       
       std::vector<std::map<RPCDetId, int> > counter;
       std::vector<int> totalcounter;

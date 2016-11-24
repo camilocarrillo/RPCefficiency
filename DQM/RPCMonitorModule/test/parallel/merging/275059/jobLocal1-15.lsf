@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set casa = `pwd`
+echo $casa
+
+ls /afs/cern.ch/work/c/carrillo/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/275059/ | grep efficiency > files
+
+for rootfile in `head -n 15 files | tail -n 15`
+        do
+        echo $rootfile
+        cp /afs/cern.ch/work/c/carrillo/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/275059//$rootfile .
+        done
+
+ls *.root > listoffilesLocal1-15.txt
+
+cd ~/efficiency/timing/CMSSW_8_0_1/src/
+eval `scramv1 ru -sh`
+cd -
+
+hadd Local1-15.root efficiency*
+
+cp listoffilesLocal1-15.txt /afs/cern.ch/user/c/carrillo/efficiency/timing/CMSSW_8_0_1/src/DQM/RPCMonitorModule/test/merging/275059
+cp Local1-15.root /afs/cern.ch/work/c/carrillo/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/275059/
+exit 0
+
