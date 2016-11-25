@@ -1,5 +1,0 @@
-/afs/cern.ch/cms/caf/scripts/cmsbsub -q cmscaf1nh -e jobLocal1-15.err -o jobLocal1-15.olsf -J jobLocal1-15 jobLocal1-15.lsf
-/afs/cern.ch/cms/caf/scripts/cmsbsub -q cmscaf1nh -e jobLocal16-30.err -o jobLocal16-30.olsf -J jobLocal16-30 jobLocal16-30.lsf
-/afs/cern.ch/cms/caf/scripts/cmsbsub -q cmscaf1nh -e jobLocal31-45.err -o jobLocal31-45.olsf -J jobLocal31-45 jobLocal31-45.lsf
-/afs/cern.ch/cms/caf/scripts/cmsbsub -q cmscaf1nh -e jobLocal46-60.err -o jobLocal46-60.olsf -J jobLocal46-60 jobLocal46-60.lsf
-/afs/cern.ch/cms/caf/scripts/cmsbsub -q cmscaf1nh -e jobLocal61-75.err -o jobLocal61-75.olsf -J jobLocal61-75 jobLocal61-75.lsf

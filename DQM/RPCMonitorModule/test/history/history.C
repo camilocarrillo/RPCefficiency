@@ -5,7 +5,7 @@
 #include <string>
 
 #define max_range 100
-#define min_range 90
+#define min_range 80
 
 float GetMean_0(TH1F * histo){
   float mean=0;
@@ -189,6 +189,61 @@ float EndCapEfficiency(TFile * file){
       return -0.01;
   }
 }
+
+
+float RingEfficiency(TFile * file,int ring){
+
+  TH1F * efficiency[4];
+  
+  if(ring==2){
+      efficiency[0] = (TH1F*) (file->Get("GregDistroD1R2"));
+      efficiency[1] = (TH1F*) (file->Get("GregDistroD2R2"));
+      efficiency[2] = (TH1F*) (file->Get("GregDistroD3R2"));
+      efficiency[3] = (TH1F*) (file->Get("GregDistroD4R2"));
+  }
+  if(ring==-2){
+      efficiency[0] = (TH1F*) (file->Get("GregDistroDm1R2"));
+      efficiency[1] = (TH1F*) (file->Get("GregDistroDm2R2"));
+      efficiency[2] = (TH1F*) (file->Get("GregDistroDm3R2"));
+      efficiency[3] = (TH1F*) (file->Get("GregDistroDm4R2"));
+  }
+  if(ring==3){
+      efficiency[0] = (TH1F*) (file->Get("GregDistroD1R3"));
+      efficiency[1] = (TH1F*) (file->Get("GregDistroD2R3"));
+      efficiency[2] = (TH1F*) (file->Get("GregDistroD3R3"));
+      efficiency[3] = (TH1F*) (file->Get("GregDistroD4R3"));
+  }
+  if(ring==-3){
+      efficiency[0] = (TH1F*) (file->Get("GregDistroDm1R3"));
+      efficiency[1] = (TH1F*) (file->Get("GregDistroDm2R3"));
+      efficiency[2] = (TH1F*) (file->Get("GregDistroDm3R3"));
+      efficiency[3] = (TH1F*) (file->Get("GregDistroDm4R3"));
+  }
+
+  float numerator=0;
+  float denominator=0;
+  float eff1,err1,eff2,err2;
+
+  for(int index=0;index<4;index++){
+      for(int k=1;k<=36;k++){
+	  eff1 = efficiency[index]->GetBinContent(k);
+	  err1 = efficiency[index]->GetBinError(k);
+	  if(err1!=0){
+	      numerator=numerator+Numerator(eff1,err1);
+	      denominator=denominator+Denominator(eff1,err1);
+	  } 
+      }
+  }
+      
+  if(denominator!=0){
+      cout<<"returning "<<numerator/denominator<<endl;
+      return numerator/denominator;
+  }else{
+      return -0.01;
+  }
+}
+
+
 
 float DiskEfficiency(TFile * file,int disk){
 
@@ -600,8 +655,8 @@ void history(){
   TH1F * EventsH = new TH1F("EventsH","Number of events History",N,0,N);
   TH1F * durationH = new TH1F("durationH","Duration of each run in seconds",N,0,N);
   
-  TH1F * CentralEffBarrelH = new TH1F("CentralEffBarrelH","Efficiency Barrel",N,0,N);
-  TH1F * CentralEffBarrelH_black_masked = new TH1F("CentralEffBarrelH_black_masked","Efficiency Barrel",N,0,N);
+  TH1F * CentralEffBarrelH = new TH1F("CentralEffBarrelH","Barrel all rolls average",N,0,N);
+  TH1F * CentralEffBarrelH_black_masked = new TH1F("CentralEffBarrelH_black_masked","Barrel good rolls Average",N,0,N);
   TH1F * Barrel_masked = new TH1F("Barrel_masked","% rolls not excluded",N,0,N);
 
   TH1F * DistributionEfficiencyPerRunBarrel = new TH1F("DistributionEfficiencyPerRunBarrel","Distribution Efficiency Per Run Barrel",10,90,100);
@@ -614,26 +669,31 @@ void history(){
   TH1F * EfficiencyPerLayer5H = new TH1F("EfficiencyPerLayer5H","EfficiencyPerLayer5H" ,N,0,N);
   TH1F * EfficiencyPerLayer6H = new TH1F("EfficiencyPerLayer6H","EfficiencyPerLayer6H" ,N,0,N);
 
-  TH1F * CentralEffBarrelInt = new TH1F("CentralEffBarrel Int","Central Efficiency" ,N,0,N);
-  TH1F * CentralEffBarrelWm2H = new TH1F("CentralEffBarrelWm2H","Central Efficiency per Wheel" ,N,0,N);
-  TH1F * CentralEffBarrelWm1H = new TH1F("CentralEffBarrelWm1H","Central Efficiency Wheel -1" ,N,0,N);
-  TH1F * CentralEffBarrelW0H = new TH1F("CentralEffBarrelW0H","Central Efficiency Wheel 0" ,N,0,N);
-  TH1F * CentralEffBarrelW1H = new TH1F("CentralEffBarrelW1H","Central Efficiency Wheel 1" ,N,0,N);
-  TH1F * CentralEffBarrelW2H = new TH1F("CentralEffBarrelW2H","Central Efficiency Wheel 2" ,N,0,N);
+  TH1F * EfficiencyPerRingm3 = new TH1F("EfficiencyPerRingm3","EfficiencyPerRingm3" ,N,0,N);
+  TH1F * EfficiencyPerRingm2 = new TH1F("EfficiencyPerRingm2","EfficiencyPerRingm2" ,N,0,N);
+  TH1F * EfficiencyPerRing2 = new TH1F("EfficiencyPerRing2","EfficiencyPerRing2" ,N,0,N);
+  TH1F * EfficiencyPerRing3 = new TH1F("EfficiencyPerRing3","EfficiencyPerRing3" ,N,0,N);
+
+  TH1F * CentralEffBarrelInt = new TH1F("CentralEffBarrelInt","Fiducial Barrel Efficiency (split)" ,N,0,N);
+  TH1F * CentralEffBarrelWm2H = new TH1F("CentralEffBarrelWm2H","Fiducial Efficiency" ,N,0,N);
+  TH1F * CentralEffBarrelWm1H = new TH1F("CentralEffBarrelWm1H","Fiducial Efficiency Wheel -1" ,N,0,N);
+  TH1F * CentralEffBarrelW0H = new TH1F("CentralEffBarrelW0H","Fiducial Efficiency Wheel 0" ,N,0,N);
+  TH1F * CentralEffBarrelW1H = new TH1F("CentralEffBarrelW1H","Fiducial Efficiency Wheel 1" ,N,0,N);
+  TH1F * CentralEffBarrelW2H = new TH1F("CentralEffBarrelW2H","Fiducial Efficiency Wheel 2" ,N,0,N);
   
-  TH1F * CentralEffEndCapH = new TH1F("CentralEffEndCapH","Efficiency EndCap",N,0,N);
-  TH1F * CentralEffEndCapH_black_masked = new TH1F("CentralEffEndCapH_black_masked","Efficiency EndCap",N,0,N);
+  TH1F * CentralEffEndCapH = new TH1F("CentralEffEndCapH","EndCap all rolls average",N,0,N);
+  TH1F * CentralEffEndCapH_black_masked = new TH1F("CentralEffEndCapH_black_masked","EndCap good rolls average",N,0,N);
   TH1F * EndCap_masked = new TH1F("EndCap_masked","% rolls not excluded",N,0,N);
 
-  TH1F * CentralEffEndCapInt = new TH1F("CentralEffEndCapInt","Central Efficiency EndCap",N,0,N);
-  TH1F * CentralEffEndCapDm4H = new TH1F("CentralEffEndCapDm4H","Central Efficiency EndCap",N,0,N);
-  TH1F * CentralEffEndCapDm3H = new TH1F("CentralEffEndCapDm3H","Central Efficiency EndCap",N,0,N);
-  TH1F * CentralEffEndCapDm2H = new TH1F("CentralEffEndCapDm2H","Central Efficiency EndCap",N,0,N);
-  TH1F * CentralEffEndCapDm1H = new TH1F("CentralEffEndCapDm1H","Central Efficiency EndCap",N,0,N);
-  TH1F * CentralEffEndCapD1H = new TH1F("CentralEffEndCapD1H","Central Efficiency EndCap",N,0,N);
-  TH1F * CentralEffEndCapD2H = new TH1F("CentralEffEndCapD2H","Central Efficiency EndCap",N,0,N);
-  TH1F * CentralEffEndCapD3H = new TH1F("CentralEffEndCapD3H","Central Efficiency EndCap",N,0,N);
-  TH1F * CentralEffEndCapD4H = new TH1F("CentralEffEndCapD4H","Central Efficiency EndCap",N,0,N);
+  TH1F * CentralEffEndCapInt = new TH1F("CentralEffEndCapInt","Fiducial EndCap Efficiency (split)",N,0,N);
+  TH1F * CentralEffEndCapDm4H = new TH1F("CentralEffEndCapDm4H","Fiducial Efficiency EndCap",N,0,N);
+  TH1F * CentralEffEndCapDm3H = new TH1F("CentralEffEndCapDm3H","Fiducial Efficiency EndCap",N,0,N);
+  TH1F * CentralEffEndCapDm2H = new TH1F("CentralEffEndCapDm2H","Fiducial Efficiency EndCap",N,0,N);
+  TH1F * CentralEffEndCapDm1H = new TH1F("CentralEffEndCapDm1H","Fiducial Efficiency EndCap",N,0,N);
+  TH1F * CentralEffEndCapD1H = new TH1F("CentralEffEndCapD1H","Fiducial Efficiency EndCap",N,0,N);
+  TH1F * CentralEffEndCapD2H = new TH1F("CentralEffEndCapD2H","Fiducial Efficiency EndCap",N,0,N);
+  TH1F * CentralEffEndCapD3H = new TH1F("CentralEffEndCapD3H","Fiducial Efficiency EndCap",N,0,N);
+  TH1F * CentralEffEndCapD4H = new TH1F("CentralEffEndCapD4H","Fiducial Efficiency EndCap",N,0,N);
   
   TH1F * DoubleGapBarrelH = new TH1F("DoubleGapBarrelH","Double Gap Mean Efficiency Barrel",N,0,N);
   TH1F * DoubleGapEndCapH = new TH1F("DoubleGapEndCapH","Double Gap Mean Efficiency EndCap",N,0,N);
@@ -701,8 +761,11 @@ void history(){
     //TFile * theFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/"+run+"/efficiency-"+run+".root").c_str());
     //TFile * secFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/"+run+"/secefficiency-"+run+".root").c_str());
     
-    TFile * theFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v2_RAW/"+run+"/efficiency-"+run+".root").c_str());
-    TFile * secFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v2_RAW/"+run+"/secefficiency-"+run+".root").c_str());
+    //TFile * theFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v2_RAW/"+run+"/efficiency-"+run+".root").c_str());
+    //TFile * secFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v2_RAW/"+run+"/secefficiency-"+run+".root").c_str());
+
+    TFile * theFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencycls/_RPCMonitor_Run2016B-v2_RAW/"+run+"/efficiency-"+run+".root").c_str());
+    TFile * secFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencycls/_RPCMonitor_Run2016B-v2_RAW/"+run+"/secefficiency-"+run+".root").c_str());
 
     if(!theFile) continue;
     if(!secFile) continue;
@@ -722,6 +785,11 @@ void history(){
       EfficiencyPerLayer4H->GetXaxis()->SetBinLabel(index,run.c_str());
       EfficiencyPerLayer5H->GetXaxis()->SetBinLabel(index,run.c_str());
       EfficiencyPerLayer6H->GetXaxis()->SetBinLabel(index,run.c_str());
+
+      EfficiencyPerRingm3->GetXaxis()->SetBinLabel(index,run.c_str());
+      EfficiencyPerRingm2->GetXaxis()->SetBinLabel(index,run.c_str());
+      EfficiencyPerRing2->GetXaxis()->SetBinLabel(index,run.c_str());
+      EfficiencyPerRing3->GetXaxis()->SetBinLabel(index,run.c_str());
 
       CentralEffBarrelH->GetXaxis()->SetBinLabel(index,run.c_str());
       CentralEffBarrelH_black_masked->GetXaxis()->SetBinLabel(index,run.c_str());
@@ -798,6 +866,18 @@ void history(){
     EfficiencyPerLayer4H->SetBinContent(index,EfficiencyPerLayer->GetBinContent(4)/100);
     EfficiencyPerLayer5H->SetBinContent(index,EfficiencyPerLayer->GetBinContent(5)/100);
     EfficiencyPerLayer6H->SetBinContent(index,EfficiencyPerLayer->GetBinContent(6)/100);
+
+    EfficiencyPerLayer1H->SetBinError(index,EfficiencyPerLayer->GetBinError(1)/100);
+    EfficiencyPerLayer2H->SetBinError(index,EfficiencyPerLayer->GetBinError(2)/100);
+    EfficiencyPerLayer3H->SetBinError(index,EfficiencyPerLayer->GetBinError(3)/100);
+    EfficiencyPerLayer4H->SetBinError(index,EfficiencyPerLayer->GetBinError(4)/100);
+    EfficiencyPerLayer5H->SetBinError(index,EfficiencyPerLayer->GetBinError(5)/100);
+    EfficiencyPerLayer6H->SetBinError(index,EfficiencyPerLayer->GetBinError(6)/100);
+
+    EfficiencyPerRingm3->SetBinContent(index,RingEfficiency(secFile,-3));
+    EfficiencyPerRingm2->SetBinContent(index,RingEfficiency(secFile,-2));
+    EfficiencyPerRing2->SetBinContent(index,RingEfficiency(secFile,2));
+    EfficiencyPerRing3->SetBinContent(index,RingEfficiency(secFile,3));
     
     TH1F * CentralEffBarrel = (TH1F*) (secFile->Get("CentralEffBarrel"));
     TH1F * CentralEffBarrel_black = (TH1F*) (secFile->Get("CentralEffBarrel_black"));
@@ -1087,7 +1167,7 @@ void history(){
   Ca0->SaveAs("CentralEffBarrelH_black_masked.png");
   Ca0->Clear();
 
-  Barrel_masked->SetTitle("Number of rolls used to measure the efficiency in the Barrel");
+  Barrel_masked->SetTitle("good rolls in the Barrel");
   Barrel_masked->GetYaxis()->SetTitleSize(0.04);
   Barrel_masked->GetYaxis()->SetTitle("good rolls");
   setHisto(Barrel_masked);
@@ -1103,20 +1183,22 @@ void history(){
   
   EfficiencyPerLayer1H->GetYaxis()->SetTitle("Mean Efficiency %");
   
-  setHistoV(EfficiencyPerLayer1H); 
+  setHistoV(CentralEffBarrelInt); CentralEffBarrelInt->SetMarkerStyle(19); CentralEffBarrelInt->SetMarkerSize(2.5);
+  setHistoSameV(EfficiencyPerLayer1H,4); 
   setHistoSameV(EfficiencyPerLayer2H,5);
   setHistoSameV(EfficiencyPerLayer3H,6);
   setHistoSameV(EfficiencyPerLayer4H,7);
   setHistoSameV(EfficiencyPerLayer5H,8);
   setHistoSameV(EfficiencyPerLayer6H,10);
   
-  TLegend *leg2 = new TLegend(0.6,0.9,0.8,0.6);
+  TLegend *leg2 = new TLegend(0.8,0.41,0.93,0.11);
   leg2->AddEntry(EfficiencyPerLayer1H,"Layer 1","p");
   leg2->AddEntry(EfficiencyPerLayer2H,"Layer 2","p");
   leg2->AddEntry(EfficiencyPerLayer3H,"Layer 3","p");
   leg2->AddEntry(EfficiencyPerLayer4H,"Layer 4","p");
   leg2->AddEntry(EfficiencyPerLayer5H,"Layer 5","p");
   leg2->AddEntry(EfficiencyPerLayer6H,"Layer 6","p");
+  leg2->AddEntry(CentralEffBarrelInt,"All Barrel","p");
   leg2->Draw("same");
   Ca0->SetGrid();
   Ca0->SaveAs("EfficiencyPerLayerH.png");
@@ -1125,20 +1207,20 @@ void history(){
   
   CentralEffBarrelInt->GetYaxis()->SetTitle("Mean Efficiency %");
   
-  setHistoV(CentralEffBarrelInt); CentralEffBarrelInt->SetMarkerStyle(19); CentralEffBarrelInt->SetMarkerSize(4);
+  setHistoV(CentralEffBarrelInt); CentralEffBarrelInt->SetMarkerStyle(19); CentralEffBarrelInt->SetMarkerSize(2.5);
   setHistoSameV(CentralEffBarrelWm2H,4);
   setHistoSameV(CentralEffBarrelWm1H,5);
   setHistoSameV(CentralEffBarrelW0H,6);
   setHistoSameV(CentralEffBarrelW1H,7);
   setHistoSameV(CentralEffBarrelW2H,8);
   
-  TLegend *leg3 = new TLegend(0.6,0.9,0.8,0.5);
+  TLegend *leg3 = new TLegend(0.8,0.41,0.93,0.11);
   leg3->AddEntry(CentralEffBarrelWm2H,"wheel -2","p");
   leg3->AddEntry(CentralEffBarrelWm1H,"wheel -1","p");
   leg3->AddEntry(CentralEffBarrelW0H,"wheel 0","p");
   leg3->AddEntry(CentralEffBarrelW1H,"wheel +1","p");
   leg3->AddEntry(CentralEffBarrelW2H,"wheel +2","p");
-  leg3->AddEntry(CentralEffBarrelInt,"Barrel","p");
+  leg3->AddEntry(CentralEffBarrelInt,"All Barrel","p");
   leg3->Draw("same");
   Ca0->SetGrid();
   Ca0->SaveAs("CentralEffBarrelWH.png");
@@ -1162,7 +1244,7 @@ void history(){
   Ca0->SaveAs("CentralEffEndCapH_black_masked.png");
   Ca0->Clear();
 
-  EndCap_masked->SetTitle("Number of rolls used to measure the efficiency in the EndCaps");
+  EndCap_masked->SetTitle("good rolls EndCaps");
   EndCap_masked->GetYaxis()->SetTitleSize(0.04);
   EndCap_masked->GetYaxis()->SetTitle("good rolls");
   setHisto(EndCap_masked);
@@ -1175,7 +1257,7 @@ void history(){
   Ca0->SaveAs("EndCap_masked.png");
   Ca0->Clear();
 
-  setHistoV(CentralEffEndCapInt); CentralEffEndCapInt->SetMarkerStyle(19); CentralEffEndCapInt->SetMarkerSize(4);
+  setHistoV(CentralEffEndCapInt); CentralEffEndCapInt->SetMarkerStyle(19); CentralEffEndCapInt->SetMarkerSize(2.5);
   setHistoSameV(CentralEffEndCapDm4H,3);
   setHistoSameV(CentralEffEndCapDm3H,4);
   setHistoSameV(CentralEffEndCapDm2H,5);
@@ -1194,13 +1276,33 @@ void history(){
   leg4->AddEntry(CentralEffEndCapD2H,"disk 2","p");
   leg4->AddEntry(CentralEffEndCapD3H,"disk 3","p");
   leg4->AddEntry(CentralEffEndCapD4H,"disk 4","p");
-  leg4->AddEntry(CentralEffEndCapInt,"EndCap","p");
+  leg4->AddEntry(CentralEffEndCapInt,"All EndCap","p");
   
   leg4->Draw("same");
   Ca0->SetGrid();
   Ca0->SaveAs("CentralEffEndCapDH.png");
   Ca0->Clear();
   leg4->Delete();
+
+  setHistoV(CentralEffEndCapInt); CentralEffEndCapInt->SetMarkerStyle(19); CentralEffEndCapInt->SetMarkerSize(2.5);
+  setHistoSameV(EfficiencyPerRingm3,3);
+  setHistoSameV(EfficiencyPerRingm2,4);
+  setHistoSameV(EfficiencyPerRing2,5);
+  setHistoSameV(EfficiencyPerRing3,6);
+  
+  TLegend *leg6 = new TLegend(0.8,0.41,0.93,0.11);
+  leg6->AddEntry(EfficiencyPerRingm3,"ring -3","p");
+  leg6->AddEntry(EfficiencyPerRingm2,"ring -2","p");
+  leg6->AddEntry(EfficiencyPerRing2,"ring 2","p");
+  leg6->AddEntry(EfficiencyPerRing3,"ring 3","p");
+  leg6->AddEntry(CentralEffEndCapInt,"All EndCap","p");
+  
+  leg6->Draw("same");
+  Ca0 ->SetGrid();
+  Ca0->SaveAs("EfficiencyPerRingH.png");
+  Ca0->Clear();
+  leg6->Delete();
+
   
   DoubleGapBarrelH->GetYaxis()->SetTitle("Mean Efficiency %");
   setHisto(DoubleGapBarrelH);
