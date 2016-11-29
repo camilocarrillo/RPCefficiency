@@ -15,6 +15,16 @@ export step=`awk 'NR==3' $1 | sed -e "s|:||g"`
 export queue=`awk 'NR==4' $1 | sed -e "s|:||g"`
 export key=`awk 'NR==5' $1 | sed -e "s|:||g"`
 
+
+if [[ -f $castorpad/$key.root ]]
+then
+   echo "the merging is done"
+   exit 0 
+else
+   echo "File $castorpad/$key.root does not exist, exectuing merging."
+fi
+
+
 export wd=`pwd`
 
 ~carrillo/public/for_All/cafDynamic/mergingDynamic/genmergeLocalDynamic.sh $1
@@ -57,6 +67,7 @@ fi
 echo Submiting Last Merging for $key for $filesInCastorLocal files
 sleep 10
 echo "hadding in $castorpad all Local*.root -> $key.root"
+rm $castorpad/$key.*.root
 hadd -f $castorpad/$key.root $castorpad/Local*.root
 echo "$key is done, time=$t, files=$filestomerge, warning=($warn2), host=$HOST" > finbash.txt
 cat finbash.txt

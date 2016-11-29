@@ -1,5 +1,5 @@
-/afs/cern.ch/user/c/carrillo/scratch0/efficiencycls/_RPCMonitor_Run2016B-v2_RAW/-run-/
-/afs/cern.ch/work/c/carrillo/efficiencycls/_RPCMonitor_Run2016B-v2_RAW/-run-/
+/afs/cern.ch/user/c/carrillo/scratch0/efficiency/_RPCMonitor_Run-era---version-_RAW/-run-/
+/eos/user/c/carrillo/efficiency/_RPCMonitor_-era---version-_RAW/-run-/
 0
 0
 cmscaf1nd

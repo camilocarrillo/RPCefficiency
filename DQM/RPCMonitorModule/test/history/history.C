@@ -5,7 +5,7 @@
 #include <string>
 
 #define max_range 100
-#define min_range 80
+#define min_range 70
 
 float GetMean_0(TH1F * histo){
   float mean=0;
@@ -57,7 +57,6 @@ float WheelError(TFile * file,int wheel){
   }
   
   if(denominator!=0){
-    //cout<<"returning "<<numerator/denominator<<endl;
       float effi=numerator/denominator;
       float erro=sqrt(effi*(1.-effi)/denominator);
       return erro;
@@ -242,6 +241,61 @@ float RingEfficiency(TFile * file,int ring){
       return -0.01;
   }
 }
+
+
+float RingError(TFile * file,int ring){
+
+  TH1F * efficiency[4];
+  
+  if(ring==2){
+      efficiency[0] = (TH1F*) (file->Get("GregDistroD1R2"));
+      efficiency[1] = (TH1F*) (file->Get("GregDistroD2R2"));
+      efficiency[2] = (TH1F*) (file->Get("GregDistroD3R2"));
+      efficiency[3] = (TH1F*) (file->Get("GregDistroD4R2"));
+  }
+  if(ring==-2){
+      efficiency[0] = (TH1F*) (file->Get("GregDistroDm1R2"));
+      efficiency[1] = (TH1F*) (file->Get("GregDistroDm2R2"));
+      efficiency[2] = (TH1F*) (file->Get("GregDistroDm3R2"));
+      efficiency[3] = (TH1F*) (file->Get("GregDistroDm4R2"));
+  }
+  if(ring==3){
+      efficiency[0] = (TH1F*) (file->Get("GregDistroD1R3"));
+      efficiency[1] = (TH1F*) (file->Get("GregDistroD2R3"));
+      efficiency[2] = (TH1F*) (file->Get("GregDistroD3R3"));
+      efficiency[3] = (TH1F*) (file->Get("GregDistroD4R3"));
+  }
+  if(ring==-3){
+      efficiency[0] = (TH1F*) (file->Get("GregDistroDm1R3"));
+      efficiency[1] = (TH1F*) (file->Get("GregDistroDm2R3"));
+      efficiency[2] = (TH1F*) (file->Get("GregDistroDm3R3"));
+      efficiency[3] = (TH1F*) (file->Get("GregDistroDm4R3"));
+  }
+
+  float numerator=0;
+  float denominator=0;
+  float eff1,err1,eff2,err2;
+
+  for(int index=0;index<4;index++){
+      for(int k=1;k<=36;k++){
+	  eff1 = efficiency[index]->GetBinContent(k);
+	  err1 = efficiency[index]->GetBinError(k);
+	  if(err1!=0){
+	      numerator=numerator+Numerator(eff1,err1);
+	      denominator=denominator+Denominator(eff1,err1);
+	  } 
+      }
+  }
+      
+  if(denominator!=0){
+      float effi=numerator/denominator;
+      float erro=sqrt(effi*(1.-effi)/denominator);
+      return erro;
+  }else{
+      return -0.01;
+  }
+}
+
 
 
 
@@ -561,7 +615,7 @@ void history(){
   allinfo.open("allinfo.txt");
 
   //const int N=416;
-  const int N=5;
+  const int N=77;
 
   //Input txt files
 
@@ -662,6 +716,9 @@ void history(){
   TH1F * DistributionEfficiencyPerRunBarrel = new TH1F("DistributionEfficiencyPerRunBarrel","Distribution Efficiency Per Run Barrel",10,90,100);
   TH1F * DistributionEfficiencyPerRunBarrel2 = new TH1F("DistributionEfficiencyPerRunBarrel2","Distribution Efficiency Per Run Barrel 2",10,90,100);
   
+  TH1F * EfficiencyTwinMuxRPCMB1H = new TH1F("EfficiencyTwinMuxRPCMB1H","EfficiencyTwinMuxRPCMB1H" ,N,0,N);
+  TH1F * EfficiencyTwinMuxRPCMB2H = new TH1F("EfficiencyTwinMuxRPCMB2H","EfficiencyTwinMuxRPCMB2H" ,N,0,N);
+
   TH1F * EfficiencyPerLayer1H = new TH1F("EfficiencyPerLayer1H","EfficiencyPerLayer1H" ,N,0,N);
   TH1F * EfficiencyPerLayer2H = new TH1F("EfficiencyPerLayer2H","EfficiencyPerLayer2H" ,N,0,N);
   TH1F * EfficiencyPerLayer3H = new TH1F("EfficiencyPerLayer3H","EfficiencyPerLayer3H" ,N,0,N);
@@ -758,14 +815,9 @@ void history(){
     getline(fileruns,run);
     std::cout<<" In run = "<<run<<std::endl;
     if(run.size()==0) continue;
-    //TFile * theFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/"+run+"/efficiency-"+run+".root").c_str());
-    //TFile * secFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencynoptt/_RPCMonitor_Run2016B-v2_RAW/"+run+"/secefficiency-"+run+".root").c_str());
     
-    //TFile * theFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v2_RAW/"+run+"/efficiency-"+run+".root").c_str());
-    //TFile * secFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run2016B-v2_RAW/"+run+"/secefficiency-"+run+".root").c_str());
-
-    TFile * theFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencycls/_RPCMonitor_Run2016B-v2_RAW/"+run+"/efficiency-"+run+".root").c_str());
-    TFile * secFile = new TFile(("/afs/cern.ch/user/c/carrillo/workspace/efficiencycls/_RPCMonitor_Run2016B-v2_RAW/"+run+"/secefficiency-"+run+".root").c_str());
+    TFile * theFile = new TFile(("/eos/user/c/carrillo/efficiency/_RPCMonitor_2016H-v1_RAW/"+run+"/efficiency-"+run+".root").c_str());
+    TFile * secFile = new TFile(("/eos/user/c/carrillo/efficiency/_RPCMonitor_2016H-v1_RAW/"+run+"/secefficiency-"+run+".root").c_str());
 
     if(!theFile) continue;
     if(!secFile) continue;
@@ -778,6 +830,9 @@ void history(){
     if(index%1==0){
       EventsH->GetXaxis()->SetBinLabel(index,run.c_str());
       durationH->GetXaxis()->SetBinLabel(index,run.c_str());
+
+      EfficiencyTwinMuxRPCMB1H->GetXaxis()->SetBinLabel(index,run.c_str());
+      EfficiencyTwinMuxRPCMB2H->GetXaxis()->SetBinLabel(index,run.c_str());
 
       EfficiencyPerLayer1H->GetXaxis()->SetBinLabel(index,run.c_str());
       EfficiencyPerLayer2H->GetXaxis()->SetBinLabel(index,run.c_str());
@@ -860,6 +915,13 @@ void history(){
 
     TH1F * EfficiencyPerLayer = (TH1F*) (secFile->Get("EfficiencyPerLayer"));
     
+    EfficiencyTwinMuxRPCMB1H->SetBinContent(index,EfficiencyPerLayer->GetBinContent(1)/100*EfficiencyPerLayer->GetBinContent(2)/100);
+    EfficiencyTwinMuxRPCMB2H->SetBinContent(index,EfficiencyPerLayer->GetBinContent(3)/100*EfficiencyPerLayer->GetBinContent(4)/100);
+
+    EfficiencyTwinMuxRPCMB1H->SetBinError(index,(EfficiencyPerLayer->GetBinError(1)*EfficiencyPerLayer->GetBinContent(2) + EfficiencyPerLayer->GetBinError(2)*EfficiencyPerLayer->GetBinContent(1)) / 10000.  );
+    EfficiencyTwinMuxRPCMB2H->SetBinError(index,(EfficiencyPerLayer->GetBinError(3)*EfficiencyPerLayer->GetBinContent(4) + EfficiencyPerLayer->GetBinError(4)*EfficiencyPerLayer->GetBinContent(3)) / 10000.  );
+
+
     EfficiencyPerLayer1H->SetBinContent(index,EfficiencyPerLayer->GetBinContent(1)/100);
     EfficiencyPerLayer2H->SetBinContent(index,EfficiencyPerLayer->GetBinContent(2)/100);
     EfficiencyPerLayer3H->SetBinContent(index,EfficiencyPerLayer->GetBinContent(3)/100);
@@ -878,6 +940,11 @@ void history(){
     EfficiencyPerRingm2->SetBinContent(index,RingEfficiency(secFile,-2));
     EfficiencyPerRing2->SetBinContent(index,RingEfficiency(secFile,2));
     EfficiencyPerRing3->SetBinContent(index,RingEfficiency(secFile,3));
+
+    EfficiencyPerRingm3->SetBinError(index,RingError(secFile,-3));
+    EfficiencyPerRingm2->SetBinError(index,RingError(secFile,-2));
+    EfficiencyPerRing2->SetBinError(index,RingError(secFile,2));
+    EfficiencyPerRing3->SetBinError(index,RingError(secFile,3));
     
     TH1F * CentralEffBarrel = (TH1F*) (secFile->Get("CentralEffBarrel"));
     TH1F * CentralEffBarrel_black = (TH1F*) (secFile->Get("CentralEffBarrel_black"));
@@ -1181,6 +1248,21 @@ void history(){
   Ca0->Clear();
 
   
+  EfficiencyTwinMuxRPCMB1H->GetYaxis()->SetTitle("Stand Alone Segment RPC TwinMux Efficiency %"); 
+  
+  setHistoV(EfficiencyTwinMuxRPCMB1H); 
+  setHistoSameV(EfficiencyTwinMuxRPCMB2H,4); 
+
+  TLegend *leg7 = new TLegend(0.8,0.21,0.93,0.11);
+  leg7->AddEntry(EfficiencyTwinMuxRPCMB1H,"RPC MB1","p");
+  leg7->AddEntry(EfficiencyTwinMuxRPCMB2H,"RPC MB2","p");
+  leg7->Draw("same");
+  Ca0->SetGrid();
+  Ca0->SaveAs("EfficiencyTwinMuxH.png");
+  Ca0->Clear();
+  leg7->Delete();
+  
+
   EfficiencyPerLayer1H->GetYaxis()->SetTitle("Mean Efficiency %");
   
   setHistoV(CentralEffBarrelInt); CentralEffBarrelInt->SetMarkerStyle(19); CentralEffBarrelInt->SetMarkerSize(2.5);
@@ -1205,6 +1287,7 @@ void history(){
   Ca0->Clear();
   leg2->Delete();
   
+
   CentralEffBarrelInt->GetYaxis()->SetTitle("Mean Efficiency %");
   
   setHistoV(CentralEffBarrelInt); CentralEffBarrelInt->SetMarkerStyle(19); CentralEffBarrelInt->SetMarkerSize(2.5);
@@ -1285,8 +1368,8 @@ void history(){
   leg4->Delete();
 
   setHistoV(CentralEffEndCapInt); CentralEffEndCapInt->SetMarkerStyle(19); CentralEffEndCapInt->SetMarkerSize(2.5);
-  setHistoSameV(EfficiencyPerRingm3,3);
-  setHistoSameV(EfficiencyPerRingm2,4);
+  setHistoSameV(EfficiencyPerRingm3,4);
+  setHistoSameV(EfficiencyPerRingm2,3);
   setHistoSameV(EfficiencyPerRing2,5);
   setHistoSameV(EfficiencyPerRing3,6);
   
