@@ -1,5 +1,3 @@
-
-
 import FWCore.ParameterSet.Config as cms
 process = cms.Process("OwnParticles")
 #process = cms.Process("RECO")
@@ -46,7 +44,7 @@ process.load("MuonTools.Configuration.StandAloneNoRpc_cff")
 process.load("RecoTracker.CkfPattern.GroupedCkfTrajectoryBuilder_cff")
 #timing producer
 process.load("STASkim.ProducerTest.standAloneTiming_cff")
-
+process.load("RecoLocalMuon.Configuration.RecoLocalMuon_cff")
 
 
 process.maxEvents = cms.untracked.PSet(
@@ -70,7 +68,7 @@ process.source = cms.Source("PoolSource",
 
 process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
                                                   cscSegments = cms.untracked.InputTag("hltCscSegments"),
-                                                  dt4DSegments = cms.untracked.InputTag("hltDt4DSegments"),
+                                                  dt4DSegments = cms.untracked.InputTag("dt4DSegments"),
                                                   tracks = cms.untracked.InputTag("standAloneMuons",""),
                                                   MuonTimeMapLabel = cms.InputTag("staRegular", "combined"),
                                                   ptCutValue = cms.untracked.double(5),
@@ -112,6 +110,8 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
     MuonCollectionLabel = cms.InputTag("standAloneMuons"),
     MuonTimeMapLabel = cms.InputTag("staRegular", "combined"),
     MuonRpcTimeMapLabel = cms.InputTag("staRegular", "rpc"),
+    MuonDtTimeMapLabel = cms.InputTag("staRegular", "dt"),
+    MuonCscTimeMapLabel = cms.InputTag("staRegular", "csc"),
     timingCutValue = cms.untracked.double(10.),
 
     incldt = cms.untracked.bool(True),
@@ -129,7 +129,7 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
     rangestrips = cms.untracked.double(4.),
 
     cscSegments = cms.untracked.InputTag('hltCscSegments'),
-    dt4DSegments = cms.untracked.InputTag('hltDt4DSegments'),
+    dt4DSegments = cms.untracked.InputTag('dt4DSegments'),
     rpcRecHits = cms.untracked.InputTag("hltRpcRecHits"),
 
 
@@ -165,7 +165,7 @@ process.triggerFilter = cms.EDFilter('TriggerFilter',
  #                              fileName = cms.untracked.string("FedeTest.root"))
 
 
-process.p = cms.Path(process.normfilter*process.muonstandalonereco*process.standAloneTiming*process.dTandCSCSegmentsinTracks*process.rpcPointProducer*process.museg)
+process.p = cms.Path(process.normfilter*process.dtlocalreco*process.muonstandalonereco*process.standAloneTiming*process.dTandCSCSegmentsinTracks*process.rpcPointProducer*process.museg)
 #process.e = cms.EndPath(process.out)
 
 
