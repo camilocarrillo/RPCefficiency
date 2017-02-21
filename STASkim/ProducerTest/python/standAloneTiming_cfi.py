@@ -5,7 +5,7 @@ from RecoMuon.MuonIdentification.DTTimingExtractor_cfi import *
 from RecoMuon.MuonIdentification.CSCTimingExtractor_cfi import *
 from RecoMuon.TrackingTools.MuonSegmentMatcher_cff import *
 
-MuonSegmentMatcher_ = MuonSegmentMatcher.clone(MatchParameters = cms.PSet(DTsegments = cms.InputTag("hltDt4DSegments"),
+MuonSegmentMatcher_ = MuonSegmentMatcher.clone(MatchParameters = cms.PSet(DTsegments = cms.InputTag("dt4DSegments"),
                                                                           DTradius = cms.double(0.01),
                                                                           CSCsegments = cms.InputTag("hltCscSegments"),
                                                                           RPChits = cms.InputTag("hltRpcRecHits"),
