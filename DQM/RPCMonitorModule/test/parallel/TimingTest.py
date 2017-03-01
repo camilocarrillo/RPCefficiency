@@ -48,7 +48,7 @@ process.load("RecoLocalMuon.Configuration.RecoLocalMuon_cff")
 
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(10000)
 )
 process.source = cms.Source("PoolSource",
    fileNames = cms.untracked.vstring(#'/store/data/Run2016E/RPCMonitor/RAW/v2/000/277/420/00000/04EEBC38-B052-E611-972D-02163E013587.root')
@@ -121,12 +121,17 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
     debug = cms.untracked.bool(False),
     inves = cms.untracked.bool(True),
     
+    clsCutValue = cms.untracked.int32(3),
+
     DuplicationCorrection = cms.untracked.int32(1),
 
     manualalignment = cms.untracked.bool(False),
     AliFileName = cms.untracked.string('/afs/cern.ch/user/c/carrillo/endcap/CMSSW_3_0_0_pre10/src/DQM/RPCMonitorModule/data/Alignment69912.dat'),
 
     rangestrips = cms.untracked.double(4.),
+    
+    selectedcscSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedCscSegments','OwnParticles'),
+    selecteddt4DSegments = cms.untracked.InputTag('dTandCSCSegmentsinTracks','SelectedDtSegments','OwnParticles'),
 
     cscSegments = cms.untracked.InputTag('hltCscSegments'),
     dt4DSegments = cms.untracked.InputTag('dt4DSegments'),
