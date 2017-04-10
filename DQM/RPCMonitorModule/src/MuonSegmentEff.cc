@@ -41,7 +41,7 @@ double straighter(RPCDetId rpcId){
     return -1.; 	 
   }else{ 	 
     return 1.; 	 
-  } 	 
+ } 	 
 }
 
 void MuonSegmentEff::beginJob(){
@@ -95,7 +95,7 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   nameInLog = iConfig.getUntrackedParameter<std::string>("moduleLogName", "RPC_Eff");
   EffSaveRootFile  = iConfig.getUntrackedParameter<bool>("EffSaveRootFile", false); 
   EffRootFileName  = iConfig.getUntrackedParameter<std::string>("EffRootFileName", "MuonSegmentEff.root"); 
-  AlignmentinfoFile  = iConfig.getUntrackedParameter<std::string>("AliFileName","/afs/cern.ch/user/c/carrillo/segments/CMSSW_2_2_10/src/DQM/RPCMonitorModule/data/Alignment.dat"); 
+  AlignmentinfoFile  = iConfig.getUntrackedParameter<std::string>("AliFileName"); 
     
   //Interface
   
@@ -265,6 +265,74 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   hGlobalResClu3R2B = dbe->book1D("GlobalResidualsClu3R2B","RPC Residuals Ring 2 Roll B Cluster Size 3",101,-10.,10.);
   hGlobalResClu3R2A = dbe->book1D("GlobalResidualsClu3R2A","RPC Residuals Ring 2 Roll A Cluster Size 3",101,-10.,10.);
 
+  //Residuals with charge
+
+  hQResidualsRE1r2A = dbe->book2D("hQResidualsRE1r2A","#pt vs q* #Delta #phi RE1 ring 2 A",100,-4,4,50,0.,100.);
+  hQResidualsRE1r2B = dbe->book2D("hQResidualsRE1r2B","#pt vs q* #Delta #phi RE1 ring 2 B",100,-4,4,50,0.,100.);
+  hQResidualsRE1r2C = dbe->book2D("hQResidualsRE1r2C","#pt vs q* #Delta #phi RE1 ring 2 C",100,-4,4,50,0.,100.);
+
+  hQResidualsRE1r3A = dbe->book2D("hQResidualsRE1r3A","#pt vs q* #Delta #phi RE1 ring 3 A",100,-4,4,50,0.,100.);
+  hQResidualsRE1r3B = dbe->book2D("hQResidualsRE1r3B","#pt vs q* #Delta #phi RE1 ring 3 B",100,-4,4,50,0.,100.);
+  hQResidualsRE1r3C = dbe->book2D("hQResidualsRE1r3C","#pt vs q* #Delta #phi RE1 ring 3 C",100,-4,4,50,0.,100.);
+ 
+  hQResidualsRE2r2A = dbe->book2D("hQResidualsRE2r2A","#pt vs q* #Delta #phi RE2 ring 2 A",100,-4,4,50,0.,100.);
+  hQResidualsRE2r2B = dbe->book2D("hQResidualsRE2r2B","#pt vs q* #Delta #phi RE2 ring 2 B",100,-4,4,50,0.,100.);
+  hQResidualsRE2r2C = dbe->book2D("hQResidualsRE2r2C","#pt vs q* #Delta #phi RE2 ring 2 C",100,-4,4,50,0.,100.);
+
+  hQResidualsRE2r3A = dbe->book2D("hQResidualsRE2r3A","#pt vs q* #Delta #phi RE2 ring 3 A",100,-4,4,50,0.,100.);
+  hQResidualsRE2r3B = dbe->book2D("hQResidualsRE2r3B","#pt vs q* #Delta #phi RE2 ring 3 B",100,-4,4,50,0.,100.);
+  hQResidualsRE2r3C = dbe->book2D("hQResidualsRE2r3C","#pt vs q* #Delta #phi RE2 ring 3 C",100,-4,4,50,0.,100.);
+
+  hQResidualsRE3r2A = dbe->book2D("hQResidualsRE3r2A","#pt vs q* #Delta #phi RE3 ring 2 A",100,-4,4,50,0.,100.);
+  hQResidualsRE3r2B = dbe->book2D("hQResidualsRE3r2B","#pt vs q* #Delta #phi RE3 ring 2 B",100,-4,4,50,0.,100.);
+  hQResidualsRE3r2C = dbe->book2D("hQResidualsRE3r2C","#pt vs q* #Delta #phi RE3 ring 2 C",100,-4,4,50,0.,100.);
+
+  hQResidualsRE3r3A = dbe->book2D("hQResidualsRE3r3A","#pt vs q* #Delta #phi RE3 ring 3 A",100,-4,4,50,0.,100.);
+  hQResidualsRE3r3B = dbe->book2D("hQResidualsRE3r3B","#pt vs q* #Delta #phi RE3 ring 3 B",100,-4,4,50,0.,100.);
+  hQResidualsRE3r3C = dbe->book2D("hQResidualsRE3r3C","#pt vs q* #Delta #phi RE3 ring 3 C",100,-4,4,50,0.,100.);
+
+  hQResidualsRE4r2A = dbe->book2D("hQResidualsRE4r2A","#pt vs q* #Delta #phi RE4 ring 2 A",100,-4,4,50,0.,100.);
+  hQResidualsRE4r2B = dbe->book2D("hQResidualsRE4r2B","#pt vs q* #Delta #phi RE4 ring 2 B",100,-4,4,50,0.,100.);
+  hQResidualsRE4r2C = dbe->book2D("hQResidualsRE4r2C","#pt vs q* #Delta #phi RE4 ring 2 C",100,-4,4,50,0.,100.);
+
+  hQResidualsRE4r3A = dbe->book2D("hQResidualsRE4r3A","#pt vs q* #Delta #phi RE4 ring 3 A",100,-4,4,50,0.,100.);
+  hQResidualsRE4r3B = dbe->book2D("hQResidualsRE4r3B","#pt vs q* #Delta #phi RE4 ring 3 B",100,-4,4,50,0.,100.);
+  hQResidualsRE4r3C = dbe->book2D("hQResidualsRE4r3C","#pt vs q* #Delta #phi RE4 ring 3 C",100,-4,4,50,0.,100.);
+
+  //ODD CHAMBERS
+
+  hQResidualsODDRE1r2A = dbe->book2D("hQResidualsODDRE1r2A","#pt vs q* #Delta #phi RE1 ring 2 A",100,-4,4,50,0.,100.);
+  hQResidualsODDRE1r2B = dbe->book2D("hQResidualsODDRE1r2B","#pt vs q* #Delta #phi RE1 ring 2 B",100,-4,4,50,0.,100.);
+  hQResidualsODDRE1r2C = dbe->book2D("hQResidualsODDRE1r2C","#pt vs q* #Delta #phi RE1 ring 2 C",100,-4,4,50,0.,100.);
+
+  hQResidualsODDRE1r3A = dbe->book2D("hQResidualsODDRE1r3A","#pt vs q* #Delta #phi RE1 ring 3 A",100,-4,4,50,0.,100.);
+  hQResidualsODDRE1r3B = dbe->book2D("hQResidualsODDRE1r3B","#pt vs q* #Delta #phi RE1 ring 3 B",100,-4,4,50,0.,100.);
+  hQResidualsODDRE1r3C = dbe->book2D("hQResidualsODDRE1r3C","#pt vs q* #Delta #phi RE1 ring 3 C",100,-4,4,50,0.,100.);
+ 
+  hQResidualsODDRE2r2A = dbe->book2D("hQResidualsODDRE2r2A","#pt vs q* #Delta #phi RE2 ring 2 A",100,-4,4,50,0.,100.);
+  hQResidualsODDRE2r2B = dbe->book2D("hQResidualsODDRE2r2B","#pt vs q* #Delta #phi RE2 ring 2 B",100,-4,4,50,0.,100.);
+  hQResidualsODDRE2r2C = dbe->book2D("hQResidualsODDRE2r2C","#pt vs q* #Delta #phi RE2 ring 2 C",100,-4,4,50,0.,100.);
+
+  hQResidualsODDRE2r3A = dbe->book2D("hQResidualsODDRE2r3A","#pt vs q* #Delta #phi RE2 ring 3 A",100,-4,4,50,0.,100.);
+  hQResidualsODDRE2r3B = dbe->book2D("hQResidualsODDRE2r3B","#pt vs q* #Delta #phi RE2 ring 3 B",100,-4,4,50,0.,100.);
+  hQResidualsODDRE2r3C = dbe->book2D("hQResidualsODDRE2r3C","#pt vs q* #Delta #phi RE2 ring 3 C",100,-4,4,50,0.,100.);
+
+  hQResidualsODDRE3r2A = dbe->book2D("hQResidualsODDRE3r2A","#pt vs q* #Delta #phi RE3 ring 2 A",100,-4,4,50,0.,100.);
+  hQResidualsODDRE3r2B = dbe->book2D("hQResidualsODDRE3r2B","#pt vs q* #Delta #phi RE3 ring 2 B",100,-4,4,50,0.,100.);
+  hQResidualsODDRE3r2C = dbe->book2D("hQResidualsODDRE3r2C","#pt vs q* #Delta #phi RE3 ring 2 C",100,-4,4,50,0.,100.);
+
+  hQResidualsODDRE3r3A = dbe->book2D("hQResidualsODDRE3r3A","#pt vs q* #Delta #phi RE3 ring 3 A",100,-4,4,50,0.,100.);
+  hQResidualsODDRE3r3B = dbe->book2D("hQResidualsODDRE3r3B","#pt vs q* #Delta #phi RE3 ring 3 B",100,-4,4,50,0.,100.);
+  hQResidualsODDRE3r3C = dbe->book2D("hQResidualsODDRE3r3C","#pt vs q* #Delta #phi RE3 ring 3 C",100,-4,4,50,0.,100.);
+
+  hQResidualsODDRE4r2A = dbe->book2D("hQResidualsODDRE4r2A","#pt vs q* #Delta #phi RE4 ring 2 A",100,-4,4,50,0.,100.);
+  hQResidualsODDRE4r2B = dbe->book2D("hQResidualsODDRE4r2B","#pt vs q* #Delta #phi RE4 ring 2 B",100,-4,4,50,0.,100.);
+  hQResidualsODDRE4r2C = dbe->book2D("hQResidualsODDRE4r2C","#pt vs q* #Delta #phi RE4 ring 2 C",100,-4,4,50,0.,100.);
+
+  hQResidualsODDRE4r3A = dbe->book2D("hQResidualsODDRE4r3A","#pt vs q* #Delta #phi RE4 ring 3 A",100,-4,4,50,0.,100.);
+  hQResidualsODDRE4r3B = dbe->book2D("hQResidualsODDRE4r3B","#pt vs q* #Delta #phi RE4 ring 3 B",100,-4,4,50,0.,100.);
+  hQResidualsODDRE4r3C = dbe->book2D("hQResidualsODDRE4r3C","#pt vs q* #Delta #phi RE4 ring 3 C",100,-4,4,50,0.,100.);
+
   //timing infos 
   folder = "Muons/Time";
   dbe->setCurrentFolder(folder);
@@ -273,10 +341,18 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   hTimeRPC = dbe->book1D("hTimeRPC","standAlone RPC time ",250,-250.,250.);
   hTimeDT = dbe->book1D("hTimeDT","standAlone DT time ",250,-250.,250.);
   hTimeCSC = dbe->book1D("hTimeCSC","standAlone CSC time ",250,-250.,250.);
+
+  hNTracks = dbe->book1D("hNTracks","Number of Tracks per event",10,0.,10.);
+
   hInTimeMuons = dbe->book1D("hInTimeMuons","standAlone muons with CMB time < 10 ",2,0.,2.);
+  hInTimeMuons_eta = dbe->book1D("hInTimeMuons_eta","standAlone muons with CMB time < 10: #eta ",50,-2.5,2.5);  
+  hInTimeMuons_pt = dbe->book1D("hInTimeMuons_pt","standAlone muons with CMB time < 10: p_{T} ",200,0.,200.);  
+  hInTimeMuons_charge = dbe->book1D("hInTimeMuons_charge","standAlone muons with CMB time < 10: q ",3,-1,1);  
+
   hOutOfTimeMuons = dbe->book1D("hOutOfTimeMuons","standAlone muons with CMB time > 10 ",2,0.,2.);
   hOutOfTimeMuons_eta = dbe->book1D("hOutOfTimeMuons_eta","standAlone muons with CMB time > 10: #eta ",50,-2.5,2.5);  
   hOutOfTimeMuons_pt = dbe->book1D("hOutOfTimeMuons_pt","standAlone muons with CMB time > 10: p_{T} ",200,0.,200.);  
+  hOutOfTimeMuons_charge = dbe->book1D("hOutOfTimeMuons_charge","standAlone muons with CMB time > 10: q ",3,-1,1);  
   
   if(debug) ofrej.open("rejected.txt");
 
@@ -369,31 +445,40 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
   Handle<reco::MuonTimeExtraMap> timeMapCSC;
   iEvent.getByToken(staCscTimeToken,timeMapCSC);
   
+  hNTracks->Fill(staMuons->size());
+
   for ( unsigned int position = 0; position != staMuons->size(); ++position ) {
-    reco::TrackRef staTrackRef(staMuons,position); 
-    reco::MuonTimeExtra timec = timeMapCMB->get(staTrackRef.key());
-    reco::MuonTimeExtra timerpc = timeMapRPC->get(staTrackRef.key());
-    reco::MuonTimeExtra timedt = timeMapDT->get(staTrackRef.key());    
-    reco::MuonTimeExtra timecsc = timeMapCSC->get(staTrackRef.key());    
+      reco::TrackRef staTrackRef(staMuons,position); 
+      reco::MuonTimeExtra timec = timeMapCMB->get(staTrackRef.key());
+      reco::MuonTimeExtra timerpc = timeMapRPC->get(staTrackRef.key());
+      reco::MuonTimeExtra timedt = timeMapDT->get(staTrackRef.key());    
+      reco::MuonTimeExtra timecsc = timeMapCSC->get(staTrackRef.key());    
 
+      const reco::Track Track = staMuons->at(position); 
+      
+      hTimeCombined->Fill(timec.timeAtIpInOut());
+      hTimeRPC->Fill(timerpc.timeAtIpInOut());    
+      hTimeDT->Fill(timedt.timeAtIpInOut());    
+      hTimeCSC->Fill(timecsc.timeAtIpInOut());    
 
-    const reco::Track Track = staMuons->at(position); 
-
-    hTimeCombined->Fill(timec.timeAtIpInOut());
-    hTimeRPC->Fill(timerpc.timeAtIpInOut());    
-    hTimeDT->Fill(timedt.timeAtIpInOut());    
-    hTimeCSC->Fill(timecsc.timeAtIpInOut());    
-
-    if(fabs(timec.timeAtIpInOut()) <= timingCut)   
-      hInTimeMuons->Fill(1.);
-    else{
-      hOutOfTimeMuons->Fill(1.);
-      hOutOfTimeMuons_eta->Fill(Track.eta());  
-      hOutOfTimeMuons_pt->Fill(Track.pt());  
-    }
-    // std::cout << "Time CMB = " << fabs(timec.timeAtIpInOut()) << " err = " << timec.timeAtIpInOutErr() << std::endl;
-    // std::cout << "Time RPC = " << fabs(timerpc.timeAtIpInOut()) << " err = " << timerpc.timeAtIpInOutErr() << std::endl;
-    
+      if(fabs(timec.timeAtIpInOut()) <= timingCut){
+	  hInTimeMuons->Fill(1.);
+	  hInTimeMuons_eta->Fill(Track.eta());  
+	  hInTimeMuons_pt->Fill(Track.pt());  
+	  hInTimeMuons_charge->Fill(Track.charge());  
+      }else{
+	  hOutOfTimeMuons->Fill(1.);
+	  hOutOfTimeMuons_eta->Fill(Track.eta());  
+	  hOutOfTimeMuons_pt->Fill(Track.pt());  
+	  hOutOfTimeMuons_charge->Fill(Track.charge());  
+      }
+      //std::cout << "Charge = " << Track.charge() << std::endl;
+      charge=Track.charge();
+      pT=Track.pt();
+ 
+      // std::cout << "Time CMB = " << fabs(timec.timeAtIpInOut()) << " err = " << timec.timeAtIpInOutErr() << std::endl;
+      // std::cout << "Time RPC = " << fabs(timerpc.timeAtIpInOut()) << " err = " << timerpc.timeAtIpInOutErr() << std::endl;
+      
   }
 
   //-------------Filling Other Histograms for correlations -----------
@@ -510,7 +595,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	      dz=segmentDirection.z();
 	      float cosal = dx/sqrt(dx*dx+dz*dz);
 	      float angle = acos(cosal)*180/3.1415926;
-	      std::cout<<"angle from the segment="<<angle<<" z_coordinateRPCPoint="<<PointExtrapolatedRPCFrame.z()<<std::endl;
+	      if(debug) std::cout<<"angle from the segment="<<angle<<" z_coordinateRPCPoint="<<PointExtrapolatedRPCFrame.z()<<std::endl;
 	      continue;
 	  }
       }
@@ -810,9 +895,10 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
       //-------RecHitPart Just For Residual--------
       int cluSize = 0;
       int bx =0;
-      int countRecHits = 0;
+      int countRecHits = 0.;
       float minres = 3000.;
-      
+      float RecHitGlobalPhi=0.;
+
       if(debug) std::cout<<"CSC  \t \t \t \t \t Getting RecHits in Roll Asociated"<<std::endl;
       typedef std::pair<RPCRecHitCollection::const_iterator, RPCRecHitCollection::const_iterator> rangeRecHits;
       rangeRecHits recHitCollection =  rpcHits->get(rollasociated->id());
@@ -825,10 +911,13 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	//if(manualalignment) res = res - alignmentinfo[rpcId.rawId()];
 	if(debug) std::cout<<"CSC  \t \t \t \t \t \t Found Rec Hit at "<<res<<"cm of the prediction."<<std::endl;
 	if(fabs(res)<fabs(minres)){
-	  minres=res;
-	  cluSize = recHit->clusterSize();
-	  bx = recHit->BunchX();
-	  if(debug) std::cout<<"CSC  \t \t \t \t \t \t \t New Min Res "<<res<<"cm."<<std::endl;
+	    const BoundPlane & RPCSurface = rollasociated->surface(); 
+	    GlobalPoint RPCRecHitInGlobal = RPCSurface.toGlobal(recHitPos);
+	    RecHitGlobalPhi=RPCRecHitInGlobal.phi();
+	    minres=res;
+	    cluSize = recHit->clusterSize();
+	    bx = recHit->BunchX();
+	    if(debug) std::cout<<"CSC  \t \t \t \t \t \t \t New Min Res "<<res<<"cm."<<std::endl;
 	}
       }
       
@@ -840,7 +929,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	assert(minres!=3000); 
 	
 	if(debug) std::cout<<"CSC \t \t \t \t \t PointExtrapolatedRPCFrame.x="<<PointExtrapolatedRPCFrame.x()<<" Minimal Residual"<<minres<<std::endl;
-	if(debug) std::cout<<"CSC  \t \t \t \t \t Minimal Residual less than stripw*rangestrips? minres="<<minres<<" range="<<rangestrips<<" stripw="<<stripw<<" cluSize"<<cluSize<<" <=compare minres with"<<(rangestrips+cluSize*0.5)*stripw<<std::endl;
+	if(debug) std::cout<<"CSC  \t \t \t \t \t Minimal Residual less than stripw*rangestrips? minres="<<minres<<" range="<<rangestrips<<" stripw="<<stripw<<" cluSize"<<cluSize<<" <=compare 3Dminres with"<<(rangestrips+cluSize*0.5)*stripw<<std::endl;
 
 	if(fabs(minres)<=(rangestrips+cluSize*0.5)*stripw && cluSize<=clsCut){
 	  if(debug) std::cout<<"CSC  \t \t \t \t \t \t True!"<<std::endl;
@@ -883,7 +972,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	  
 	}
 	
-
+	
 	if(cluSize == 1*dupli){
 	  sprintf(meIdRPC,"RPCResiduals_Clu1_%s",detUnitLabel);
 	  meMap[meIdRPC]->Fill(minres);
@@ -897,8 +986,125 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
 	  sprintf(meIdRPC,"RPCResiduals_Other_%s",detUnitLabel);
 	  meMap[meIdRPC]->Fill(minres);
 	}
+
+	float deltaphi=(RecHitGlobalPhi-PointExtrapolatedRPCFrame.z())*180./3.1415926535;
+
+	if(rpcsrv.segment()%2==0){//EVEN
+
+	if(rpcId.station()==1){
+	    if(rpcId.ring()==2){
+		if(rpcId.roll()==1) hQResidualsRE1r2A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsRE1r2B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsRE1r2C->Fill(deltaphi*float(charge),pT);
+	    }
+	    if(rpcId.ring()==3){
+		if(rpcId.roll()==1) hQResidualsRE1r3A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsRE1r3B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsRE1r3C->Fill(deltaphi*float(charge),pT);
+	    }
+	}
 	
+	if(rpcId.station()==2){
+	    if(rpcId.ring()==2){
+		if(rpcId.roll()==1) hQResidualsRE2r2A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsRE2r2B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsRE2r2C->Fill(deltaphi*float(charge),pT);
+	    }
+	    if(rpcId.ring()==3){
+		if(rpcId.roll()==1) hQResidualsRE2r3A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsRE2r3B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsRE2r3C->Fill(deltaphi*float(charge),pT);
+	    }
+	}
 	
+	if(rpcId.station()==3){
+	    if(rpcId.ring()==2){
+		if(rpcId.roll()==1) hQResidualsRE3r2A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsRE3r2B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsRE3r2C->Fill(deltaphi*float(charge),pT);
+	    }
+	    if(rpcId.ring()==3){
+		if(rpcId.roll()==1) hQResidualsRE3r3A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsRE3r3B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsRE3r3C->Fill(deltaphi*float(charge),pT);
+	    }
+	}
+	
+	if(rpcId.station()==4){
+	    if(rpcId.ring()==2){
+		if(rpcId.roll()==1) hQResidualsRE4r2A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsRE4r2B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsRE4r2C->Fill(deltaphi*float(charge),pT);
+	    }
+	    if(rpcId.ring()==3){
+		if(rpcId.roll()==1) hQResidualsRE4r3A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsRE4r3B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsRE4r3C->Fill(deltaphi*float(charge),pT);
+	    }
+	    
+	}
+	
+	}
+
+	else{//ODD
+
+	if(rpcId.station()==1){
+	    if(rpcId.ring()==2){
+		if(rpcId.roll()==1) hQResidualsODDRE1r2A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsODDRE1r2B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsODDRE1r2C->Fill(deltaphi*float(charge),pT);
+	    }
+	    if(rpcId.ring()==3){
+		if(rpcId.roll()==1) hQResidualsODDRE1r3A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsODDRE1r3B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsODDRE1r3C->Fill(deltaphi*float(charge),pT);
+	    }
+	}
+	
+	if(rpcId.station()==2){
+	    if(rpcId.ring()==2){
+		if(rpcId.roll()==1) hQResidualsODDRE2r2A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsODDRE2r2B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsODDRE2r2C->Fill(deltaphi*float(charge),pT);
+	    }
+	    if(rpcId.ring()==3){
+		if(rpcId.roll()==1) hQResidualsODDRE2r3A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsODDRE2r3B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsODDRE2r3C->Fill(deltaphi*float(charge),pT);
+	    }
+	}
+	
+	if(rpcId.station()==3){
+	    if(rpcId.ring()==2){
+		if(rpcId.roll()==1) hQResidualsODDRE3r2A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsODDRE3r2B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsODDRE3r2C->Fill(deltaphi*float(charge),pT);
+	    }
+	    if(rpcId.ring()==3){
+		if(rpcId.roll()==1) hQResidualsODDRE3r3A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsODDRE3r3B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsODDRE3r3C->Fill(deltaphi*float(charge),pT);
+	    }
+	}
+	
+	if(rpcId.station()==4){
+	    if(rpcId.ring()==2){
+		if(rpcId.roll()==1) hQResidualsODDRE4r2A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsODDRE4r2B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsODDRE4r2C->Fill(deltaphi*float(charge),pT);
+	    }
+	    if(rpcId.ring()==3){
+		if(rpcId.roll()==1) hQResidualsODDRE4r3A->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==2) hQResidualsODDRE4r3B->Fill(deltaphi*float(charge),pT);
+		if(rpcId.roll()==3) hQResidualsODDRE4r3C->Fill(deltaphi*float(charge),pT);
+	    }
+	    
+	}
+	
+	}
+
+
+
 	sprintf(meIdRPC,"RPCDataOccupancy_%s",detUnitLabel);
 	meMap[meIdRPC]->Fill(stripPredicted);
 	

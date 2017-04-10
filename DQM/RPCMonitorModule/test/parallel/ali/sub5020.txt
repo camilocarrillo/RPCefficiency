@@ -1,0 +1,5 @@
+. submit_run.sh 2016B 275 059 v2
+. submit_run.sh 2016B 275 067 v2
+. submit_run.sh 2016B 275 068 v2
+. submit_run.sh 2016B 275 073 v2 
+. submit_run.sh 2016B 275 074 v2

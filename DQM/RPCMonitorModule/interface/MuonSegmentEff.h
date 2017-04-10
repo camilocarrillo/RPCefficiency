@@ -176,10 +176,78 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       MonitorElement * hGlobalResClu3R3C;
       MonitorElement * hGlobalResClu3R3B;
       MonitorElement * hGlobalResClu3R3A;
+
       MonitorElement * hGlobalResClu3R2C;
       MonitorElement * hGlobalResClu3R2B;
       MonitorElement * hGlobalResClu3R2A;
 
+      //Residuals
+
+
+      MonitorElement * hQResidualsRE1r3A;
+      MonitorElement * hQResidualsRE1r3B;
+      MonitorElement * hQResidualsRE1r3C;
+
+      MonitorElement * hQResidualsRE1r2A;
+      MonitorElement * hQResidualsRE1r2B;
+      MonitorElement * hQResidualsRE1r2C;
+
+      MonitorElement * hQResidualsRE2r3A;
+      MonitorElement * hQResidualsRE2r3B;
+      MonitorElement * hQResidualsRE2r3C;
+
+      MonitorElement * hQResidualsRE2r2A;
+      MonitorElement * hQResidualsRE2r2B;
+      MonitorElement * hQResidualsRE2r2C;
+
+      MonitorElement * hQResidualsRE3r3A;
+      MonitorElement * hQResidualsRE3r3B;
+      MonitorElement * hQResidualsRE3r3C;
+
+      MonitorElement * hQResidualsRE3r2A;
+      MonitorElement * hQResidualsRE3r2B;
+      MonitorElement * hQResidualsRE3r2C;
+
+      MonitorElement * hQResidualsRE4r3A;
+      MonitorElement * hQResidualsRE4r3B;
+      MonitorElement * hQResidualsRE4r3C;
+
+      MonitorElement * hQResidualsRE4r2A;
+      MonitorElement * hQResidualsRE4r2B;
+      MonitorElement * hQResidualsRE4r2C;
+
+      MonitorElement * hQResidualsODDRE1r3A;
+      MonitorElement * hQResidualsODDRE1r3B;
+      MonitorElement * hQResidualsODDRE1r3C;
+
+      MonitorElement * hQResidualsODDRE1r2A;
+      MonitorElement * hQResidualsODDRE1r2B;
+      MonitorElement * hQResidualsODDRE1r2C;
+
+      MonitorElement * hQResidualsODDRE2r3A;
+      MonitorElement * hQResidualsODDRE2r3B;
+      MonitorElement * hQResidualsODDRE2r3C;
+
+      MonitorElement * hQResidualsODDRE2r2A;
+      MonitorElement * hQResidualsODDRE2r2B;
+      MonitorElement * hQResidualsODDRE2r2C;
+
+      MonitorElement * hQResidualsODDRE3r3A;
+      MonitorElement * hQResidualsODDRE3r3B;
+      MonitorElement * hQResidualsODDRE3r3C;
+
+      MonitorElement * hQResidualsODDRE3r2A;
+      MonitorElement * hQResidualsODDRE3r2B;
+      MonitorElement * hQResidualsODDRE3r2C;
+
+      MonitorElement * hQResidualsODDRE4r3A;
+      MonitorElement * hQResidualsODDRE4r3B;
+      MonitorElement * hQResidualsODDRE4r3C;
+
+      MonitorElement * hQResidualsODDRE4r2A;
+      MonitorElement * hQResidualsODDRE4r2B;
+      MonitorElement * hQResidualsODDRE4r2C;
+      
  private:
       //timing 
       edm::InputTag theSTACollectionLabel;
@@ -193,10 +261,19 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       MonitorElement *hTimeRPC;
       MonitorElement *hTimeDT;
       MonitorElement *hTimeCSC;
+
+      MonitorElement *hNTracks;
+
       MonitorElement *hInTimeMuons;
+      MonitorElement *hInTimeMuons_eta;
+      MonitorElement *hInTimeMuons_pt;
+      MonitorElement *hInTimeMuons_charge;
+
       MonitorElement *hOutOfTimeMuons;
       MonitorElement *hOutOfTimeMuons_eta;
       MonitorElement *hOutOfTimeMuons_pt;
+      MonitorElement *hOutOfTimeMuons_charge;
+
       double timingCut;
       int clsCut;
       
@@ -209,6 +286,8 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       bool manualalignment;
       double rangestrips;
       int dupli;
+      int charge;
+      int pT;
       
       edm::EDGetTokenT<DTRecSegment4DCollection> dt4DSegments;
       edm::EDGetTokenT<CSCSegmentCollection> cscSegments;
