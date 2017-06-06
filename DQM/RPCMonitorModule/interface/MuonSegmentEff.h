@@ -258,6 +258,7 @@ class MuonSegmentEff : public edm::EDAnalyzer {
       edm::EDGetTokenT<reco::MuonTimeExtraMap> staCscTimeToken;
  
       MonitorElement *hTimeCombined;
+      MonitorElement *hTimeErrorCombined;
       MonitorElement *hTimeRPC;
       MonitorElement *hTimeDT;
       MonitorElement *hTimeCSC;

@@ -65,6 +65,7 @@ class DTandCSCSegmentsinTracks : public edm::EDProducer {
       //edm::EDGetTokenT<reco::MuonTimeExtraMap> staRpcTimeToken;
  
       double timingCut;
+      double timingErrorCut;
       double ptCut;
 };
 

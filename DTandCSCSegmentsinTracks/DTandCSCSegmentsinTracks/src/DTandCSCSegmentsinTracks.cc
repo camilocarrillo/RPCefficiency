@@ -53,6 +53,7 @@ DTandCSCSegmentsinTracks::DTandCSCSegmentsinTracks(const edm::ParameterSet& iCon
   
   staTimeToken=consumes<reco::MuonTimeExtraMap>(iConfig.getParameter<edm::InputTag>("MuonTimeMapLabel"));
   timingCut = iConfig.getUntrackedParameter<double>("timingCutValue");
+  timingErrorCut = iConfig.getUntrackedParameter<double>("timingErrorCutValue");
   ptCut = iConfig.getUntrackedParameter<double>("ptCutValue");
 
   produces<DTRecSegment4DCollection>("SelectedDtSegments");
@@ -113,6 +114,9 @@ void DTandCSCSegmentsinTracks::produce(edm::Event& iEvent, const edm::EventSetup
     //std::cout << "Time RPC = " << fabs(timerpc.timeAtIpInOut()) << " err = " << timerpc.timeAtIpInOutErr() << std::endl;
        
     if(fabs(timec.timeAtIpInOut()) > timingCut)
+      continue;//take only intime muons 
+
+    if(fabs(timec.timeAtIpInOutErr()) > timingErrorCut)
       continue;//take only intime muons 
     
     int hitsCounter = 0;

@@ -338,6 +338,7 @@ MuonSegmentEff::MuonSegmentEff(const edm::ParameterSet& iConfig){
   dbe->setCurrentFolder(folder);
 
   hTimeCombined = dbe->book1D("hTimeCombined","standAlone CMB time ",250,-250.,250.);
+  hTimeErrorCombined = dbe->book1D("hTimeErrorCombined","standAlone CMB error time ",100,0.,20.);
   hTimeRPC = dbe->book1D("hTimeRPC","standAlone RPC time ",250,-250.,250.);
   hTimeDT = dbe->book1D("hTimeDT","standAlone DT time ",250,-250.,250.);
   hTimeCSC = dbe->book1D("hTimeCSC","standAlone CSC time ",250,-250.,250.);
@@ -457,6 +458,7 @@ void MuonSegmentEff::analyze(const edm::Event& iEvent, const edm::EventSetup& iS
       const reco::Track Track = staMuons->at(position); 
       
       hTimeCombined->Fill(timec.timeAtIpInOut());
+      hTimeErrorCombined->Fill(timec.timeAtIpInOutErr());
       hTimeRPC->Fill(timerpc.timeAtIpInOut());    
       hTimeDT->Fill(timedt.timeAtIpInOut());    
       hTimeCSC->Fill(timecsc.timeAtIpInOut());    

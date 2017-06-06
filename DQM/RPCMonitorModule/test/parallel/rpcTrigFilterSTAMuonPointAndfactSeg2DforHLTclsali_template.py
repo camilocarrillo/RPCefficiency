@@ -55,6 +55,11 @@ process.source = cms.Source("PoolSource",
    fileNames = cms.untracked.vstring('-input-')
 )
 
+import FWCore.PythonUtilities.LumiList as LumiList
+process.source.lumisToProcess = LumiList.LumiList(filename = '/afs/cern.ch/user/c/carrillo/efficiency/timing/CMSSW_8_0_1/src/DQM/RPCMonitorModule/test/parallel/data_collisions17_295340_295655_json.txt').getVLuminosityBlockRange()
+
+
+
 process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
                                                   cscSegments = cms.untracked.InputTag("hltCscSegments"),
                                                   #dt4DSegments = cms.untracked.InputTag("hltDt4DSegments"),
@@ -62,7 +67,8 @@ process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
                                                   tracks = cms.untracked.InputTag("standAloneMuons",""),
                                                   MuonTimeMapLabel = cms.InputTag("staRegular", "combined"),
                                                   ptCutValue = cms.untracked.double(0),
-                                                  timingCutValue = cms.untracked.double(10)
+                                                  timingCutValue = cms.untracked.double(5),
+                                                  timingErrorCutValue = cms.untracked.double(1)
                                                   )
 
 
@@ -102,7 +108,8 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
     MuonDtTimeMapLabel = cms.InputTag("staRegular", "dt"),
     MuonCscTimeMapLabel = cms.InputTag("staRegular", "csc"),
 
-    timingCutValue = cms.untracked.double(10.),
+    timingCutValue = cms.untracked.double(5.),
+    timingErrorCutValue = cms.untracked.double(1.),
 
     incldt = cms.untracked.bool(True),
     incldtMB4 = cms.untracked.bool(True),
