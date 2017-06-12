@@ -26,19 +26,19 @@ class RPCRecHitAli : public edm::EDProducer {
       explicit RPCRecHitAli(const edm::ParameterSet&);
       edm::ESHandle<RPCGeometry> rpcGeo;
       std::map<int,float> alignmentinfo;
-
+      
       ~RPCRecHitAli();
 
    private:
       edm::InputTag rpcRecHitsLabel;
 
-      RPCRecHitCollection* _ThePoints;
       edm::OwnVector<RPCRecHit> RPCPointVector;
             
       virtual void beginJob() ;
       virtual void produce(edm::Event&, const edm::EventSetup&);
       virtual void endJob() ;
       
+      RPCRecHitCollection* _ThePoints;
       std::string AlignmentinfoFile;
 
       bool debug;

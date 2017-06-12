@@ -95,9 +95,17 @@ void RPCRecHitAli::produce(edm::Event& iEvent, const edm::EventSetup& iSetup){
       }
     }
   }
+
+  //std::auto_ptr<RPCRecHitCollection> TheAlignedRPCHits(_ThePoints);
+  //iEvent.put(TheAlignedRPCHits,"RPCRecHitAligned");
+
   
-  std::auto_ptr<RPCRecHitCollection> TheAlignedRPCHits(_ThePoints);
-  iEvent.put(TheAlignedRPCHits,"RPCRecHitAligned");
+  //RPCRecHitCollection* thePoints(){return _ThePoints;}  
+  //RPCRecHitCollection* TheAlignedRPCHits(_ThePoints);
+  std::unique_ptr<RPCRecHitCollection>  TheAlignedRPCHits(_ThePoints);
+  iEvent.put(std::move(TheAlignedRPCHits),"RPCRecHitAligned"); 
+  
+
 }
 
 // ------------ method called once each job just before starting event loop  ------------

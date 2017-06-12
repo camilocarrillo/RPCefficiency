@@ -61,9 +61,12 @@ void RPCPointProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
     edm::Handle<DTRecSegment4DCollection> all4DSegments;
     iEvent.getByToken(dt4DSegments, all4DSegments);
     if(all4DSegments.isValid()){
-      DTSegtoRPC DTClass(all4DSegments,iSetup,iEvent,debug,ExtrapolatedRegion);
-      std::auto_ptr<RPCRecHitCollection> TheDTPoints(DTClass.thePoints());     
-      iEvent.put(TheDTPoints,"RPCDTExtrapolatedPoints"); 
+	//DTSegtoRPC DTClass(all4DSegments,iSetup,iEvent,debug,ExtrapolatedRegion);
+	//std::auto_ptr<RPCRecHitCollection> TheDTPoints(DTClass.thePoints());     
+	//iEvent.put(TheDTPoints,"RPCDTExtrapolatedPoints"); 
+	DTSegtoRPC DTClass(all4DSegments,iSetup,iEvent,debug,ExtrapolatedRegion);
+	std::unique_ptr<RPCRecHitCollection>  TheDTPoints(DTClass.thePoints());
+	iEvent.put(std::move(TheDTPoints), "RPCDTExtrapolatedPoints"); 
     }else{
       if(debug) std::cout<<"RPCHLT Invalid DTSegments collection"<<std::endl;
     }
@@ -73,9 +76,9 @@ void RPCPointProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
     edm::Handle<CSCSegmentCollection> allCSCSegments;
     iEvent.getByToken(cscSegments, allCSCSegments);
     if(allCSCSegments.isValid()){
-      CSCSegtoRPC CSCClass(allCSCSegments,iSetup,iEvent,debug,ExtrapolatedRegion);
-      std::auto_ptr<RPCRecHitCollection> TheCSCPoints(CSCClass.thePoints());  
-      iEvent.put(TheCSCPoints,"RPCCSCExtrapolatedPoints"); 
+	CSCSegtoRPC CSCClass(allCSCSegments, iSetup,iEvent,debug,ExtrapolatedRegion);
+	std::unique_ptr<RPCRecHitCollection>  TheCSCPoints(CSCClass.thePoints());
+	iEvent.put(std::move(TheCSCPoints), "RPCCSCExtrapolatedPoints"); 
     }else{
       if(debug) std::cout<<"RPCHLT Invalid CSCSegments collection"<<std::endl;
     }

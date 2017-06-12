@@ -58,6 +58,7 @@ DTandCSCSegmentsinTracks::DTandCSCSegmentsinTracks(const edm::ParameterSet& iCon
 
   produces<DTRecSegment4DCollection>("SelectedDtSegments");
   produces<CSCSegmentCollection>("SelectedCscSegments");
+
 }
 
 
@@ -87,10 +88,13 @@ void DTandCSCSegmentsinTracks::produce(edm::Event& iEvent, const edm::EventSetup
   CSCSegmentCollection::const_iterator segmentCSC;
   DTRecSegment4D segmentDTToStore;
   CSCSegment segmentCSCToStore;
+
   
-  
-  std::auto_ptr<DTRecSegment4DCollection> selectedDtSegments(new DTRecSegment4DCollection());
-  std::auto_ptr<CSCSegmentCollection> selectedCscSegments(new CSCSegmentCollection());
+  auto selectedDtSegments = std::make_unique<DTRecSegment4DCollection>();
+  auto selectedCscSegments = std::make_unique<CSCSegmentCollection>();
+
+  //std::auto_ptr<DTRecSegment4DCollection> selectedDtSegments(new DTRecSegment4DCollection());
+  //std::auto_ptr<CSCSegmentCollection> selectedCscSegments(new CSCSegmentCollection());
    
   std::vector<CSCDetId> chamberIdCSC;
   std::vector<DTLayerId> chamberIdDT;
@@ -175,8 +179,8 @@ void DTandCSCSegmentsinTracks::produce(edm::Event& iEvent, const edm::EventSetup
     }
   }
  
-  iEvent.put(selectedCscSegments,"SelectedCscSegments");
-  iEvent.put(selectedDtSegments,"SelectedDtSegments");
+  iEvent.put(std::move(selectedCscSegments),"SelectedCscSegments");
+  iEvent.put(std::move(selectedDtSegments),"SelectedDtSegments");
 }
 
 
