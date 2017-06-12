@@ -19,7 +19,8 @@ process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 #process.GlobalTag.globaltag = autoCond['mc']
 #process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff")
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
-process.GlobalTag.globaltag = "80X_dataRun2_Express_v1"
+#process.GlobalTag.globaltag = "80X_dataRun2_Express_v1"
+process.GlobalTag.globaltag = "90X_dataRun2_Express_v2"
 
 
 # do Stand Alone Muon reconstruction
@@ -62,7 +63,8 @@ process.dTandCSCSegmentsinTracks = cms.EDProducer("DTandCSCSegmentsinTracks",
                                                   tracks = cms.untracked.InputTag("standAloneMuons",""),
                                                   MuonTimeMapLabel = cms.InputTag("staRegular", "combined"),
                                                   ptCutValue = cms.untracked.double(5),
-                                                  timingCutValue = cms.untracked.double(10)
+                                                  timingCutValue = cms.untracked.double(5),
+                                                  timingErrorCutValue = cms.untracked.double(1)
                                                   )
 
 
@@ -102,7 +104,8 @@ process.museg = cms.EDAnalyzer("MuonSegmentEff",
     MuonDtTimeMapLabel = cms.InputTag("staRegular", "dt"),
     MuonCscTimeMapLabel = cms.InputTag("staRegular", "csc"),
 
-    timingCutValue = cms.untracked.double(10.),
+    timingCutValue = cms.untracked.double(5.),
+    timingErrorCutValue = cms.untracked.double(1.),
 
     incldt = cms.untracked.bool(True),
     incldtMB4 = cms.untracked.bool(True),

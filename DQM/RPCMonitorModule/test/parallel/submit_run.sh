@@ -16,7 +16,7 @@ do
     echo "$folder/$file" | sed -e "s|:||g" >> _RPCMonitor_Run$1-$4_RAW/$2$3/files-efficiency-$2$3.txt
 done
 
-cat config_template.txt | sed -e "s|-version-|$4|g" -e "s|-era-|$1|g" -e "s|-run-|$2$3|g"> _RPCMonitor_Run$1-$4_RAW/$2$3/$2$3.txt
+cat config_template_2017.txt | sed -e "s|-version-|$4|g" -e "s|-era-|$1|g" -e "s|-run-|$2$3|g"> _RPCMonitor_Run$1-$4_RAW/$2$3/$2$3.txt
 cd _RPCMonitor_Run$1-$4_RAW/$2$3/
 ~/parallel/submit.sh $2$3.txt > /tmp/carrillo/$2$3log.txt &
 cd -
