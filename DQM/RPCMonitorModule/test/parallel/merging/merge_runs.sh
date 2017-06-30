@@ -4,7 +4,7 @@
 for run in `cat $1`
 do 
     echo $run
-    FILENAME="/eos/user/c/carrillo/efficiency/_RPCMonitor_$2-$3_RAW/$run/efficiency-$run.root"
+    FILENAME="/afs/cern.ch/work/c/carrillo/efficiency/_RPCMonitor_Run$2-$3_RAW/$run/efficiency-$run.root"
     echo checking $FILENAME
     if [ -e "$FILENAME" ]
     then
