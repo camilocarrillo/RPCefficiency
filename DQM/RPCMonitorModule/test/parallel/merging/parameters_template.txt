@@ -1,6 +1,5 @@
-/eos/user/c/carrillo/efficiency/_RPCMonitor_-era---version-_RAW/-run-/
-/afs/cern.ch/work/c/carrillo/efficiency
-~/efficiency/CMSSW_9_0_0/src/
+/afs/cern.ch/user/c/carrillo/workspace/efficiency/_RPCMonitor_Run-era---version-_RAW/-run-/
+~/efficiency/CMSSW_9_2_3_patch2/src/
 15
 cmscaf1nh
 efficiency--run-

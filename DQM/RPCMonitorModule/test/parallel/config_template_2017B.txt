@@ -6,7 +6,7 @@ cmscaf1nd
 2000
 -1
 /afs/cern.ch/user/c/carrillo/efficiency/CMSSW_9_2_3_patch2/
-/afs/cern.ch/user/c/carrillo/efficiency/CMSSW_9_2_3_patch2/src/DQM/RPCMonitorModule/test/parallel/rpcTrigFilterSTAMuonPointAndfactSeg2DforHLTcls_template.py
+/afs/cern.ch/user/c/carrillo/efficiency/CMSSW_9_2_3_patch2/src/DQM/RPCMonitorModule/test/parallel/rpcTrigFilterSTAMuonPointAndfactSeg2DforHLTclsali_template.py
 efficiency--run-
 /
 0

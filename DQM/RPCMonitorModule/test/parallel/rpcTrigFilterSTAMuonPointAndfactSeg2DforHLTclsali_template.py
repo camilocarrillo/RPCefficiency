@@ -19,8 +19,8 @@ process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 #process.GlobalTag.globaltag = autoCond['mc']
 #process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff")
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
-process.GlobalTag.globaltag = "80X_dataRun2_Express_v1"
-
+#process.GlobalTag.globaltag = "80X_dataRun2_Express_v1"
+process.GlobalTag.globaltag = "90X_dataRun2_Express_v2"
 
 # do Stand Alone Muon reconstruction
 # ----------------------------------
@@ -56,7 +56,7 @@ process.source = cms.Source("PoolSource",
 )
 
 import FWCore.PythonUtilities.LumiList as LumiList
-process.source.lumisToProcess = LumiList.LumiList(filename = '/afs/cern.ch/user/c/carrillo/efficiency/CMSSW_9_0_0/src/DQM/RPCMonitorModule/test/parallel/data_collisions17_295340_295655_json.txt').getVLuminosityBlockRange()
+process.source.lumisToProcess = LumiList.LumiList(filename = '/afs/cern.ch/user/c/carrillo/efficiency/CMSSW_9_2_3_patch2/src/DQM/RPCMonitorModule/test/parallel/dcs_only.json').getVLuminosityBlockRange()
 
 
 
