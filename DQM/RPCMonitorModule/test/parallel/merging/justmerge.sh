@@ -67,7 +67,7 @@ fi
 echo Submiting Last Merging for $key for $filesInCastorLocal files
 sleep 10
 echo "hadding in $castorpad all Local*.root -> $key.root"
-rm $castorpad/$key.*.root
+#rm $castorpad/$key.*.root
 hadd -f $castorpad/$key.root $castorpad/Local*.root
 echo "$key is done, time=$t, files=$filestomerge, warning=($warn2), host=$HOST" > finbash.txt
 cat finbash.txt
